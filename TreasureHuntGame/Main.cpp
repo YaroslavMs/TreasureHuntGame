@@ -28,6 +28,8 @@ int main()
 	Scene* scene = &test;
 	sf::Clock clock;
 	while (window.Renderer.isOpen()) {
+		window.Renderer.clear(sf::Color::Black);
+
 		float time = clock.restart().asMicroseconds(); //clock.getElapsedTime().asMicroseconds();
 		scene->Update(time);
 		sf::Event event;

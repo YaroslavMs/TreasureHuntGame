@@ -10,7 +10,7 @@ protected:
 	
 public:
 	sf::Sprite tileset;
-	sf::String* mainTilemap; //for colliders mainly
+	std::string* mainTilemap; //for colliders mainly
 	float offsetX = 0, offsetY = 0;
 	virtual void Update(float time) = 0;
 	virtual void DrawMap() = 0;

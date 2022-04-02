@@ -85,7 +85,7 @@ public:
 	}
 
 };
-sf::String tileset1[50] = {
+std::string tileset1[50] = {
 "000000000000000000000000000000000000000000000000000000",
 "k                                                    r",
 "k                                                    r",
@@ -169,7 +169,7 @@ public:
 
 	};
 	void DrawMap() override {
-		window.Renderer.clear(sf::Color::Black);
+		
 
 
 		for (int i = 0; i < height; i++)
