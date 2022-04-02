@@ -1,5 +1,7 @@
+/*#pragma once
 #include <SFML/Graphics.hpp>
-
+#include "Renderer.h"
+#include <iostream>
 
 using namespace sf;
 
@@ -7,8 +9,8 @@ using namespace sf;
 float offsetX = 0, offsetY = 0;
 
 
-const int H = 25;
-const int W = 54;
+const int H = 50;  //375
+const int W = 865 / 16; //865
 
 
 String TileMap[H] = {
@@ -21,19 +23,44 @@ String TileMap[H] = {
 "k                                                    r",
 "k                                                    r",
 "k                                                    r",
+"k            kkkk                                    r",
+"k                                                    r",
+"k           k                                        r",
 "k                                                    r",
 "k                                                    r",
 "k                                                    r",
+"k        kkkk                                        r",
+"k                                                    r",
+"k                kkk                                 r",
+"k                         kkkk                       r",
+"k                                                    r",
+"k                                                    r",
+"k                                      kkk           r",
+"k                                      kkk           r",
+"k                                      kkk           r",
+"k                                      kkk           r",
+"k                                      kkk           r",
+"k                                      kkk           r",
+"k                                      kkk           r",
+"k                                      kkk           r",
+"k                                      kkk           r",
+"k                                      kkk           r",
+"k                                      kkk           r",
+"k                                      kkk           r",
+"k                                      kkk           r",
+"k                                      kkk           r",
+"k                                      kkk           r",
+"k                                      kkk           r",
 "k                                                    r",
 "k                                                    r",
 "k                                                    r",
+"k                                      PPP           r",
 "k                                                    r",
 "k                                                    r",
+"k                                         PPP        r",
 "k                                                    r",
 "k                                                    r",
-"k                                                    r",
-"k                                                    r",
-"k                                                    r",
+"k                                      PPP           r",
 "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
 "                                                      ",
 "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
@@ -56,7 +83,7 @@ public:
 	PLAYER(Texture& image)
 	{
 		sprite.setTexture(image);
-		rect = FloatRect(100, 180, 16, 16);
+		rect = FloatRect(100, 600, 16, 16);
 
 		dx = dy = 0.1;
 		currentFrame = 0;
@@ -98,22 +125,17 @@ public:
 			{
 				if ((TileMap[i][j] == 'P') || (TileMap[i][j] == 'k') || (TileMap[i][j] == '0') || (TileMap[i][j] == 'r') )
 				{
-					if (dy > 0 && num == 1)
-					{
+					if (dy > 0 && num == 1) {
 						rect.top = i * 16 - rect.height;  dy = 0;   onGround = true;
 					}
-					if (dy < 0 && num == 1)
-					{
+					if (dy < 0 && num == 1) {
 						rect.top = i * 16 + 16;   dy = 0;
 					}
-					if (dx > 0 && num == 0)
-					{
-						rect.left = j * 16 - rect.width;
-					}
-					if (dx < 0 && num == 0)
-					{
-						rect.left = j * 16 + 16;
-					}
+					if (dx > 0 && num == 0)					
+						rect.left = j * 16 - rect.width;					
+					if (dx < 0 && num == 0)					
+						rect.left = j * 16 + 16; 
+					
 				}
 
 				
@@ -125,79 +147,15 @@ public:
 
 
 
-class ENEMY
-{
-
-public:
-	float dx, dy;
-	FloatRect rect;
-	Sprite sprite;
-	float currentFrame;
-	
-
-
-	void set(Texture& image, int x, int y)
-	{
-		sprite.setTexture(image);
-		rect = FloatRect(x, y, 16, 16);
-
-		dx = 0.05;
-		currentFrame = 0;
-		
-	}
-
-	void update(float time)
-	{
-		rect.left += dx * time;
-
-		Collision();
-
-
-		currentFrame += time * 0.005;
-		if (currentFrame > 2) currentFrame -= 2;
-
-		sprite.setTextureRect(IntRect(18 * int(currentFrame), 0, 16, 16));
-		
-
-
-		sprite.setPosition(rect.left - offsetX, rect.top - offsetY);
-
-	}
-
-
-	void Collision()//колайдер
-	{
-
-		for (int i = rect.top / 16; i < (rect.top + rect.height) / 16; i++)
-			for (int j = rect.left / 16; j < (rect.left + rect.width) / 16; j++)
-				if ((TileMap[i][j] == 'P') || (TileMap[i][j] == '0')|| (TileMap[i][j] == 'r') || (TileMap[i][j] == 'k'))
-				{
-					if (dx > 0)
-					{
-						rect.left = j * 16 - rect.width; dx *= -1;
-					}
-					else if (dx < 0)
-					{
-						rect.left = j * 16 + 16;  dx *= -1;
-					}
-
-				}
-	}
-
-};
-
-
 
 int main()
 {
 
-	RenderWindow window(VideoMode(865, 375), "test!");
-
 	Texture tileSet;
-	tileSet.loadFromFile("454.png");
+	tileSet.loadFromFile("Assets/Art/454.png");
+	Texture player1;
 
-
-	PLAYER player(tileSet);
+	PLAYER player(player1);
 	
 	Sprite tile(tileSet);
 
@@ -206,9 +164,11 @@ int main()
 
 	Clock clock;
 
-	while (window.isOpen())
+	while (window.Renderer.isOpen())
 	{
 
+		offsetX = player.rect.left - sf::VideoMode().getDesktopMode().width / 2;
+		offsetY = player.rect.top - sf::VideoMode().getDesktopMode().height / 2;
 		float time = clock.getElapsedTime().asMicroseconds();
 		clock.restart();
 
@@ -217,10 +177,10 @@ int main()
 		if (time > 20) time = 20;
 
 		Event event;
-		while (window.pollEvent(event))
+		while (window.Renderer.pollEvent(event))
 		{
 			if (event.type == Event::Closed)
-				window.close();
+				window.Renderer.close();
 		}
 
 
@@ -239,38 +199,38 @@ int main()
 
 
 		//if (Mario.rect.left > 100) offsetX = Mario.rect.left -100; // нестирати!!
+		
 
 
 
 
+		window.Renderer.clear(Color(Color::Black));
 
-		window.clear(Color(Color::Black));
-
+		
 		for (int i = 0; i < H; i++)
 			for (int j = 0; j < W; j++)
 			{
-				if (TileMap[i][j] == 'P')  tile.setTextureRect(IntRect(240, 720, 16*2, 16*2));
+				if (TileMap[i][j] == 'P')  tile.setTextureRect(IntRect(240, 720, 16, 16));
 
 				if (TileMap[i][j] == 'k')  tile.setTextureRect(IntRect(175, 672, 16, 16));
 
-				if (TileMap[i][j] == 'r')  tile.setTextureRect(IntRect(512 , 672, 16, 16));
+				if (TileMap[i][j] == 'r')  tile.setTextureRect(IntRect(512, 672, 16, 16));
 
 				if ((TileMap[i][j] == ' ') || (TileMap[i][j] == '0')) continue;
 
 				tile.setPosition(j * 16 - offsetX, i * 16 - offsetY);
-				window.draw(tile);
+				window.Renderer.draw(tile);
 			}
 
 
-
-		window.draw(player.sprite);
+		window.Renderer.draw(player.sprite);
 		
 
-		window.display();
+		window.Renderer.display();
 	}
 
 	return 0;
-}
+}*/
 
 
 

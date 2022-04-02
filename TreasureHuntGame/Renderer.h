@@ -45,3 +45,5 @@ public:
     }
 };
 
+Window window(0, 0);
+

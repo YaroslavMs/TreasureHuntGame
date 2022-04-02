@@ -10,6 +10,9 @@ class SpriteClass
 	sf::Sprite sprite;
 
 public:
+	SpriteClass() {
+
+	}
 	SpriteClass(sf::Texture &texture, sf::IntRect rectOnImageToUse) {
 		sprite.setTexture(texture);
 		sprite.setTextureRect(rectOnImageToUse);

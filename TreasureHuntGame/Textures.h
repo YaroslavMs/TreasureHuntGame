@@ -5,9 +5,9 @@
 
 class TexturesDatabase {
 
-	std::vector<sf::Texture> textures;
+	
 public:
-
+	std::vector<sf::Texture> textures;
 	void AddTextureToDatabase(sf::Texture texture) {
 		textures.push_back(texture);
 	}
