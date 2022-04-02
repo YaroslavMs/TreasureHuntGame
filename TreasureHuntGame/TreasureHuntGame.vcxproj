@@ -150,6 +150,7 @@
     <ClCompile Include="Source1.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="MainMenu.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Renderer.h" />
