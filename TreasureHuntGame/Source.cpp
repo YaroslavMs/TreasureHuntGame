@@ -1,4 +1,4 @@
-#include <SFML/Graphics.hpp>
+/*#include <SFML/Graphics.hpp>
 #include <iostream>
 
 using namespace sf;
@@ -152,11 +152,10 @@ public:
 int main()
 {
 
-    RenderWindow window(VideoMode(300/*865*/, 400/*375*/), "test!", Style::Fullscreen);
-    std::cout << sf::VideoMode(1920, 1080).isValid() << "   " << sf::VideoMode().getDesktopMode().width;
+    RenderWindow window(VideoMode(), "test!", Style::Fullscreen);
 
     Texture tileSet;
-    tileSet.loadFromFile("454.png");
+    tileSet.loadFromFile("Assets/Art/454.png");
     Texture player1;
 
     PLAYER player(player1);
@@ -171,8 +170,8 @@ int main()
     while (window.isOpen())
     {
 
-        offsetX = player.rect.left - sf::VideoMode().getDesktopMode().width /3;
-        offsetY = player.rect.top - sf::VideoMode().getDesktopMode().height/1.06 ;
+        offsetX = player.rect.left - sf::VideoMode().getDesktopMode().width /2;
+        offsetY = player.rect.top - sf::VideoMode().getDesktopMode().height /1.06 ;
         float time = clock.getElapsedTime().asMicroseconds();
         clock.restart();
 
@@ -246,4 +245,4 @@ int main()
     }
 
     return 0;
-}
+}*/
