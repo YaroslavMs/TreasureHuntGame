@@ -3,22 +3,24 @@
 #include <SFML/Graphics.hpp>
 #include "Sprite.h"
 
-struct Position {
-	int x = 0;
-	int y = 0;
-} point;
 struct Size {
 	int width = 0;
 	int height = 0;
 };
-
+struct Position {
+	int x = 0;
+	int y = 0;
+};
 class Object {
-	Position position;
+	/*Position position;
 	Size size;
-	SpriteClass objectSprite;
+	SpriteClass objectSprite;*/
 public:
 
-	Object(int x, int y, int width, int height, sf::Texture texture, sf::IntRect  textureRect) {
+	virtual ~Object() {
+
+	}
+	/*Object(int x, int y, int width, int height, sf::Texture texture, sf::IntRect  textureRect) {
 		SetPosition(x, y);
 		SetSize(width, height);
 
@@ -63,7 +65,7 @@ public:
 	void SetSize(int width, int height) {
 		size.width = width;
 		size.height = height;
-	}
+	}*/
 };
 
 
