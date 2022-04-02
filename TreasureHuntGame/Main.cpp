@@ -23,12 +23,18 @@ int main()
 	//texture.AddTextureToDatabase(texture1);
 	std::cout << "here OK 0";
 	sf::Texture tileset;
+	sf::Texture fon;
+	fon.loadFromFile("Assets/Art/12.png");
 	tileset.loadFromFile("Assets/Art/454.png");
-	TestScene test(tileset);
+	texture.AddTextureToDatabase(tileset);
+	sf::Sprite fonSp(fon);
+	fonSp.setScale(sf::Vector2f(sf::VideoMode().getDesktopMode().width / fonSp.getGlobalBounds().width, sf::VideoMode().getDesktopMode().height / fonSp.getGlobalBounds().height));
+	TestScene test(texture.textures.at(0));
 	Scene* scene = &test;
 	sf::Clock clock;
 	while (window.Renderer.isOpen()) {
 		window.Renderer.clear(sf::Color::Black);
+		window.Renderer.draw(fonSp);
 
 		float time = clock.restart().asMicroseconds(); //clock.getElapsedTime().asMicroseconds();
 		scene->Update(time);
