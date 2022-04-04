@@ -23,7 +23,7 @@ public:
 		currentFrame = 0;
 	}
 	~Player() {
-		delete scene;
+	//	delete scene;
 	}
 
 

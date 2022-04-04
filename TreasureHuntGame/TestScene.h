@@ -69,6 +69,9 @@ public:
 		height = 50;
 		width = 55;
 	}
+	//~TestScene() {
+	//	player.~Player();
+	//}
 
 	void Update(float time) override {
 		offsetX = player.rect.left - sf::VideoMode().getDesktopMode().width / 2;
