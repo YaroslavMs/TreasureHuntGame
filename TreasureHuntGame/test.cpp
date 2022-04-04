@@ -283,7 +283,7 @@ int main()
     fonSp.setScale(sf::Vector2f(sf::VideoMode().getDesktopMode().width / fonSp.getGlobalBounds().width, sf::VideoMode().getDesktopMode().height / fonSp.getGlobalBounds().height));
 
     Texture tileSet;
-    tileSet.loadFromFile("0000.png");
+    tileSet.loadFromFile("Assets/Art/0000.png");
 
     Texture player1;
 

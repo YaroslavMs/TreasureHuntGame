@@ -1,6 +1,7 @@
 #pragma once
 #include "Scene.h"
 #include "TestScene.h"
+#include "Database.h"
 
 class Player {
 	Scene* scene;
@@ -13,10 +14,10 @@ public:
 	sf::Sprite sprite;
 	float currentFrame;
 
-	Player(Scene* scene, sf::Texture& image)
+	Player(Scene* scene)
 	{
 		this->scene = scene;
-		sprite.setTexture(image);
+		sprite.setTexture(DATABASE.textures.at(0));
 		rect = sf::FloatRect(100, 600, 16, 16);
 
 		dx = dy = 0.1;

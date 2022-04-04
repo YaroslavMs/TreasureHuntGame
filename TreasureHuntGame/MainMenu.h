@@ -3,7 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "Renderer.h"
-#include "Textures.h"
+#include "Database.h"
 
 
 class MainMenu {
@@ -12,18 +12,18 @@ class MainMenu {
 	sf::Text text[3], name;
 
 public:
-	MainMenu(sf::Texture& texture, sf::Texture& button, sf::Font& font) {
-		background.setTexture(texture);
+	MainMenu() {
+		background.setTexture(DATABASE.textures.at(0));
 		background.setTextureRect(sf::IntRect(1160, 81, 1294 - 1160, 190 - 81));
 		background.setScale(sf::Vector2f(sf::VideoMode::getDesktopMode().width / background.getGlobalBounds().width, sf::VideoMode::getDesktopMode().height / background.getGlobalBounds().height));
-		this->button.setTexture(button);
+		this->button.setTexture(DATABASE.textures.at(2));
 		this->button.setTextureRect(sf::IntRect(0, 0, 200, 60));
 		this->button.setScale(2, 1.5);
 		text[0].setString("Play");
 		text[1].setString("Options");
 		text[2].setString("Quit");
 		for (int i = 0; i < 3; i++) {
-			text[i].setFont(font);
+			text[i].setFont(DATABASE.fonts.at(0));
 			text[i].setFillColor(sf::Color::Red);
 			text[i].setCharacterSize(80);
 			text[i].setOutlineColor(sf::Color::White);
@@ -35,7 +35,7 @@ public:
 		name.setOutlineColor(sf::Color::White);
 		name.setOutlineThickness(5);
 		name.setCharacterSize(200);
-		name.setFont(font);
+		name.setFont(DATABASE.fonts.at(0));
 		name.setOrigin(name.getGlobalBounds().width / 2, name.getGlobalBounds().height / 2);
 		name.setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2, 200));
 		for (int i = 1; i <= 3; i++)
