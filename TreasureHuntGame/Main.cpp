@@ -24,8 +24,8 @@ int main()
 	std::cout << "here OK 0";
 	sf::Texture tileset;
 	sf::Texture fon;
-	fon.loadFromFile("Assets/Art/12.png");
-	tileset.loadFromFile("Assets/Art/454.png");
+	fon.loadFromFile("3.png");
+	tileset.loadFromFile("454.png");
 	texture.AddTextureToDatabase(tileset);
 	sf::Sprite fonSp(fon);
 	fonSp.setScale(sf::Vector2f(sf::VideoMode().getDesktopMode().width / fonSp.getGlobalBounds().width, sf::VideoMode().getDesktopMode().height / fonSp.getGlobalBounds().height));
