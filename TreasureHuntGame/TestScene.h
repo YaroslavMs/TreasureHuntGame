@@ -67,7 +67,7 @@ class TestScene : public Scene {
 public:
 	TestScene() : Scene(sf::FloatRect(100, 2200, 28 * 1.2, 40 * 1.2)), player(this) {
 		mainTilemap = TileMap;
-		tileset.setTexture(DATABASE.textures.at(0));
+		tileset.setTexture(DATABASE.textures.at(1));
 		height = 142;
 		width = 300;
 	}

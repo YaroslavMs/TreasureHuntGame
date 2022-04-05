@@ -32,6 +32,9 @@ int main()
 		while (window.Renderer.pollEvent(event)) {
 			if (event.type == sf::Event::EventType::Closed)
 				window.Renderer.close();
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+				gameStarted = false;
+			}
 			if (event.type == sf::Event::EventType::MouseButtonPressed) {
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
 					sf::Mouse mouse;
