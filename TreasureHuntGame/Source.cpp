@@ -1,4 +1,4 @@
-/*#include <SFML/Graphics.hpp>
+#include <SFML/Graphics.hpp>
 #include <iostream>
 
 using namespace sf;
@@ -7,65 +7,184 @@ using namespace sf;
 float offsetX = 0, offsetY = 0;
 
 
-const int H = 50-1;  //375
-const int W = 865 / 16+29+50; //865
+const int H = 142;  //375
+const int W = 300; //132
 
 
 String TileMap[H] = {
-"0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-"t000ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo0w00",
-"0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-"0000                                                                                                                              000",
-"000                                                                                                                                00",
-"k0                                                                                                                                  r",
-"k0                                                                                                                                  r",
-"k0                                                                                                                                  r",
-"k0                                                                                                                                  r",
-"k0                                                                                                                                  r",
-"k0                                                                                                                                  r",
-"k0                                                                                                                                  r",
-"k0                                                                                                                                  r",
-"k0                                                                                                                                  r",
-"k0                                                                                                                                  r",
-"k0                                                                                                                                  r",
-"k0                                                                                                                                  r",
-"k0                                                                                                                                  r",
-"k0                                                                                                                                  r",
-"k0                                                                                                                                  r",
-"k0                                                                                                                                  r",
-"k0                                                                                                                                  r",
-"k0                                                                                                                                  r",
-"k0                                                                                                                                  r",
-"k0                                                                                                                                  r",
-"k0                                                                                                                                  r",
-"k0                                                                                                                                  r",
-"k0                                                                                                                                  r",
-"k0                                                                                                                                  r",
-"k0                                                                                                                         lllllllllr",
-"k0                                                                                                                                  r",
-"k0                       PPPPPP                                                                       lllllllllllllll               r",
-"k0PPPPPPPPPPPPPPPPPs                                                                                                                r",
-"k0hhhhhhhhhhhhhhhhk0             PPPPPPPPPPP                                                llllll                                  r",
-"k0hhhhhhhhhhhhhhhhk0                                                                                                                r",
-"k0hhhhhhhhhhhhhhhhk0                                                                                                                r",
-"k0hhhhhhhhhhhhhhhhk0     PPPPPPPP                                                                   llllllllll                      r",
-"k0hhhhhhhhhhhhhhhhk0                                                                                                                r",
-"k0oooooooooooooooog0                                                                 llllllllllll                                   r",
-"k000000000000000000d            PPPPPP                                                                                              r",
-"k0                                                                       lllllll                                                    r",
-"k0                                                                                                                                  r",
-"k0                       PPPPPP                              lllllllll                                                              r",
-"k0                                                                                                                                  r",
-"k0                                                                                                                                  r",
-"k0                                                                                                                                  r",
-"q0PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPe",
-"0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-"0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+"0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000                                                                                                                                                                      ",
+"t000bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb                                                                                                                                                                      0w00",
+"00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+"0000                                                                                                                                                                                                                                                                                                    000",
+"000                                                                                                                                                                                                                                                                                                      00",
+"c                                                                                                                                                                                                                                                                                                         d",
+"c                                                                                                                                                                                                                                                                                                         d",
+"c                                                                                                                                                                                                                                                                                                         d",
+"c                                                                                                                                                                                                                                                                                                         d",
+"c                                                                                                                                                                                                                                                                                                         d",
+"c                                                                                                                                                                                                                                                                                                         d",
+"c                                                                                                                                                                                                                                                                                                         d",
+"c                                                                                                                                                                                                                                                                                                         d",
+"c                                                                                                                                                                                                                                                                                                         d",
+"c                                                                                                                                                                                                                                                                                                         d",
+"c                                                                                                                                                                                                                                                                                                         d",
+"c                                                                                                                                                                                                                                                                                                         d",
+"c                                                                                                                                                                                                                                                                                                         d",
+"c                                                                                                                                                                                                                                                                                                         d",
+"c                                                                                                                                                                                                                                                                                                         d",
+"c                                                                                                                                                                                                                                                                                                         d",
+"c                                                                                                                    kbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbg                                                                         d",
+"c                                                                                                                    c                                                                                                          d                                                                         d",
+"c                                                                                                                    c                                                                                                          d                                                                         d",
+"c                                                                                                                    c                                                                                                          d                                                                         d",
+"c                                                                                                                    c                                                                                                          d                                                                         d",
+"c                                                                                                                    c                                                                                                          d                                                                         d",
+"c                                                                                                                    c                                                                                                          d                                                                         d",
+"c                                                                                                                    c                                                                                      hhhhhhhhhhhhhhhhhhhhd                                                                         d",
+"c                                                                                                                    c                                                                   nnnnn                                  d                                                                         d",
+"c                                                                                                                    c                                                                 hhhhhhhhhhhhhhhhh                        d                                                                         d",
+"c                                                                                                                    c                                                nnnnnn                                                    d                                                                         d",
+"c                                                                                                                    c                                          hhhhhhhhhhhhhhhhhh                                              d                                                                         d",
+"c                                                                                                                    c                                                                                                          d                                                                         d",
+"c                                                                                                                    c                          hhhhhhhhhhhh                                                                    d                                                                         d",
+"c                                                                                                                    c                                                                                                          d                                                                         d",
+"c                                                                                                                    c                                                                                                          d                                                                         d",
+"c                                                                                                                    c             hhhhhhhhh                                                                                    d                                                                         d",
+"c                                                                                                                    c                                                                                                          d                                                                         d",
+"c                                                                                                                    c                                    nnnn                                                                  d                                                                         d",
+"c                                                                                                                    c                          hhhhhhhhhhhhhhhhhhh                                                             d                                                                         d",
+"c                                                                                                                    c                                                                                                          d                                                                         d",
+"c                                                                                                                    c                                                hhhhhhhhhh                        hhhhhhhhhhhh            d                                                                         d",
+"c                                                                                                                    c                                                                                                          d                                                                         d",
+"c                                                                                                                    c                                                                   nnn                                    d                                                                         d",
+"c                                                                                                                    c                                                               hhhhhhhhhhhhhhhh                           d                                                                         d",
+"c                                                                                                                    c                                                                                                          d                                                                         d",
+"c                                                                                                                    c                                                nnnn                                                      d                                                                         d",
+"c                                                                                                                    c                                            hhhhhhhhhhhhhh                                                d                                                                         d",
+"c                                                                                                                    c                                                                                                          d                                                                         d",
+"c                                                                                                                    c                                                                                                          d                                                                         d",
+"c                                                                                                                    c                                  hhhhhhhhh                                                               d                                                                         d",
+"c                                                                                                                    c                                                                                                          d                                                                         d",
+"c                                                                                                                    c                                                                                                          d                                                                         d",
+"c                                                                                                                    c                                                                                                          d                                                                         d",
+"c                                                                                                                    maaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaai         jaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaae                                                                         d",
+"c                                                                                                                                                                        c         d                                                                                                                      d",
+"c                                                                                                                                                                        c         d                                                                                                                      d",
+"c                                                                                                                                                                        chhh      d                                                                                                                      d",
+"c                                                                                                                                                                        c         d                                                                                                                      d",
+"c                                                                                                                                                                        c         d                                                                                                                      d",
+"c                                                                                                                                                                        c      hhhd                                                                                                                      d",
+"c                                                                                                                                                                        c         d                                                                                                                      d",
+"c                                                                                                                                                                        c         d                                                                                                                      d",
+"c                                                                                                                                                                        c         d                                                                                                                      d",
+"c                                                                                                                                                                        chhh      d                                                                                                                      d",
+"c                                                                                                                                                                        c         d                                                                                                                      d",
+"c                                                                                                                                                                        c         d                                                                                                                      d",
+"c                                                                                                                                                                        c       hhd                                                                                                                      d",
+"c                                                                                                                                                                        c         d                                                                                                                      d",
+"c                                                                                                                                                                        c         d                                                                                                                      d",
+"c                                                                                                                                                                        chh       d                                                                                                                      d",
+"c                                                                                                                                                                        c         d                                                                                                                      d",
+"c                                                                                                                                                                        c         d                                                                                                                      d",
+"c                                                                                                                                                                        c         d                                                                                                                      d",
+"c                                                                                                                                                                        c     hhhhd                                                                                                                      d",
+"c                                                                                                                                                                        c         fbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbg                        d",
+"c                                                                                                                                                                        c                                                                                                       d                        d",
+"c                                                                                                                                                                        chhh                                                                                                    d                        d",
+"c                                                                                                                                                                        c                                                                                                       d                        d",
+"c                                                                                                                                                                        c                                                                                                       d                        d",
+"c                                                                                                                                                                        c                                                                             M                         d                        d",
+"c                                                                                                                                                                        maaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaai        jaaaaaaaaaaaaaaaaae                        d",
+"c                                                                                                                                                                                                                                                     c      hhd                                          d",
+"c                                                                                                                                                                                                                                                     c        d                                          d",
+"c                        kbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbg                                                                                                                                                                        c        d                                          d",
+"c                        cM        AM        AM        AM        AM AM       d                                                                                                                                                                        c        d                                          d",
+"c                        c                                                   d                                                                                                                                                                        chh      d                                          d",
+"c                        c         A         A         A         AM AM       d                                                                                                                                                                        cM       d                                          d",
+"c                        c    G         G         G        G     A           d                                                                                                                                                                        c        d                                          d",
+"c                        c                                                   d                                                                                                                                                                        c      hhd                                          d",
+"c                        c                                                   d                                                                                                                                                                        c        d                                          d",
+"c                        c                                                   d                                                                                                                                                                        c        d                                          d",
+"c                        maaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaiM  AM       d                                                                                                                                                                        c        d                                          d",
+"c                                                               cF           d                                                                                                                                                                        chh      d                                          d",
+"c                                                               c            d                                                                                                                                                                        cM       d                                          d",
+"c                                                               chhhhhh      d                                                                                                                                                                        c      hhd                                          d",
+"c                                                               c            d                                                                                                                                                                        c        d                                          d",
+"c                                                               c            d                                                                                                                                                                        c        d                                          d",
+"c                                                               cM  AM       d                                                                                                                                                                        c        d                                          d",
+"c                                                               c       hhhhhd                                                                                                                                                                        chh      d                                          d",
+"c                                                               c            d                                                                                                                                                                        c        d                                          d",
+"c                                                               c            d                                                                                                                                                                        cM       d                                          d",
+"c                                                               c            d                              kbbbbbbbbbbbbbbbbbbbbbbbbbbbbg                                                                                                            c      hhd                                          d",
+"c                                                               chhhhh       d                              cAM  A   A AE      AE        d                                                                   kbbbbbbbbbbbg                            c        d                                          d",
+"c                                                               cM  AM       d                              c                            d                                                                   c           d                            c        d                                          d",
+"c                                                               c            d                              c                            d                                                                   c           0                            c        d                                          d",
+"c                                                               c            d                              c                            d                                                                   c           fbbbbbbbbbbbbbbbbbbbbbbbbbbbblhh      d                                          d",
+"c                                                               c       hhhhhd                              cA                           d                                                                   c                                                 d                                          d",
+"c                                                               c            d                              c M  A   Ajaaaaaaaaaaaaaaaaaae                                                                   c                                         M       d                                          d",
+"c                                                               c            d                              c         d                                                                                      c                                                 d                                          d",
+"c                                                               cM  AM       d                              c         d                                                                                      c                                               hhd                                          d",
+"c                                                               chhh         fbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbl      hhhfbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbg                                 maaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaai        d                                          d",
+"c                                                               c            VH  VH  VH  VH  VN  VH  VH  VH  VH  VH  VH  VH  VH  VN  VH  VH  VH  VH  VN  VH  VH  VH  VH  F d                                                                          c        d                                          d",
+"c                                                               c       h                                       hh                                                         d                                                                          c        d                                          d",
+"c                                                               c                                                                                                        K d                                                                          chh      d                                          d",
+"c                                                               c                                                                                                          d                                                                          cM     hhd                                          d",
+"c                                                               c   A   hhhhhjaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaiM  AM   A  K d                                                                          c        d                                          d",
+"c                                                               cM  AM       d                                                                               c             fbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbg                            c        d                                          d",
+"c                                                               c            d                                                                               c        M  F     AM        AM       AM        AM        AK d                            c        d                                          d",
+"c                                                               c            d                                                                               cE  A    A        A         A        A         A            fbbbbbbbbbbbbbbbbbbbbbbbbbbbblhh      d                                          d",
+"c                                                               chhhhh       d                                                                               c           F                                             F VH  VH  VH  VH  VH  VH  VH  VH  VH Vhhd                                          d",
+"c                                                               c            d                                                                               c                                                                                                 d                                          d",
+"c                                                               c            d                                                                               c           F                                             K                                     F d                                          d",
+"c                                                               c   A        d                                                                               c                                                                                                 d                                          d",
+"c                                                               cM  AM   hhhhd                                                                               maaaaaaaaaaaaaaaaaaaaaiVH  VjaaiVH  jaaiVH  VjaaaiVH  jaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaae                                          d",
+"c                                                               c            d                                                                                                     c     d  c    d  c     d   c    d                                                                                      d",
+"c                                                               c            d                                                                                                     c     d  c    d  c     d   c    d                                                                                      d",
+"c                                                               c            d                                                                                                     c     d  c    d  c     d   c    d                                                                                      d",
+"c                                                               chhhhh       d                                                                                                     cnnnnnd  cnnnnd  cnnnnnd   cnnnnd                                                                                      d",
+"cbbbbbbbbbbbbbbbbbbbbbbbg        kbbbbbbbbbbbbbbbbbbbbbbbbbbbbbblD    D      d                                                                                                     maaaaae  maaaae  maaaaae   maaaae                          W                                                           d",
+"cM        AM W      AS  d        cM        AM N      AAF AAM       AM        d                                                                                                                                                                                                                            d",
+"c                       d        c                                           d                                                                                                                                                                                                                            d",
+"c     B        Z        d        c                     K                 hhhhd                                                                                                                                                                                                                            d",
+"c                    S  fbbbbbbbbl        v     C                Q      T    d                                                                                                                                                                                                                            d",
+"c                       F K F K F                      K                     d                                                                                                                                                                                                                            d",
+"c                                                                            d                                                                                                                                                                                                                            d",
+"maaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaae                                                                                                                                                                                                                            d",
+"                                                                                                                                                                                                                                                                                                           ",
+"                                                                                                                                                                                                                                                                                                           ",
+"                                                                                                                                                                                                                                                                                                           ",
+"                                                                                                                                                                                                                                                                                                           ",
 
 };
 
 
+/*   if (TileMap[i][j] == 'P')  tile.setTextureRect(IntRect(240, 720, 16, 32));// низ
+                if (TileMap[i][j] == 'k')  tile.setTextureRect(IntRect(176, 672, 16*2, 16*2));//л≥ва ст≥на
+                if (TileMap[i][j] == 'r')  tile.setTextureRect(IntRect(512, 672, 16*2, 16*2));//права ст≥на
+                if (TileMap[i][j] == 't')  tile.setTextureRect(IntRect(160, 448, 64, 64));//л≥вий верхн≥й кут
+                if (TileMap[i][j] == 'o')  tile.setTextureRect(IntRect(240, 448, 32, 32));//потолок
+                if (TileMap[i][j] == 'q')  tile.setTextureRect(IntRect(160, 720, 32, 32));//нижн≥й л≥вий кут
+                if (TileMap[i][j] == 'w')  tile.setTextureRect(IntRect(480, 448, 64, 64));//верхн≥й правий кут
+                if (TileMap[i][j] == 'e')  tile.setTextureRect(IntRect(512, 720, 32, 32));//нижн≥й правий кут
+                if (TileMap[i][j] == 's')  tile.setTextureRect(IntRect(480, 720, 16, 16));//зовн≥шн≥й верхн≥й кут
+                if (TileMap[i][j] == 'd')  tile.setTextureRect(IntRect(176, 544, 16, 16));//зовн≥шн≥й нижн≥й кут
+                if (TileMap[i][j] == ' ') continue; //tile.setTextureRect(IntRect(1326, 864, 16, 16)); 
+                if (TileMap[i][j] == 'f')  tile.setTextureRect(IntRect(160, 672, 16 , 16 ));
+                if (TileMap[i][j] == 'g')  tile.setTextureRect(IntRect(240, 448, 16, 16));
+                if (TileMap[i][j] == 'h')  tile.setTextureRect(IntRect(48, 544, 16, 16));//затемненн€ 
 
+                if (TileMap[i][j] == 'l')  tile.setTextureRect(IntRect(208, 672, 16, 16));//платформа
+                if (TileMap[i][j] == '0') continue;
+
+                if (TileMap[i][j] == 'z')  tile.setTextureRect(IntRect(2440, 365, 32, 32));// шипи
+                if (TileMap[i][j] == 'c')  tile.setTextureRect(IntRect(2247, 409, 49, 64)); //полиц€ з книгами широка
+                if (TileMap[i][j] == 'v')  tile.setTextureRect(IntRect(2247, 313, 49, 64));//полиц€ з книгами
+                if (TileMap[i][j] == 'b')  tile.setTextureRect(IntRect(2296, 313, 49, 64));//пуста полиц€
+                if (TileMap[i][j] == 'n')  tile.setTextureRect(IntRect(2247, 233, 49, 64));//полиц€ з баночками
+                if (TileMap[i][j] == 'm')  tile.setTextureRect(IntRect(2326, 408, 40, 64));//збро€
+                if (TileMap[i][j] == 'Q')  tile.setTextureRect(IntRect(2361, 264, 32, 64));//щит
+                if (TileMap[i][j] == 'W')  tile.setTextureRect(IntRect(2536, 474, 115, 84));//червона велика павутина
+                if (TileMap[i][j] == 'T')  tile.setTextureRect(IntRect(2361, 472, 32, 64));//списи*/
 
 class PLAYER {
 
@@ -80,7 +199,7 @@ public:
     PLAYER(Texture& image)
     {
         sprite.setTexture(image);
-        rect = FloatRect(100, 650, 16, 16);
+        rect = FloatRect(100,2200, 16, 16);
 
         dx = dy = 0.1;
         currentFrame = 0;
@@ -119,7 +238,7 @@ public:
         for (int i = rect.top / 16; i < (rect.top + rect.height) / 16; i++)
             for (int j = rect.left / 16; j < (rect.left + rect.width) / 16; j++)
             {
-                if ((TileMap[i][j] == 'P') || (TileMap[i][j] == 'k') || (TileMap[i][j] == '0') || (TileMap[i][j] == 'r')|| (TileMap[i][j] == 't') || (TileMap[i][j] == 'o') || (TileMap[i][j] == 'q')||(TileMap[i][j] == 'w') || (TileMap[i][j] == 'e') || (TileMap[i][j] == 's') || (TileMap[i][j] == 'd') || (TileMap[i][j] == 'f') || (TileMap[i][j] == 'g') || (TileMap[i][j] == 'h') || (TileMap[i][j] == 'l'))
+                if (static_cast<int>(TileMap[i][j] >= 97 && TileMap[i][j] <= 110))
                 {
                     if (dy > 0 && num == 1)
                     {
@@ -138,6 +257,9 @@ public:
                         rect.left = j * 16 + 16;
                     }
                 }
+             
+             
+
 
 
             }
@@ -152,16 +274,23 @@ public:
 int main()
 {
 
-    RenderWindow window(VideoMode(), "test!", Style::Fullscreen);
+    RenderWindow window(VideoMode(300, 400), "test!", Style::Fullscreen);
+    std::cout << sf::VideoMode(1920, 1080).isValid() << "   " << sf::VideoMode().getDesktopMode().width;
+
+    sf::Texture fon;
+    fon.loadFromFile("3.png");
+    sf::Sprite fonSp(fon);
+    fonSp.setScale(sf::Vector2f(sf::VideoMode().getDesktopMode().width / fonSp.getGlobalBounds().width, sf::VideoMode().getDesktopMode().height / fonSp.getGlobalBounds().height));
 
     Texture tileSet;
-    tileSet.loadFromFile("Assets/Art/454.png");
+    tileSet.loadFromFile("011.png");
+
     Texture player1;
 
     PLAYER player(player1);
 
     Sprite tile(tileSet);
-
+   
 
 
 
@@ -170,12 +299,13 @@ int main()
     while (window.isOpen())
     {
 
-        offsetX = player.rect.left - sf::VideoMode().getDesktopMode().width /2;
-        offsetY = player.rect.top - sf::VideoMode().getDesktopMode().height /1.06 ;
+       offsetX = player.rect.left - sf::VideoMode().getDesktopMode().width /4;
+       offsetY = player.rect.top - sf::VideoMode().getDesktopMode().height/2 ;
+
         float time = clock.getElapsedTime().asMicroseconds();
         clock.restart();
 
-        time = time / 500;
+        time = time / 5;
 
         if (time > 20) time = 20;
 
@@ -201,9 +331,9 @@ int main()
 
 
 
-        //if (player.rect.left > 100) offsetX = player.rect.left -100; // нестирати!!
-
-
+       //if (player.rect.left > -300) offsetX = player.rect.left -300; // нестирати!!
+        //if (player.rect.left > 100) offsetX = player.rect.left +200;
+    
 
 
 
@@ -213,30 +343,65 @@ int main()
         for (int i = 0; i < H; i++)
             for (int j = 0; j < W; j++)
             {
-                if (TileMap[i][j] == 'P')  tile.setTextureRect(IntRect(240, 720, 16, 32));
+                if (TileMap[i][j] == 'a')  tile.setTextureRect(IntRect(240, 720, 16, 16));// низ
+                if (TileMap[i][j] == 'c')  tile.setTextureRect(IntRect(176, 672, 16*2, 16*2));//л≥ва ст≥на
+                if (TileMap[i][j] == 'd')  tile.setTextureRect(IntRect(512, 672, 16, 16));//права ст≥на
+               // if (TileMap[i][j] == 't')  tile.setTextureRect(IntRect(160, 448, 64, 64));//л≥вий верхн≥й кут
+                if (TileMap[i][j] == 'b')  tile.setTextureRect(IntRect(240, 464, 32, 16));//потолок
+                if (TileMap[i][j] == 'm')  tile.setTextureRect(IntRect(176, 720, 16, 16));//нижн≥й л≥вий кут
+                //if (TileMap[i][j] == 'w')  tile.setTextureRect(IntRect(480, 448, 64, 64));//верхн≥й правий кут
+                if (TileMap[i][j] == 'e')  tile.setTextureRect(IntRect(512, 720, 16, 16));//нижн≥й правий кут
+               // if (TileMap[i][j] == 's')  tile.setTextureRect(IntRect(480, 720, 16, 16));//зовн≥шн≥й верхн≥й кут
+              //  if (TileMap[i][j] == 'd')  tile.setTextureRect(IntRect(176, 544, 16, 16));//зовн≥шн≥й нижн≥й кут
+                if (TileMap[i][j] == ' ') continue; //tile.setTextureRect(IntRect(1326, 864, 16, 16)); 
+                if (TileMap[i][j] == 'f')  tile.setTextureRect(IntRect(512, 544, 32 , 32 ));
+                if (TileMap[i][j] == 'g')  tile.setTextureRect(IntRect(512, 528, 16, 16));
+                if (TileMap[i][j] == 'l')  tile.setTextureRect(IntRect(176, 544, 32, 32));
+                if (TileMap[i][j] == 'k')  tile.setTextureRect(IntRect(176, 528, 16, 16));
 
-                if (TileMap[i][j] == 'k')  tile.setTextureRect(IntRect(160, 672, 16*2, 16*2));
 
-                if (TileMap[i][j] == 'r')  tile.setTextureRect(IntRect(512, 672, 16*2, 16*2));
-                if (TileMap[i][j] == 't')  tile.setTextureRect(IntRect(160, 448, 64, 64));
-                if (TileMap[i][j] == 'o')  tile.setTextureRect(IntRect(240, 448, 32, 32));
-                if (TileMap[i][j] == 'q')  tile.setTextureRect(IntRect(160, 720, 32, 32));
-                if (TileMap[i][j] == 'w')  tile.setTextureRect(IntRect(480, 448, 64, 64));
-                if (TileMap[i][j] == 'e')  tile.setTextureRect(IntRect(512, 720, 32, 32));
-                if (TileMap[i][j] == 's')  tile.setTextureRect(IntRect(480, 720, 32, 32));
-                if (TileMap[i][j] == 'd')  tile.setTextureRect(IntRect(176, 544, 32, 32));
-                if (TileMap[i][j] == ' ')  tile.setTextureRect(IntRect(1326, 864, 16, 16)); 
-                if (TileMap[i][j] == 'f')  tile.setTextureRect(IntRect(160, 672, 16 , 16 ));
-                if (TileMap[i][j] == 'g')  tile.setTextureRect(IntRect(240, 448, 16, 16));
-                if (TileMap[i][j] == 'h')  tile.setTextureRect(IntRect(48, 544, 16, 16));
-                if (TileMap[i][j] == 'l')  tile.setTextureRect(IntRect(208, 672, 16, 16));
 
-                 if   (TileMap[i][j] == '0') continue;
+                if (TileMap[i][j] == 'j')  tile.setTextureRect(IntRect(208, 720, 32, 32));
+                if (TileMap[i][j] == 'i')  tile.setTextureRect(IntRect(480, 720, 32, 32));
 
+
+
+              //  if (TileMap[i][j] == 'h')  tile.setTextureRect(IntRect(48, 544, 16, 16));//затемненн€ 
+                if (TileMap[i][j] == 'h')  tile.setTextureRect(IntRect(208, 672, 16, 16));//платформа
+                if (TileMap[i][j] == '0') continue;
+
+                if (TileMap[i][j] == 'n')  tile.setTextureRect(IntRect(2440, 365, 32, 32));// шипи
+
+
+
+
+
+                if (TileMap[i][j] == 'Z')  tile.setTextureRect(IntRect(2247, 409, 49, 64)); //полиц€ з книгами широка
+                if (TileMap[i][j] == 'v')  tile.setTextureRect(IntRect(2247, 313, 49, 64));//полиц€ з книгами
+                if (TileMap[i][j] == 'X')  tile.setTextureRect(IntRect(2296, 313, 49, 64));//пуста полиц€
+                if (TileMap[i][j] == 'B')  tile.setTextureRect(IntRect(2247, 233, 49, 64));//полиц€ з баночками
+                if (TileMap[i][j] == 'C')  tile.setTextureRect(IntRect(2326, 408, 40, 64));//збро€
+                if (TileMap[i][j] == 'Q')  tile.setTextureRect(IntRect(2361, 264, 32, 64));//щит
+                if (TileMap[i][j] == 'W')  tile.setTextureRect(IntRect(2536, 474, 115, 84));//червона велика павутина
+                if (TileMap[i][j] == 'T')  tile.setTextureRect(IntRect(2361, 472, 32, 64));//списи
+
+                if (TileMap[i][j] == 'M')  tile.setTextureRect(IntRect(1152, 464, 144, 112));
+                if (TileMap[i][j] == 'N')  tile.setTextureRect(IntRect(1312, 592, 48, 80));
+                if (TileMap[i][j] == 'K')  tile.setTextureRect(IntRect(1424, 512, 32, 32));
+                if (TileMap[i][j] == 'A')  tile.setTextureRect(IntRect(1392, 544, 16, 96));
+                if (TileMap[i][j] == 'S')  tile.setTextureRect(IntRect(1312, 464, 52, 64));
+                if (TileMap[i][j] == 'F')  tile.setTextureRect(IntRect(1424, 656, 32, 32));
+                if (TileMap[i][j] == 'D')  tile.setTextureRect(IntRect(1152, 208, 112, 16));
+                if (TileMap[i][j] == 'G')  tile.setTextureRect(IntRect(1552, 535, 33, 42));
+                if (TileMap[i][j] == 'H')  tile.setTextureRect(IntRect(1152, 464, 48, 80));
+                if (TileMap[i][j] == 'V')  tile.setTextureRect(IntRect(1392, 544, 16, 64));
+                if (TileMap[i][j] == 'E')  tile.setTextureRect(IntRect(1152, 464, 144, 80));
                 tile.setPosition(j * 16 - offsetX, i * 16 - offsetY);
                 window.draw(tile);
-            }
 
+               
+            }
+       
 
         window.draw(player.sprite);
 
@@ -245,4 +410,4 @@ int main()
     }
 
     return 0;
-}*/
+}
