@@ -4,7 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include "Object.h"
 #include "Scene.h"
-#include "Textures.h"
+#include "Database.h"
 #include "Renderer.h"
 #include "Player.h"
 std::string tilemapForTestScene[50] = {
@@ -63,9 +63,9 @@ std::string tilemapForTestScene[50] = {
 class TestScene : public Scene {
 	Player player;
 public:
-	TestScene(sf::Texture& texture) : player(this, texture) {
+	TestScene() : player(this) {
 		mainTilemap = tilemapForTestScene;
-		tileset.setTexture(texture);
+		tileset.setTexture(DATABASE.textures.at(0));
 		height = 50;
 		width = 55;
 	}
