@@ -47,14 +47,14 @@ std::string tilemapForTestScene[50] = {
 "k                                      kkk           r",
 "k                                                    r",
 "k                                                    r",
-"k                                                    r",
-"k                                      PPP           r",
-"k                                                    r",
-"k                                                    r",
-"k                                         PPP        r",
+"k                      kkk                           r",
 "k                                                    r",
 "k                                                    r",
-"k                                      PPP           r",
+"k                                                    r",
+"k                             kkk                    r",
+"k                                                    r",
+"k                                                    r",
+"k                                                    r",
 "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
 "                                                      ",
 "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
@@ -85,7 +85,7 @@ public:
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))    player.dx = 0.1;
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))	if (player.onGround) { player.dy = -0.27; player.onGround = false; }
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))	if (player.onGround) { player.dy = -0.27; player.onGround = false; player.jumped = true; }
 
 
 		player.update(time);
@@ -113,7 +113,7 @@ public:
 			}
 
 
-		window.Renderer.draw(player.sprite);
+	//	window.Renderer.draw(player.idle);
 
 
 		
