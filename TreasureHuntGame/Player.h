@@ -11,8 +11,8 @@ public:
 
 	float dx, dy;
 	sf::FloatRect rect;
-	bool onGround = false, jumping = false, jumped = false;
-	sf::Sprite idle, run, jump, fall;
+	bool onGround = false, jumping = false, jumped = false, crouching = false;
+	sf::Sprite idle, run, jump, fall, crouch, crouchWalk;
 	float currentFrame;
 
 	Player(Scene* scene)
@@ -22,12 +22,17 @@ public:
 		run.setTexture(DATABASE.textures.at(4));
 		jump.setTexture(DATABASE.textures.at(5));
 		fall.setTexture(DATABASE.textures.at(6));
+		crouch.setTexture(DATABASE.textures.at(7));
+		crouchWalk.setTexture(DATABASE.textures.at(8));
 		idle.setScale(1.2, 1.2);
 		run.setScale(1.2, 1.2);
 		jump.setScale(1.2, 1.2);
 		fall.setScale(1.2, 1.2);
-		rect = sf::FloatRect(100, 600, 28 * 1.2, 40 * 1.2);
-
+		crouch.setScale(1.1, 1.1);
+		crouchWalk.setScale(1.1, 1.1);
+	//	rect = sf::FloatRect(100, 600, 28 * 1.2, 40 * 1.2);
+	//	rect = sf::FloatRect(100,2200, 28 * 1.2, 40 * 1.2);
+		rect = scene->spawnPoint;
 		dx = dy = 0.1;
 		currentFrame = 0;
 	}
@@ -38,8 +43,9 @@ public:
 
 	void update(float time)
 	{
-
-		rect.left += dx * time;
+		if (crouching)
+			rect.left += dx * time * 0.6;
+		else rect.left += dx * time;
 		Collision(0);
 
 
@@ -58,11 +64,31 @@ public:
 		jump.setPosition(rect.left - scene->offsetX, rect.top - scene->offsetY);
 		run.setPosition(rect.left - scene->offsetX, rect.top - scene->offsetY);
 		fall.setPosition(rect.left - scene->offsetX, rect.top - scene->offsetY);
+		crouch.setPosition(rect.left - scene->offsetX, rect.top - scene->offsetY);
+		crouchWalk.setPosition(rect.left - scene->offsetX, rect.top - scene->offsetY);
 
 		if (dx > 0) facingRight = 1;
 		if (dx < 0) facingRight = 0;
 		//jump animation
-		if (jumping) {
+		if (crouching) {
+			if (dx == 0) {
+				if(facingRight)crouch.setTextureRect(sf::IntRect(42, 52, 30, 30));
+				else crouch.setTextureRect(sf::IntRect(42 + 30, 52, -30, 30));
+				window.Renderer.draw(crouch);
+			}
+			else{
+				if (currentFrame >= 8) currentFrame = 0;
+
+				if (dx > 0) {
+					crouchWalk.setTextureRect(sf::IntRect(41 + 120 * int(currentFrame), 52, 40, 30));
+				}
+				else crouchWalk.setTextureRect(sf::IntRect(41 + 120 * int(currentFrame) + 40, 52, -40, 30));
+				window.Renderer.draw(crouchWalk);
+			}
+
+			
+		}
+		else if (jumping) {
 			if (currentFrame >= 3) jumping = 0;
 			if (facingRight) jump.setTextureRect(sf::IntRect(41 + 120 * int(currentFrame), 40, 30, 41));
 			else jump.setTextureRect(sf::IntRect(41 + 120 * int(currentFrame) + 30, 40, -30, 41));
@@ -114,25 +140,45 @@ public:
 		for (int i = rect.top / 16; i < (rect.top + rect.height) / 16; i++)
 			for (int j = rect.left / 16; j < (rect.left + rect.width) / 16; j++)
 			{
-				if ((scene->mainTilemap[i][j] == 'P') || (scene->mainTilemap[i][j] == 'k') || (scene->mainTilemap[i][j] == '0') || (scene->mainTilemap[i][j] == 'r'))
+				if (TileMap[i][j] >= 97 && TileMap[i][j] <= 110)
 				{
-					if (dy > 0 && num == 1) {
+					if (dy > 0 && num == 1)
+					{
 						rect.top = i * 16 - rect.height;  dy = 0;   onGround = true;
-						
 					}
-					if (dy < 0 && num == 1) {
+					if (dy < 0 && num == 1)
+					{
 						rect.top = i * 16 + 16;   dy = 0;
 					}
 					if (dx > 0 && num == 0)
+					{
 						rect.left = j * 16 - rect.width;
+					}
 					if (dx < 0 && num == 0)
+					{
 						rect.left = j * 16 + 16;
-
+					}
 				}
-
-
 			}
 
+	//	if (crouching)
+	//		rect.height = 26 * 1.2;
+	//	else rect.height = 40 * 1.2;
+
+	}
+	bool CheckToStandCol() {
+		float height = 40 * 1.2;
+		float width = 28 * 1.2;
+		for (int i = (rect.top + rect.height - height) / 16; i < (rect.top + rect.height) / 16; i++)
+			for (int j = rect.left / 16; j < (rect.left + width) / 16; j++)
+			{
+				if (TileMap[i][j] >= 97 && TileMap[i][j] <= 110)
+				{
+					return false;
+				}
+			}
+
+		return true;
 	}
 
 };

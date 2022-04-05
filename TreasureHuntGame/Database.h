@@ -23,7 +23,11 @@ public:
 		textures.push_back(load);
 		load.loadFromFile("Assets/Art/_Jump.png");                 //5
 		textures.push_back(load);
-		load.loadFromFile("Assets/Art/_Fall.png");                 //6
+		load.loadFromFile("Assets/Art/_Fall.png");                 //6                
+		textures.push_back(load);
+		load.loadFromFile("Assets/Art/_Crouch.png");               //7
+		textures.push_back(load);
+		load.loadFromFile("Assets/Art/_CrouchWalk.png");           //8
 		textures.push_back(load);
 		sf::Font loadFont;
 		loadFont.loadFromFile("Assets/Fonts/CaslonAntique.ttf");
