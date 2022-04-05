@@ -1,4 +1,4 @@
-#pragma once
+/*#pragma once
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 #include <iostream>
@@ -55,3 +55,4 @@ int main()
 	//		delete scene;
 		//	delete menu;
 }
+*/

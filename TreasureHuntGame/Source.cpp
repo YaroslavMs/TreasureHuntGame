@@ -283,7 +283,7 @@ int main()
     fonSp.setScale(sf::Vector2f(sf::VideoMode().getDesktopMode().width / fonSp.getGlobalBounds().width, sf::VideoMode().getDesktopMode().height / fonSp.getGlobalBounds().height));
 
     Texture tileSet;
-    tileSet.loadFromFile("011.png");
+    tileSet.loadFromFile("Assets/Art/0000.png");
 
     Texture player1;
 
@@ -305,9 +305,9 @@ int main()
         float time = clock.getElapsedTime().asMicroseconds();
         clock.restart();
 
-        time = time / 5;
+        time = time / 10;
 
-        if (time > 20) time = 20;
+        if (time > 10) time = 10;
 
         Event event;
         while (window.pollEvent(event))
@@ -343,59 +343,59 @@ int main()
         for (int i = 0; i < H; i++)
             for (int j = 0; j < W; j++)
             {
-                if (TileMap[i][j] == 'a')  tile.setTextureRect(IntRect(240, 720, 16, 16));// низ
-                if (TileMap[i][j] == 'c')  tile.setTextureRect(IntRect(176, 672, 16*2, 16*2));//л≥ва ст≥на
-                if (TileMap[i][j] == 'd')  tile.setTextureRect(IntRect(512, 672, 16, 16));//права ст≥на
+                if (TileMap[i][j] == ' ') continue;
+                else if (TileMap[i][j] == '0') continue;//tile.setTextureRect(IntRect(1326, 864, 16, 16)); 
+                else if (TileMap[i][j] == 'a')  tile.setTextureRect(IntRect(240, 720, 16, 16));// низ
+                else if (TileMap[i][j] == 'c')  tile.setTextureRect(IntRect(176, 672, 16*2, 16*2));//л≥ва ст≥на
+                else if (TileMap[i][j] == 'd')  tile.setTextureRect(IntRect(512, 672, 16, 16));//права ст≥на
                // if (TileMap[i][j] == 't')  tile.setTextureRect(IntRect(160, 448, 64, 64));//л≥вий верхн≥й кут
-                if (TileMap[i][j] == 'b')  tile.setTextureRect(IntRect(240, 464, 32, 16));//потолок
-                if (TileMap[i][j] == 'm')  tile.setTextureRect(IntRect(176, 720, 16, 16));//нижн≥й л≥вий кут
+                else if (TileMap[i][j] == 'b')  tile.setTextureRect(IntRect(240, 464, 32, 16));//потолок
+                else if (TileMap[i][j] == 'm')  tile.setTextureRect(IntRect(176, 720, 16, 16));//нижн≥й л≥вий кут
                 //if (TileMap[i][j] == 'w')  tile.setTextureRect(IntRect(480, 448, 64, 64));//верхн≥й правий кут
-                if (TileMap[i][j] == 'e')  tile.setTextureRect(IntRect(512, 720, 16, 16));//нижн≥й правий кут
+                else if (TileMap[i][j] == 'e')  tile.setTextureRect(IntRect(512, 720, 16, 16));//нижн≥й правий кут
                // if (TileMap[i][j] == 's')  tile.setTextureRect(IntRect(480, 720, 16, 16));//зовн≥шн≥й верхн≥й кут
               //  if (TileMap[i][j] == 'd')  tile.setTextureRect(IntRect(176, 544, 16, 16));//зовн≥шн≥й нижн≥й кут
-                if (TileMap[i][j] == ' ') continue; //tile.setTextureRect(IntRect(1326, 864, 16, 16)); 
-                if (TileMap[i][j] == 'f')  tile.setTextureRect(IntRect(512, 544, 32 , 32 ));
-                if (TileMap[i][j] == 'g')  tile.setTextureRect(IntRect(512, 528, 16, 16));
-                if (TileMap[i][j] == 'l')  tile.setTextureRect(IntRect(176, 544, 32, 32));
-                if (TileMap[i][j] == 'k')  tile.setTextureRect(IntRect(176, 528, 16, 16));
+                else if (TileMap[i][j] == 'f')  tile.setTextureRect(IntRect(512, 544, 32 , 32 ));
+                else if (TileMap[i][j] == 'g')  tile.setTextureRect(IntRect(512, 528, 16, 16));
+                else if (TileMap[i][j] == 'l')  tile.setTextureRect(IntRect(176, 544, 32, 32));
+                else if (TileMap[i][j] == 'k')  tile.setTextureRect(IntRect(176, 528, 16, 16));
 
 
 
-                if (TileMap[i][j] == 'j')  tile.setTextureRect(IntRect(208, 720, 32, 32));
-                if (TileMap[i][j] == 'i')  tile.setTextureRect(IntRect(480, 720, 32, 32));
+                else if (TileMap[i][j] == 'j')  tile.setTextureRect(IntRect(208, 720, 32, 32));
+                else if (TileMap[i][j] == 'i')  tile.setTextureRect(IntRect(480, 720, 32, 32));
 
 
 
               //  if (TileMap[i][j] == 'h')  tile.setTextureRect(IntRect(48, 544, 16, 16));//затемненн€ 
-                if (TileMap[i][j] == 'h')  tile.setTextureRect(IntRect(208, 672, 16, 16));//платформа
-                if (TileMap[i][j] == '0') continue;
+                else if (TileMap[i][j] == 'h')  tile.setTextureRect(IntRect(208, 672, 16, 16));//платформа
+                
 
-                if (TileMap[i][j] == 'n')  tile.setTextureRect(IntRect(2440, 365, 32, 32));// шипи
-
-
+                else if (TileMap[i][j] == 'n')  tile.setTextureRect(IntRect(2440, 365, 32, 32));// шипи
 
 
 
-                if (TileMap[i][j] == 'Z')  tile.setTextureRect(IntRect(2247, 409, 49, 64)); //полиц€ з книгами широка
-                if (TileMap[i][j] == 'v')  tile.setTextureRect(IntRect(2247, 313, 49, 64));//полиц€ з книгами
-                if (TileMap[i][j] == 'X')  tile.setTextureRect(IntRect(2296, 313, 49, 64));//пуста полиц€
-                if (TileMap[i][j] == 'B')  tile.setTextureRect(IntRect(2247, 233, 49, 64));//полиц€ з баночками
-                if (TileMap[i][j] == 'C')  tile.setTextureRect(IntRect(2326, 408, 40, 64));//збро€
-                if (TileMap[i][j] == 'Q')  tile.setTextureRect(IntRect(2361, 264, 32, 64));//щит
-                if (TileMap[i][j] == 'W')  tile.setTextureRect(IntRect(2536, 474, 115, 84));//червона велика павутина
-                if (TileMap[i][j] == 'T')  tile.setTextureRect(IntRect(2361, 472, 32, 64));//списи
 
-                if (TileMap[i][j] == 'M')  tile.setTextureRect(IntRect(1152, 464, 144, 112));
-                if (TileMap[i][j] == 'N')  tile.setTextureRect(IntRect(1312, 592, 48, 80));
-                if (TileMap[i][j] == 'K')  tile.setTextureRect(IntRect(1424, 512, 32, 32));
-                if (TileMap[i][j] == 'A')  tile.setTextureRect(IntRect(1392, 544, 16, 96));
-                if (TileMap[i][j] == 'S')  tile.setTextureRect(IntRect(1312, 464, 52, 64));
-                if (TileMap[i][j] == 'F')  tile.setTextureRect(IntRect(1424, 656, 32, 32));
-                if (TileMap[i][j] == 'D')  tile.setTextureRect(IntRect(1152, 208, 112, 16));
-                if (TileMap[i][j] == 'G')  tile.setTextureRect(IntRect(1552, 535, 33, 42));
-                if (TileMap[i][j] == 'H')  tile.setTextureRect(IntRect(1152, 464, 48, 80));
-                if (TileMap[i][j] == 'V')  tile.setTextureRect(IntRect(1392, 544, 16, 64));
-                if (TileMap[i][j] == 'E')  tile.setTextureRect(IntRect(1152, 464, 144, 80));
+                else if (TileMap[i][j] == 'Z')  tile.setTextureRect(IntRect(2247, 409, 49, 64)); //полиц€ з книгами широка
+                else if (TileMap[i][j] == 'v')  tile.setTextureRect(IntRect(2247, 313, 49, 64));//полиц€ з книгами
+                else if (TileMap[i][j] == 'X')  tile.setTextureRect(IntRect(2296, 313, 49, 64));//пуста полиц€
+                else if (TileMap[i][j] == 'B')  tile.setTextureRect(IntRect(2247, 233, 49, 64));//полиц€ з баночками
+                else if (TileMap[i][j] == 'C')  tile.setTextureRect(IntRect(2326, 408, 40, 64));//збро€
+                else if (TileMap[i][j] == 'Q')  tile.setTextureRect(IntRect(2361, 264, 32, 64));//щит
+                else if (TileMap[i][j] == 'W')  tile.setTextureRect(IntRect(2536, 474, 115, 84));//червона велика павутина
+                else if (TileMap[i][j] == 'T')  tile.setTextureRect(IntRect(2361, 472, 32, 64));//списи
+
+                else if (TileMap[i][j] == 'M')  tile.setTextureRect(IntRect(1152, 464, 144, 112));
+                else if (TileMap[i][j] == 'N')  tile.setTextureRect(IntRect(1312, 592, 48, 80));
+                else if (TileMap[i][j] == 'K')  tile.setTextureRect(IntRect(1424, 512, 32, 32));
+                else if (TileMap[i][j] == 'A')  tile.setTextureRect(IntRect(1392, 544, 16, 96));
+                else if (TileMap[i][j] == 'S')  tile.setTextureRect(IntRect(1312, 464, 52, 64));
+                else if (TileMap[i][j] == 'F')  tile.setTextureRect(IntRect(1424, 656, 32, 32));
+                else if (TileMap[i][j] == 'D')  tile.setTextureRect(IntRect(1152, 208, 112, 16));
+                else if (TileMap[i][j] == 'G')  tile.setTextureRect(IntRect(1552, 535, 33, 42));
+                else if (TileMap[i][j] == 'H')  tile.setTextureRect(IntRect(1152, 464, 48, 80));
+                else if (TileMap[i][j] == 'V')  tile.setTextureRect(IntRect(1392, 544, 16, 64));
+                else if (TileMap[i][j] == 'E')  tile.setTextureRect(IntRect(1152, 464, 144, 80));
                 tile.setPosition(j * 16 - offsetX, i * 16 - offsetY);
                 window.draw(tile);
 
