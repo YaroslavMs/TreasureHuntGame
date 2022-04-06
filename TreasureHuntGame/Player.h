@@ -11,7 +11,7 @@ class Player {
 public:
 
 	float dx, dy;
-	int lives = 3;
+	int lives = 15;
 	sf::FloatRect rect;
 	sf::FloatRect spawnPoint;
 	bool onGround = false, jumping = false, jumped = false, crouching = false;
@@ -42,8 +42,9 @@ public:
 		//	delete scene;
 	}
 	void LoseLife() {
-		dx = 0;
-		dy = 0;
+		dx = 0.1;
+		dy = 0.1;
+		currentFrame = 0;
 		lives--;
 		rect = spawnPoint;
 	}
@@ -184,10 +185,14 @@ public:
 			}
 	}
 	bool CheckToStandCol() {
-		float height = 40 * 1.2;
-		float width = 28 * 1.2;
-		for (int i = (rect.top + rect.height - height) / 16; i < (rect.top + rect.height) / 16; i++)
-			for (int j = rect.left / 16; j < (rect.left + width) / 16; j++)
+		float height1 = 40 * 1.2;
+		float width1 = 28 * 1.2;
+		auto top = rect.top;
+		auto height = rect.height;
+		auto left = rect.left;
+		auto width = rect.width;
+		for (int i = (top + height - height1) / 16; i < (top + height) / 16; i++)
+			for (int j = left / 16; j < (left + width1) / 16; j++)
 			{
 				if (TileMap[i][j] >= 97 && TileMap[i][j] <= 109)
 				{
