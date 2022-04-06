@@ -11,7 +11,7 @@ public:
 	std::vector<sf::Font> fonts;
 	Database() {
 		sf::Texture load;
-		load.loadFromFile("Assets/Art/454.png");                   //0
+		load.loadFromFile("Assets/Art/0000.png");                   //0
 		textures.push_back(load);                                     
 		load.loadFromFile("Assets/Art/0000.png");                  //1
 		textures.push_back(load);
