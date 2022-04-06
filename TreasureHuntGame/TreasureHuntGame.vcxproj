@@ -159,6 +159,7 @@
     <ClInclude Include="TestScene.h" />
     <ClInclude Include="Database.h" />
     <ClInclude Include="TileMaps.h" />
+    <ClInclude Include="UI.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

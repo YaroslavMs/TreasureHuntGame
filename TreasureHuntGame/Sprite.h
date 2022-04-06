@@ -1,5 +1,5 @@
 #pragma once
-#include <SFML/Window.hpp>
+/*#include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
@@ -36,5 +36,5 @@ public:
 	/*	void SetSpriteSize(Size ObjectSize) {
 			auto size = sprite.getLocalBounds();
 			sprite.setScale(sf::Vector2f(ObjectSize.width / size.width, ObjectSize.height / size.height));
-		}*/
-};
+		}
+};*/

@@ -17,15 +17,17 @@ int main()
 	TestScene test;
 	//Scene* scene = nullptr; //= &test;
 	sf::Clock clock;
+	sf::Sprite heart;
 	while (window.Renderer.isOpen()) {
 		window.Renderer.clear(sf::Color::Black);
 		//window.Renderer.draw(fonSp);
-
 		if (!gameStarted) {
 			auto number = mainMenu.UpdateMenu();
 		}
-
-		float time = clock.restart().asMicroseconds(); //clock.getElapsedTime().asMicroseconds();
+		if (test.isOver()) {
+			gameStarted = false;
+		}
+		float time = clock.restart().asMicroseconds();
 		if (gameStarted)
 			test.Update(time);
 		sf::Event event;
