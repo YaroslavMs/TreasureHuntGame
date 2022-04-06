@@ -17,21 +17,26 @@ int main()
 	TestScene test;
 	//Scene* scene = nullptr; //= &test;
 	sf::Clock clock;
+	sf::Sprite heart;
 	while (window.Renderer.isOpen()) {
 		window.Renderer.clear(sf::Color::Black);
 		//window.Renderer.draw(fonSp);
-
 		if (!gameStarted) {
 			auto number = mainMenu.UpdateMenu();
 		}
-
-		float time = clock.restart().asMicroseconds(); //clock.getElapsedTime().asMicroseconds();
+		if (test.isOver()) {
+			gameStarted = false;
+		}
+		float time = clock.restart().asMicroseconds();
 		if (gameStarted)
 			test.Update(time);
 		sf::Event event;
 		while (window.Renderer.pollEvent(event)) {
 			if (event.type == sf::Event::EventType::Closed)
 				window.Renderer.close();
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+				gameStarted = false;
+			}
 			if (event.type == sf::Event::EventType::MouseButtonPressed) {
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
 					sf::Mouse mouse;

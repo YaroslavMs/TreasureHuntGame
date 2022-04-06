@@ -8,73 +8,28 @@
 #include "Database.h"
 #include "Renderer.h"
 #include "Player.h"
-std::string tilemapForTestScene[50] = {
-"000000000000000000000000000000000000000000000000000000",
-"k                                                    r",
-"k                                                    r",
-"k                                                    r",
-"k                                                    r",
-"k                                                    r",
-"k                                                    r",
-"k                                                    r",
-"k                                                    r",
-"k            kkkk                                    r",
-"k                                                    r",
-"k           k                                        r",
-"k                                                    r",
-"k                                                    r",
-"k                                                    r",
-"k        kkkk                                        r",
-"k                                                    r",
-"k                kkk                                 r",
-"k                         kkkk                       r",
-"k                                                    r",
-"k                                                    r",
-"k                                      kkk           r",
-"k                                      kkk           r",
-"k                                      kkk           r",
-"k                                      kkk           r",
-"k                                      kkk           r",
-"k                                      kkk           r",
-"k                                      kkk           r",
-"k                                      kkk           r",
-"k                                      kkk           r",
-"k                                      kkk           r",
-"k                                      kkk           r",
-"k                                      kkk           r",
-"k                                      kkk           r",
-"k                                      kkk           r",
-"k                                      kkk           r",
-"k                                      kkk           r",
-"k                                                    r",
-"k                                                    r",
-"k                      kkk                           r",
-"k                                                    r",
-"k                                                    r",
-"k                                                    r",
-"k                             kkk                    r",
-"k                                                    r",
-"k                                                    r",
-"k                                                    r",
-"PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
-"                                                      ",
-"PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
+#include "UI.h"
 
-};
 class TestScene : public Scene {
 	Player player;
-    
+    UI ui;
 public:
 	TestScene() : Scene(sf::FloatRect(100, 2200, 28 * 1.2, 40 * 1.2)), player(this) {
 		mainTilemap = TileMap;
-		tileset.setTexture(DATABASE.textures.at(0));
+		tileset.setTexture(DATABASE.textures.at(1));
 		height = 142;
 		width = 300;
 	}
 	//~TestScene() {
 	//	player.~Player();
 	//}
-
+    bool isOver() {
+        if (player.lives <= 0) {
+            player.lives = 3;
+            return true;
+        }
+        return false;
+    }
 	void Update(float time) override {
 		offsetX = player.rect.left - sf::VideoMode().getDesktopMode().width / 2;
 		offsetY = player.rect.top - sf::VideoMode().getDesktopMode().height / 2;
@@ -106,7 +61,7 @@ public:
        }
         DrawMap();
 		player.update(time);
-
+        ui.Draw(player);
 		
 
 	};
