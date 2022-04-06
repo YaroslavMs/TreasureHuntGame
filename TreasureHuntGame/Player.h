@@ -11,7 +11,7 @@ class Player {
 public:
 
 	float dx, dy;
-	int lives = 15;
+	int lives = 5;
 	sf::FloatRect rect;
 	sf::FloatRect spawnPoint;
 	bool onGround = false, jumping = false, jumped = false, crouching = false;
@@ -202,5 +202,4 @@ public:
 
 		return true;
 	}
-
 };
