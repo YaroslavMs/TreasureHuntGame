@@ -90,7 +90,7 @@ public:
 				if (dx > 0) {
 					crouchWalk.setTextureRect(sf::IntRect(41 + 120 * int(currentFrame), 52, 40, 30));
 				}
-				else crouchWalk.setTextureRect(sf::IntRect(41 + 120 * int(currentFrame) + 40, 52, -40, 30));
+				else crouchWalk.setTextureRect(sf::IntRect(41 + 120 * int(currentFrame) + 30, 52, -30, 30));
 				window.Renderer.draw(crouchWalk);
 			}
 
@@ -161,7 +161,6 @@ public:
 						}
 						else if (TileMap[i][j] >= 97 && TileMap[i][j] <= 109)
 						{
-							std::cout << i << " ---- " << j << std::endl;
 							if (dy > 0 && num == 1)
 							{
 								rect.top = i * 16 - rect.height;  dy = 0;   onGround = true;
