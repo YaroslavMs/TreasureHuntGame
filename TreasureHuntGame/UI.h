@@ -26,17 +26,17 @@ public:
 
 	}
 	void Draw(Player player) {
-		
-		for (int i = 0; i < 3; i++)
-		{
-			heartBorder.setPosition(50 + i * 80, 50);
-			window.Renderer.draw(heartBorder);
-		}
 		for (int i = 0; i < player.lives; i++)
 		{
 			heart.setPosition(50 + i * 80, 50);
 			window.Renderer.draw(heart);
 		}
+		for (int i = 0; i < 5; i++)
+		{
+			heartBorder.setPosition(50 + i * 80, 50);
+			window.Renderer.draw(heartBorder);
+		}
+		
 	}
 
 

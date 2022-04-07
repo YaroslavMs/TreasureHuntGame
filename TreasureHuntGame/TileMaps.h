@@ -147,5 +147,8 @@ std::string TileMap[H] = {
 "                                                                                                                                                                                                                                                                                                               ",
 "                                                                                                                                                                                                                                                                                                               ",
 "                                                                                                                                                                                                                                                                                                               ",
+<<<<<<< HEAD
 
+=======
+>>>>>>> 2a4a3dc3c0aa50a07668680c8caa3f31f4141eb0
 };

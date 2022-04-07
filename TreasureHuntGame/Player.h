@@ -11,7 +11,7 @@ class Player {
 public:
 
 	float dx, dy;
-	int lives = 3;
+	int lives = 5;
 	sf::FloatRect rect;
 	sf::FloatRect spawnPoint;
 	bool onGround = false, jumping = false, jumped = false, crouching = false;
@@ -42,8 +42,9 @@ public:
 		//	delete scene;
 	}
 	void LoseLife() {
-		dx = 0;
-		dy = 0;
+		dx = 0.1;
+		dy = 0.1;
+		currentFrame = 0;
 		lives--;
 		rect = spawnPoint;
 	}
@@ -89,7 +90,7 @@ public:
 				if (dx > 0) {
 					crouchWalk.setTextureRect(sf::IntRect(41 + 120 * int(currentFrame), 52, 40, 30));
 				}
-				else crouchWalk.setTextureRect(sf::IntRect(41 + 120 * int(currentFrame) + 40, 52, -40, 30));
+				else crouchWalk.setTextureRect(sf::IntRect(41 + 120 * int(currentFrame) + 30, 52, -30, 30));
 				window.Renderer.draw(crouchWalk);
 			}
 
@@ -160,7 +161,6 @@ public:
 						}
 						else if (TileMap[i][j] >= 97 && TileMap[i][j] <= 109&&111&&112)
 						{
-							std::cout << i << " ---- " << j << std::endl;
 							if (dy > 0 && num == 1)
 							{
 								rect.top = i * 16 - rect.height;  dy = 0;   onGround = true;
@@ -184,10 +184,14 @@ public:
 			}
 	}
 	bool CheckToStandCol() {
-		float height = 40 * 1.2;
-		float width = 28 * 1.2;
-		for (int i = (rect.top + rect.height - height) / 16; i < (rect.top + rect.height) / 16; i++)
-			for (int j = rect.left / 16; j < (rect.left + width) / 16; j++)
+		float height1 = 40 * 1.2;
+		float width1 = 28 * 1.2;
+		auto top = rect.top;
+		auto height = rect.height;
+		auto left = rect.left;
+		auto width = rect.width;
+		for (int i = (top + height - height1) / 16; i < (top + height) / 16; i++)
+			for (int j = left / 16; j < (left + width1) / 16; j++)
 			{
 				if (TileMap[i][j] >= 97 && TileMap[i][j] <= 109)
 				{
@@ -197,5 +201,4 @@ public:
 
 		return true;
 	}
-
 };

@@ -13,12 +13,16 @@
 class TestScene : public Scene {
 	Player player;
     UI ui;
+    int backgroundX;
+    int backgroundY;
 public:
 	TestScene() : Scene(sf::FloatRect(100, 2200, 28 * 1.2, 40 * 1.2)), player(this) {
 		mainTilemap = TileMap;
 		tileset.setTexture(DATABASE.textures.at(1));
 		height = 142;
 		width = 300;
+        backgroundX = scrW / 10;
+        backgroundY = scrH / 6;
 	}
 	//~TestScene() {
 	//	player.~Player();
@@ -31,6 +35,15 @@ public:
         return false;
     }
 	void Update(float time) override {
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 6; j++) {
+                background.setPosition(sf::Vector2f(0 + i * backgroundX, 0 + j * backgroundY));
+                window.Renderer.draw(background);
+            }
+
+        }
+        
+
 		offsetX = player.rect.left - sf::VideoMode().getDesktopMode().width / 2;
 		offsetY = player.rect.top - sf::VideoMode().getDesktopMode().height / 2;
 		
