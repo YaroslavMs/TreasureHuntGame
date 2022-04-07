@@ -20,6 +20,8 @@ public:
 		coinsText.setFont(DATABASE.fonts.at(0));
 		coinsText.setCharacterSize(60);
 		coinsText.setFillColor(sf::Color::Blue);
+		coinsText.setOutlineColor(sf::Color::Blue);
+		coinsText.setOutlineThickness(3);
 		coinsText.setPosition(sf::Vector2f(120, 150));
 		heartBorder.setTexture(DATABASE.textures.at(9));
 		heart.setTexture(DATABASE.textures.at(10));
