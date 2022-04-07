@@ -113,7 +113,12 @@ public:
 				else if (TileMap[i][j] == 'h')  tileset.setTextureRect(sf::IntRect(208, 672, 16, 16));//платформа
 
 
-				else if (TileMap[i][j] == 'n')  tileset.setTextureRect(sf::IntRect(2440, 365, 32, 32));// шипи
+				else if (TileMap[i][j] == 'n') {
+					tileset.setTextureRect(sf::IntRect(2440, 365, 32, 32)); // шипи
+					tileset.setPosition(j * 16 - offsetX, i * 16 - offsetY + 5);
+					window.Renderer.draw(tileset);
+					continue;
+				}
 
 				else if (TileMap[i][j] == 'Z')  tileset.setTextureRect(sf::IntRect(2247, 409, 49, 64)); //полиц€ з книгами широка
 				else if (TileMap[i][j] == 'v')  tileset.setTextureRect(sf::IntRect(2247, 313, 49, 64));//полиц€ з книгами
