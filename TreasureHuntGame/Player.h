@@ -159,7 +159,7 @@ public:
 						if (TileMap[i][j] == 110) {
 							lost = true;
 						}
-						else if (TileMap[i][j] >= 97 && TileMap[i][j] <= 109&&111&&112)
+						else if (TileMap[i][j] >= 97 && TileMap[i][j] <= 109)
 						{
 							if (dy > 0 && num == 1)
 							{

@@ -33,6 +33,8 @@ public:
 		textures.push_back(load);
 		load.loadFromFile("Assets/Art/heart.png");                 //10
 		textures.push_back(load);
+		load.loadFromFile("Assets/Art/987.png");                 //11
+		textures.push_back(load);
 
 		sf::Font loadFont;
 		loadFont.loadFromFile("Assets/Fonts/CaslonAntique.ttf");
