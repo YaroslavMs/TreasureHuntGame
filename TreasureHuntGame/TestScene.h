@@ -34,7 +34,7 @@ public:
 		offsetX = player.rect.left - sf::VideoMode().getDesktopMode().width / 2;
 		offsetY = player.rect.top - sf::VideoMode().getDesktopMode().height / 2;
 		
-		time = time / 500;
+		time = time / 200;
 
 		if (time > 20) time = 20;
 
@@ -122,6 +122,11 @@ public:
                 else if (TileMap[i][j] == 'H')  tileset.setTextureRect(sf::IntRect(1152, 464, 48, 80));
                 else if (TileMap[i][j] == 'V')  tileset.setTextureRect(sf::IntRect(1392, 544, 16, 64));
                 else if (TileMap[i][j] == 'E')  tileset.setTextureRect(sf::IntRect(1152, 464, 144, 80));
+                else if (TileMap[i][j] == 'o')  tileset.setTextureRect(sf::IntRect(2330, 253, 32, 16));
+                else if (TileMap[i][j] == 'p')  tileset.setTextureRect(sf::IntRect(2330, 238, 32, 16));
+
+
+
                 tileset.setPosition(j * 16 - offsetX, i * 16 - offsetY);
                 window.Renderer.draw(tileset);
 
