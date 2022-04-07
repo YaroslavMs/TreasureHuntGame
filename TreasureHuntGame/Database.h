@@ -11,7 +11,7 @@ public:
 	std::vector<sf::Font> fonts;
 	Database() {
 		sf::Texture load;
-		load.loadFromFile("Assets/Art/0000.png");                   //0
+		load.loadFromFile("Assets/Art/0000.png");                  //0
 		textures.push_back(load);                                     
 		load.loadFromFile("Assets/Art/0000.png");                  //1
 		textures.push_back(load);
@@ -33,7 +33,9 @@ public:
 		textures.push_back(load);
 		load.loadFromFile("Assets/Art/heart.png");                 //10
 		textures.push_back(load);
-		load.loadFromFile("Assets/Art/987.png");                 //11
+		load.loadFromFile("Assets/Art/987.png");                   //11
+		textures.push_back(load);
+		load.loadFromFile("Assets/Art/Diamond5.png");              //12
 		textures.push_back(load);
 
 		sf::Font loadFont;

@@ -11,7 +11,7 @@ class Player {
 public:
 
 	float dx, dy;
-	int lives = 5, coinsCollected = 0;
+	int lives = 4, coinsCollected = 0;
 	sf::FloatRect rect;
 	sf::FloatRect spawnPoint;
 	bool onGround = false, jumping = false, jumped = false, crouching = false;
@@ -160,7 +160,7 @@ public:
 							coinsCollected++;
 
 						}
-						else if (TileMap[i][j] == 'o') {
+						else if (TileMap[i][j] == 'o' && lives < 5) {
 							TileMap[i][j] = ' ';
 							lives++;
 
