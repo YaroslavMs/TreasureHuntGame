@@ -13,7 +13,7 @@ protected:
 	
 	
 public:
-	sf::Sprite tileset, coin;
+	sf::Sprite tileset, coin, healPotion;
 	sf::FloatRect spawnPoint;
 	std::string* mainTilemap; //for colliders mainly
 	float offsetX = 0, offsetY = 0;

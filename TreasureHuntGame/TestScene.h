@@ -21,6 +21,7 @@ public:
 		mainTilemap = TileMap;
 		tileset.setTexture(DATABASE.textures.at(1));
 		coin.setTexture(DATABASE.textures.at(12));
+		healPotion.setTexture(DATABASE.textures.at(13));
 		coin.setScale(sf::Vector2f(2, 2));
 		height = 142;
 		width = 300;
@@ -140,19 +141,24 @@ public:
 				else if (TileMap[i][j] == 'H')  tileset.setTextureRect(sf::IntRect(1152, 464, 48, 80));
 				else if (TileMap[i][j] == 'V')  tileset.setTextureRect(sf::IntRect(1392, 544, 16, 64));
 				else if (TileMap[i][j] == 'E')  tileset.setTextureRect(sf::IntRect(1152, 464, 144, 80));
-				else if (TileMap[i][j] == 'o')  tileset.setTextureRect(sf::IntRect(2330, 253, 32, 16));
+				else if (TileMap[i][j] == 'o') {
+					healPotion.setTextureRect(sf::IntRect(232, 230, 245 - 232, 18));
+					healPotion.setPosition(j * 16 - offsetX, i * 16 - offsetY);
+					window.Renderer.draw(healPotion);
+					continue;
 
-				if (TileMap[i][j] != 'p') {
-					tileset.setPosition(j * 16 - offsetX, i * 16 - offsetY);
-					window.Renderer.draw(tileset);
 				}
+				
 				else if (TileMap[i][j] == 'p') {
 					if (currentSprite >= 5)
 						currentSprite = 0;
 					coin.setTextureRect(sf::IntRect(0 + 8 * (int)currentSprite, 0, 8, 9));
 					coin.setPosition(j * 16 - offsetX, i * 16 - offsetY);
 					window.Renderer.draw(coin);
+					continue;
 				}
+					tileset.setPosition(j * 16 - offsetX, i * 16 - offsetY);
+					window.Renderer.draw(tileset);
 			}
 
 

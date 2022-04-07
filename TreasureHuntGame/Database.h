@@ -37,6 +37,8 @@ public:
 		textures.push_back(load);
 		load.loadFromFile("Assets/Art/Diamond5.png");              //12
 		textures.push_back(load);
+		load.loadFromFile("Assets/Art/weapon_free.png");           //13
+		textures.push_back(load);
 
 		sf::Font loadFont;
 		loadFont.loadFromFile("Assets/Fonts/CaslonAntique.ttf");
