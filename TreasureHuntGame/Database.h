@@ -51,3 +51,4 @@ public:
 };
 
 Database DATABASE;
+int sizeMultiplier = 3;

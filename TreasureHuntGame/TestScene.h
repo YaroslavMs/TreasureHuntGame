@@ -13,20 +13,18 @@
 class TestScene : public Scene {
 	Player player;
 	UI ui;
-	int backgroundX;
-	int backgroundY;
 	float currentSprite = 0;
 public:
-	TestScene() : Scene(sf::FloatRect(100, 2200, 28 * 1.2, 40 * 1.2)), player(this) {
+	TestScene() : Scene(sf::FloatRect(100 * sizeMultiplier, 2200 * sizeMultiplier, 28 * 1.2 * sizeMultiplier, 40 * 1.2 * sizeMultiplier)), player(this) {
 		mainTilemap = TileMap;
 		tileset.setTexture(DATABASE.textures.at(1));
 		coin.setTexture(DATABASE.textures.at(12));
 		healPotion.setTexture(DATABASE.textures.at(13));
-		coin.setScale(sf::Vector2f(2, 2));
+		coin.setScale(sf::Vector2f(2 * sizeMultiplier, 2 * sizeMultiplier));
+		tileset.setScale(sf::Vector2f(sizeMultiplier, sizeMultiplier));
+		healPotion.setScale(sf::Vector2f(sizeMultiplier, sizeMultiplier));
 		height = 142;
 		width = 300;
-		backgroundX = scrW / 10;
-		backgroundY = scrH / 6;
 	}
 	//~TestScene() {
 	//	player.~Player();
@@ -58,18 +56,18 @@ public:
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 			if (player.onGround) {
 				if (player.crouching)
-					player.dy = -0.20;
-				else  player.dy = -0.27;
+					player.dy = -0.20 * 1.2;
+				else  player.dy = -0.27 * 1.2;
 				player.onGround = false; player.jumped = true;
 			}
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::C) || sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)) {
 			player.crouching = true;
-			player.rect.height = 26 * 1.2;
+			player.rect.height = 26 * 1.2 * sizeMultiplier;
 		}
 		else if (player.CheckToStandCol()) {
 			sf::FloatRect crouchRect = player.rect;
-			player.rect = sf::FloatRect(crouchRect.left, crouchRect.top + crouchRect.height - 40 * 1.2, crouchRect.width, 40 * 1.2);
+			player.rect = sf::FloatRect(crouchRect.left, crouchRect.top + crouchRect.height - 40 * 1.2 * sizeMultiplier, crouchRect.width, 40 * 1.2 * sizeMultiplier);
 			player.crouching = false;
 		}
 		currentSprite += time * 0.003;
@@ -116,7 +114,7 @@ public:
 
 				else if (TileMap[i][j] == 'n') {
 					tileset.setTextureRect(sf::IntRect(2440, 365, 32, 32)); // шипи
-					tileset.setPosition(j * 16 - offsetX, i * 16 - offsetY + 5);
+					tileset.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY + 5 * sizeMultiplier);
 					window.Renderer.draw(tileset);
 					continue;
 				}
@@ -143,7 +141,7 @@ public:
 				else if (TileMap[i][j] == 'E')  tileset.setTextureRect(sf::IntRect(1152, 464, 144, 80));
 				else if (TileMap[i][j] == 'o') {
 					healPotion.setTextureRect(sf::IntRect(232, 230, 245 - 232, 18));
-					healPotion.setPosition(j * 16 - offsetX, i * 16 - offsetY);
+					healPotion.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
 					window.Renderer.draw(healPotion);
 					continue;
 
@@ -153,11 +151,11 @@ public:
 					if (currentSprite >= 5)
 						currentSprite = 0;
 					coin.setTextureRect(sf::IntRect(0 + 8 * (int)currentSprite, 0, 8, 9));
-					coin.setPosition(j * 16 - offsetX, i * 16 - offsetY);
+					coin.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
 					window.Renderer.draw(coin);
 					continue;
 				}
-					tileset.setPosition(j * 16 - offsetX, i * 16 - offsetY);
+					tileset.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
 					window.Renderer.draw(tileset);
 			}
 

@@ -27,12 +27,12 @@ public:
 		fall.setTexture(DATABASE.textures.at(6));
 		crouch.setTexture(DATABASE.textures.at(7));
 		crouchWalk.setTexture(DATABASE.textures.at(8));
-		idle.setScale(1.2, 1.2);
-		run.setScale(1.2, 1.2);
-		jump.setScale(1.2, 1.2);
-		fall.setScale(1.2, 1.2);
-		crouch.setScale(1.1, 1.1);
-		crouchWalk.setScale(1.1, 1.1);
+		idle.setScale(1.2 * sizeMultiplier, 1.2 * sizeMultiplier);
+		run.setScale(1.2 * sizeMultiplier, 1.2 * sizeMultiplier);
+		jump.setScale(1.2 * sizeMultiplier, 1.2 * sizeMultiplier);
+		fall.setScale(1.2 * sizeMultiplier, 1.2 * sizeMultiplier);
+		crouch.setScale(1.1 * sizeMultiplier, 1.1 * sizeMultiplier);
+		crouchWalk.setScale(1.1 * sizeMultiplier, 1.1 * sizeMultiplier);
 		rect = scene->spawnPoint;
 		spawnPoint = scene->spawnPoint;
 		dx = dy = 0.1;
@@ -52,13 +52,13 @@ public:
 	void update(float time)
 	{
 		if (crouching)
-			rect.left += dx * time * 0.6f;
-		else rect.left += dx * time;
+			rect.left += dx * time * 0.6f * sizeMultiplier;
+		else rect.left += dx * time * sizeMultiplier;
 		Collision(0);
 
 
 		if (!onGround) dy = dy + 0.0005 * time;
-		rect.top += dy * time;
+		rect.top += dy * time * 2;
 		onGround = false;
 		Collision(1);
 
@@ -150,8 +150,8 @@ public:
 		auto left = rect.left;
 		auto width = rect.width;
 
-		for (int i = (int)top / 16; i < (top + height) / 16; i++)
-			for (int j = (int)left / 16; j < (left + width) / 16; j++)
+		for (int i = (int)top / 16 / sizeMultiplier; i < (top + height) / 16 / sizeMultiplier; i++)
+			for (int j = (int)left / 16 / sizeMultiplier; j < (left + width) / 16 / sizeMultiplier; j++)
 			{
 				if (i < TileMap->length()) {
 					if (j < TileMap[i].length()) {
@@ -172,19 +172,19 @@ public:
 						{
 							if (dy > 0 && num == 1)
 							{
-								rect.top = i * 16 - rect.height;  dy = 0;   onGround = true;
+								rect.top = i * 16 * sizeMultiplier - rect.height;  dy = 0;   onGround = true;
 							}
 							if (dy < 0 && num == 1)
 							{
-								rect.top = i * 16 + 16;   dy = 0;
+								rect.top = i * 16 * sizeMultiplier + 16 * sizeMultiplier;   dy = 0;
 							}
 							if (dx > 0 && num == 0)
 							{
-								rect.left = j * 16 - rect.width;
+								rect.left = j * 16 * sizeMultiplier - rect.width;
 							}
 							if (dx < 0 && num == 0)
 							{
-								rect.left = j * 16 + 16;
+								rect.left = j * 16 * sizeMultiplier + 16 * sizeMultiplier;
 							}
 						}
 					}
@@ -193,14 +193,14 @@ public:
 			}
 	}
 	bool CheckToStandCol() {
-		float height1 = 40 * 1.2;
-		float width1 = 28 * 1.2;
+		float height1 = 40 * 1.2 * sizeMultiplier;
+		float width1 = 28 * 1.2 * sizeMultiplier;
 		auto top = rect.top;
 		auto height = rect.height;
 		auto left = rect.left;
 		auto width = rect.width;
-		for (int i = (top + height - height1) / 16; i < (top + height) / 16; i++)
-			for (int j = left / 16; j < (left + width1) / 16; j++)
+		for (int i = (top + height - height1) / 16 / sizeMultiplier; i < (top + height) / 16 / sizeMultiplier; i++)
+			for (int j = left / 16 / sizeMultiplier; j < (left + width1) / 16 / sizeMultiplier; j++)
 			{
 				if (TileMap[i][j] >= 97 && TileMap[i][j] <= 109)
 				{
