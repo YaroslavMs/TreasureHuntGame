@@ -139,6 +139,9 @@ public:
 				else if (TileMap[i][j] == 'H')  tileset.setTextureRect(sf::IntRect(1152, 464, 48, 80));
 				else if (TileMap[i][j] == 'V')  tileset.setTextureRect(sf::IntRect(1392, 544, 16, 64));
 				else if (TileMap[i][j] == 'E')  tileset.setTextureRect(sf::IntRect(1152, 464, 144, 80));
+
+				else if (TileMap[i][j] == 's')  tileset.setTextureRect(sf::IntRect(1392, 544, 16, 64));
+				else if (TileMap[i][j] == 't')  tileset.setTextureRect(sf::IntRect(1152, 464, 144, 80));
 				else if (TileMap[i][j] == 'o') {
 					healPotion.setTextureRect(sf::IntRect(232, 230, 245 - 232, 18));
 					healPotion.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
