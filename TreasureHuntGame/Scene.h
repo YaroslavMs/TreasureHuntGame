@@ -22,7 +22,7 @@ public:
 		scrW = sf::VideoMode::getDesktopMode().width;
 		scrH = sf::VideoMode::getDesktopMode().height;
 		background.setTexture(DATABASE.textures.at(11));
-		background.setTextureRect(sf::IntRect(0,0,2000,1200));
+		//background.setTextureRect(sf::IntRect(0,200,1920,620));
 		background.setScale(sf::Vector2f(sf::VideoMode::getDesktopMode().width / background.getGlobalBounds().width / 1, sf::VideoMode::getDesktopMode().height / background.getGlobalBounds().height / 1));
 	}
 	virtual void Update(float time) = 0;

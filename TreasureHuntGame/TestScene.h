@@ -43,7 +43,7 @@ public:
 
 
 		offsetX = player.rect.left - sf::VideoMode().getDesktopMode().width / 2;
-		offsetY = player.rect.top - sf::VideoMode().getDesktopMode().height / 2;
+		offsetY = player.rect.top - sf::VideoMode().getDesktopMode().height / 2 - 150;
 
 		time = time / 200;
 
