@@ -11,7 +11,7 @@ class Player {
 public:
 
 	float dx, dy;
-	int lives = 5;
+	int lives = 4, coinsCollected = 0;
 	sf::FloatRect rect;
 	sf::FloatRect spawnPoint;
 	bool onGround = false, jumping = false, jumped = false, crouching = false;
@@ -139,7 +139,6 @@ public:
 			lost = false;
 			LoseLife();
 		}
-
 		dx = 0;
 	}
 
@@ -156,7 +155,17 @@ public:
 			{
 				if (i < TileMap->length()) {
 					if (j < TileMap[i].length()) {
-						if (TileMap[i][j] == 110) {
+						if (TileMap[i][j] == 'p') {
+							TileMap[i][j] = ' ';
+							coinsCollected++;
+
+						}
+						else if (TileMap[i][j] == 'o' && lives < 5) {
+							TileMap[i][j] = ' ';
+							lives++;
+
+						}
+						else if (TileMap[i][j] == 110) {
 							lost = true;
 						}
 						else if (TileMap[i][j] >= 97 && TileMap[i][j] <= 109)
