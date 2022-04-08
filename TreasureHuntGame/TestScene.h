@@ -13,18 +13,25 @@
 class TestScene : public Scene {
 	Player player;
 	UI ui;
-	float currentSprite = 0;
+	float currentSprite = 0, currentObelisk = 0;
 public:
+	
 	TestScene() : Scene(sf::FloatRect(100 * sizeMultiplier, 2200 * sizeMultiplier, 28 * 1.2 * sizeMultiplier, 40 * 1.2 * sizeMultiplier)), player(this) {
+	//	CheckPoint checkpoint[] = { CheckPoint(132, 61), CheckPoint(131, 61), CheckPoint(), CheckPoint(), CheckPoint() };
+	//	checkpoints[0] = CheckPoint(132, 61);
+	//	checkpoints[1] = CheckPoint(131, 61);
 		mainTilemap = TileMap;
 		tileset.setTexture(DATABASE.textures.at(1));
 		coin.setTexture(DATABASE.textures.at(12));
 		healPotion.setTexture(DATABASE.textures.at(13));
+		obelisk.setTexture(DATABASE.textures.at(14));
 		coin.setScale(sf::Vector2f(2 * sizeMultiplier, 2 * sizeMultiplier));
 		tileset.setScale(sf::Vector2f(sizeMultiplier, sizeMultiplier));
 		healPotion.setScale(sf::Vector2f(sizeMultiplier, sizeMultiplier));
+		obelisk.setScale(sf::Vector2f(0.7, 0.7));
 		height = 142;
 		width = 300;
+		
 	}
 	//~TestScene() {
 	//	player.~Player();
@@ -71,6 +78,7 @@ public:
 			player.crouching = false;
 		}
 		currentSprite += time * 0.003;
+		currentObelisk += time * 0.003;
 		DrawMap();
 		player.update(time);
 		ui.Update(time);
@@ -140,7 +148,14 @@ public:
 				else if (TileMap[i][j] == 'V')  tileset.setTextureRect(sf::IntRect(1392, 544, 16, 64));
 				else if (TileMap[i][j] == 'E')  tileset.setTextureRect(sf::IntRect(1152, 464, 144, 80));
 
-				else if (TileMap[i][j] == 's')  tileset.setTextureRect(sf::IntRect(1392, 544, 16, 64));
+				else if (TileMap[i][j] == 's') {
+					if (currentObelisk >= 13)
+						currentObelisk = 0;
+					obelisk.setTextureRect(sf::IntRect(60 + (int)currentObelisk * 200, 50, 100, 350));
+					obelisk.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - 130 - offsetY);
+					window.Renderer.draw(obelisk);
+					continue;
+				}
 				else if (TileMap[i][j] == 't')  tileset.setTextureRect(sf::IntRect(1152, 464, 144, 80));
 				else if (TileMap[i][j] == 'o') {
 					healPotion.setTextureRect(sf::IntRect(232, 230, 245 - 232, 18));
@@ -149,7 +164,6 @@ public:
 					continue;
 
 				}
-				
 				else if (TileMap[i][j] == 'p') {
 					if (currentSprite >= 5)
 						currentSprite = 0;

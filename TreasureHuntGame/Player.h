@@ -155,6 +155,11 @@ public:
 			{
 				if (i < TileMap->length()) {
 					if (j < TileMap[i].length()) {
+						if (TileMap[i][j] == 's') {
+							spawnPoint.left = j * 16 * sizeMultiplier;
+							spawnPoint.top = i * 16 * sizeMultiplier;
+
+						}
 						if (TileMap[i][j] == 'p') {
 							TileMap[i][j] = ' ';
 							coinsCollected++;
