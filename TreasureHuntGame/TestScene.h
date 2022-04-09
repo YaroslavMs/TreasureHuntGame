@@ -68,9 +68,9 @@ public:
 		offsetX = player.rect.left - sf::VideoMode().getDesktopMode().width / 2;
 		offsetY = player.rect.top - sf::VideoMode().getDesktopMode().height / 2 - 150;
 
-		time = time / 200;
+		time = time / 400;
 
-		if (time > 20) time = 20;
+	//	if (time > 6) time = 6;
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::A))    player.dx = -0.1;
 
@@ -111,7 +111,13 @@ public:
 		for (int i = 0; i < H; i++)
 			for (int j = 0; j < W; j++)
 			{
-				if (mainTilemap[i][j] == ' ') continue;
+				if (j * 16 * sizeMultiplier - offsetX < -600 ||
+					i * 16 * sizeMultiplier - offsetY < -600  ||
+					j * 16 * sizeMultiplier - offsetX > 5000 ||
+					i * 16 * sizeMultiplier - offsetY > 3000) {
+					continue;
+				}
+				else if (mainTilemap[i][j] == ' ') continue;
 				else if (mainTilemap[i][j] == '0') continue;//tile.setTextureRect(IntRect(1326, 864, 16, 16)); 
 				else if (mainTilemap[i][j] == 'a')  tileset.setTextureRect(sf::IntRect(240, 720, 16, 16));// низ
 				else if (mainTilemap[i][j] == 'c')  tileset.setTextureRect(sf::IntRect(176, 672, 16 * 2, 16 * 2));//ліва стіна

@@ -87,7 +87,7 @@ public:
 
 		if (dx > 0) facingRight = 1;
 		if (dx < 0) facingRight = 0;
-		//jump animation
+		
 		if (crouching) {
 			if (dx == 0) {
 				if (facingRight)crouch.setTextureRect(sf::IntRect(42, 52, 30, 30));
@@ -106,6 +106,7 @@ public:
 
 
 		}
+		//jump animation
 		else if (jumping) {
 			if (currentFrame >= 3) jumping = 0;
 			if (facingRight) jump.setTextureRect(sf::IntRect(41 + 120 * int(currentFrame), 40, 30, 41));
