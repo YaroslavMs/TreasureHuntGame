@@ -12,14 +12,13 @@
 
 class TestScene : public Scene {
 	Player player;
-	UI ui;
 	float currentDiamond = 0, currentObelisk = 0, currentKey = 0;
 public:
-	
+	UI ui;
 	TestScene() : Scene(sf::FloatRect(100 * sizeMultiplier, 2200 * sizeMultiplier, 28 * 1.2 * sizeMultiplier, 40 * 1.2 * sizeMultiplier)), player(this) {
-	//	CheckPoint checkpoint[] = { CheckPoint(132, 61), CheckPoint(131, 61), CheckPoint(), CheckPoint(), CheckPoint() };
-	//	checkpoints[0] = CheckPoint(132, 61);
-	//	checkpoints[1] = CheckPoint(131, 61);
+		//	CheckPoint checkpoint[] = { CheckPoint(132, 61), CheckPoint(131, 61), CheckPoint(), CheckPoint(), CheckPoint() };
+		//	checkpoints[0] = CheckPoint(132, 61);
+		//	checkpoints[1] = CheckPoint(131, 61);
 		mainTilemap = TileMap;
 		doorText.setFont(DATABASE.fonts.at(0));
 		doorText.setCharacterSize(20);
@@ -38,13 +37,13 @@ public:
 		key.setScale(sf::Vector2f(2, 2));
 		door.setScale(sf::Vector2f(0.3, 0.3));
 
-	
+
 
 		obelisk.setScale(sf::Vector2f(0.7, 0.7));
 
 		height = 142;
 		width = 300;
-		
+
 	}
 	//~TestScene() {
 	//	player.~Player();
@@ -70,36 +69,36 @@ public:
 
 		time = time / 400;
 
-	//	if (time > 6) time = 6;
+		if (!ui.gamePaused) {
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::A))    player.dx = -0.1;
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::A))    player.dx = -0.1;
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D))    player.dx = 0.1;
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D))    player.dx = 0.1;
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))    player.Restart();
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))    player.Restart();
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+				if (player.onGround) {
+					if (player.crouching)
+						player.dy = -0.20 * 1.2;
+					else  player.dy = -0.27 * 1.2;
+					player.onGround = false; player.jumped = true;
+				}
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-			if (player.onGround) {
-				if (player.crouching)
-					player.dy = -0.20 * 1.2;
-				else  player.dy = -0.27 * 1.2;
-				player.onGround = false; player.jumped = true;
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::C) || sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)) {
+				player.crouching = true;
+				player.rect.height = 26 * 1.2 * sizeMultiplier;
 			}
-
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::C) || sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)) {
-			player.crouching = true;
-			player.rect.height = 26 * 1.2 * sizeMultiplier;
+			else if (player.CheckToStandCol()) {
+				sf::FloatRect crouchRect = player.rect;
+				player.rect = sf::FloatRect(crouchRect.left, crouchRect.top + crouchRect.height - 40 * 1.2 * sizeMultiplier, crouchRect.width, 40 * 1.2 * sizeMultiplier);
+				player.crouching = false;
+			}
+			currentDiamond += time * 0.003;
+			currentObelisk += time * 0.003;
+			currentKey += time * 0.005;
+			DrawMap();
+			player.update(time);
 		}
-		else if (player.CheckToStandCol()) {
-			sf::FloatRect crouchRect = player.rect;
-			player.rect = sf::FloatRect(crouchRect.left, crouchRect.top + crouchRect.height - 40 * 1.2 * sizeMultiplier, crouchRect.width, 40 * 1.2 * sizeMultiplier);
-			player.crouching = false;
-		}
-		currentDiamond += time * 0.003;
-		currentObelisk += time * 0.003;
-		currentKey += time * 0.005;
-		DrawMap();
-		player.update(time);
 		ui.Update(time);
 		ui.Draw(player);
 
@@ -112,7 +111,7 @@ public:
 			for (int j = 0; j < W; j++)
 			{
 				if (j * 16 * sizeMultiplier - offsetX < -600 ||
-					i * 16 * sizeMultiplier - offsetY < -600  ||
+					i * 16 * sizeMultiplier - offsetY < -600 ||
 					j * 16 * sizeMultiplier - offsetX > 4000 ||
 					i * 16 * sizeMultiplier - offsetY > 3000) {
 					continue;
@@ -219,8 +218,8 @@ public:
 
 
 				}
-					tileset.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
-					window.Renderer.draw(tileset);
+				tileset.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
+				window.Renderer.draw(tileset);
 			}
 
 

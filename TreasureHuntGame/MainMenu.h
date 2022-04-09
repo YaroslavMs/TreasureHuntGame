@@ -16,9 +16,9 @@ public:
 		background.setTexture(DATABASE.textures.at(0));
 		background.setTextureRect(sf::IntRect(1160, 81, 1294 - 1160, 190 - 81));
 		background.setScale(sf::Vector2f(sf::VideoMode::getDesktopMode().width / background.getGlobalBounds().width, sf::VideoMode::getDesktopMode().height / background.getGlobalBounds().height));
-		this->button.setTexture(DATABASE.textures.at(2));
-		this->button.setTextureRect(sf::IntRect(0, 0, 200, 60));
-		this->button.setScale(2, 1.5);
+		button.setTexture(DATABASE.textures.at(2));
+		button.setTextureRect(sf::IntRect(0, 0, 200, 60));
+		button.setScale(2, 1.5);
 		text[0].setString("Play");
 		text[1].setString("Options");
 		text[2].setString("Quit");

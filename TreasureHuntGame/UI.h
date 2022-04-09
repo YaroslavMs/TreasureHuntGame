@@ -10,12 +10,15 @@
 
 class UI {
 	sf::Sprite heartBorder, heart, diamond, key;
+	sf::Sprite background, button;
+	sf::Text text[3];
 	std::string amountOfCoins = "", keyString = "";
 	sf::Text coinsText, keyText;
 	int scrW, scrH;
 	float currentFrame = 0, currentKey = 0;
 
 public:
+	bool gamePaused = false;
 	UI() {
 		coinsText.setFont(DATABASE.fonts.at(0));
 		coinsText.setCharacterSize(40);
@@ -39,7 +42,40 @@ public:
 		key.setScale(sf::Vector2f(3, 3));
 		scrW = sf::VideoMode::getDesktopMode().width;
 		scrH = sf::VideoMode::getDesktopMode().height;
+
+
+
+
+		background.setTexture(DATABASE.textures.at(0));
+		background.setTextureRect(sf::IntRect(1160, 81, 1294 - 1160, 190 - 81));
+		background.setScale(sf::Vector2f(sf::VideoMode::getDesktopMode().width / background.getGlobalBounds().width, sf::VideoMode::getDesktopMode().height / background.getGlobalBounds().height));
+		button.setTexture(DATABASE.textures.at(2));
+		button.setTextureRect(sf::IntRect(0, 0, 200, 60));
+		button.setScale(2, 1.5);
+
+		text[0].setString("Pause");
+		text[0].setFillColor(sf::Color::Red);
+		text[0].setOutlineColor(sf::Color::White);
+		text[0].setOutlineThickness(5);
+		text[0].setCharacterSize(200);
+		text[0].setFont(DATABASE.fonts.at(0));
+		text[0].setOrigin(text[0].getGlobalBounds().width / 2, text[0].getGlobalBounds().height / 2);
+		text[0].setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2, 200));
+		text[1].setString("Continue");
+		text[2].setString("Main menu");
+
+		for (int i = 1; i < 3; i++) {
+			text[i].setFont(DATABASE.fonts.at(0));
+			text[i].setFillColor(sf::Color::Red);
+			text[i].setCharacterSize(80);
+			text[i].setOutlineColor(sf::Color::White);
+			text[i].setOutlineThickness(2);
+			text[i].setOrigin(text[i].getGlobalBounds().width / 2, text[i].getGlobalBounds().height / 2);
+		}
+		for (int i = 2; i <= 3; i++)
+			text[i - 1].setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2, 275 + 180 * i));
 	}
+
 	void Update(float time) {
 		currentFrame += time * 0.003;
 		currentKey += time * 0.003;
@@ -71,10 +107,49 @@ public:
 		window.Renderer.draw(coinsText);
 		window.Renderer.draw(keyText);
 		window.Renderer.draw(diamond);
-		
+		if (gamePaused)
+			PauseMenu();
 	}
 
+	void PauseMenu() {
+		window.Renderer.draw(background);
+		sf::Mouse mouse;
+		sf::Vector2i mousePos = mouse.getPosition(window.Renderer);
+		for (int i = 2; i <= 3; i++) {
 
+			button.setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2 - 100 * 2, 250 + 180 * i));
+			if (CheckCollision(button.getGlobalBounds(), mousePos)) {
+				button.setColor(sf::Color(100, 0, 0, 255));
+			}
+			else button.setColor(sf::Color::White);
+			window.Renderer.draw(button);
+			window.Renderer.draw(text[i - 1]);
+		}
+		window.Renderer.draw(text[0]);
+
+
+
+	}
+	bool CheckCollision(sf::FloatRect rect, sf::Vector2i mousePos) {
+		if (mousePos.x < rect.left)
+			return false;
+		if (mousePos.y < rect.top)
+			return false;
+		if (mousePos.x > rect.left + rect.width)
+			return false;
+		if (mousePos.y > rect.top + rect.height)
+			return false;
+		return true;
+	}
+
+	int MouseClicked(sf::Mouse mouse) {
+		for (int i = 2; i <= 3; i++) {
+			button.setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2 - 100 * 2, 250 + 180 * i));
+			if ((CheckCollision(button.getGlobalBounds(), mouse.getPosition(window.Renderer)))) {
+				return i;
+			}
+		}
+	}
 
 
 
