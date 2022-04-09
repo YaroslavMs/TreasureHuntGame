@@ -37,7 +37,7 @@ public:
 	int allKeys = 3;
 	sf::FloatRect spawnPoint;
 //	CheckPoint checkpoints[5];
-	std::string* mainTilemap; //for colliders mainly
+	std::vector<std::string> mainTilemap; //for colliders mainly
 	float offsetX = 0, offsetY = 0;
 	Scene(sf::FloatRect spawn) {
 		spawnPoint = spawn;

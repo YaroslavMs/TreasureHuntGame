@@ -10,7 +10,7 @@ class Player {
 public:
 	int keysFound = 0;
 	float dx, dy;
-	int lives = 4, coinsCollected = 0;
+	int lives = 5, coinsCollected = 0;
 	sf::FloatRect rect;
 	sf::FloatRect spawnPoint;
 	bool onGround = false, jumping = false, jumped = false, crouching = false;
@@ -46,6 +46,9 @@ public:
 		currentFrame = 0;
 		lives--;
 		rect = spawnPoint;
+	}
+	void Restart() {
+
 	}
 
 	void update(float time)
@@ -152,37 +155,37 @@ public:
 		for (int i = (int)top / 16 / sizeMultiplier; i < (top + height) / 16 / sizeMultiplier; i++)
 			for (int j = (int)left / 16 / sizeMultiplier; j < (left + width) / 16 / sizeMultiplier; j++)
 			{
-				if (i < TileMap->length()) {
-					if (j < TileMap[i].length()) {
-						if (TileMap[i][j] == '+') {
-							TileMap[i][j] = ' ';
+				if (i < scene->mainTilemap.size()) {
+					if (j < scene->mainTilemap[i].length()) {
+						if (scene->mainTilemap[i][j] == '+') {
+							scene->mainTilemap[i][j] = ' ';
 							keysFound++;
 
 						}
-						else if (TileMap[i][j] == 'z') {
+						else if (scene->mainTilemap[i][j] == 'z') {
 							if (keysFound == scene->allKeys) {
 								scene->levelCompleted = true;
 							}
 						}
-						else if (TileMap[i][j] == 's') {
+						else if (scene->mainTilemap[i][j] == 's') {
 							spawnPoint.left = j * 16 * sizeMultiplier - 10;
 							spawnPoint.top = i * 16 * sizeMultiplier - 30;
 
 						}
-						else if (TileMap[i][j] == 'p') {
-							TileMap[i][j] = ' ';
+						else if (scene->mainTilemap[i][j] == 'p') {
+							scene->mainTilemap[i][j] = ' ';
 							coinsCollected++;
 
 						}
-						else if (TileMap[i][j] == 'o' && lives < 5) {
-							TileMap[i][j] = ' ';
+						else if (scene->mainTilemap[i][j] == 'o' && lives < 5) {
+							scene->mainTilemap[i][j] = ' ';
 							lives++;
 
 						}
-						else if (TileMap[i][j] == 110) {
+						else if (scene->mainTilemap[i][j] == 110) {
 							lost = true;
 						}
-						else if (TileMap[i][j] >= 97 && TileMap[i][j] <= 109)
+						else if (scene->mainTilemap[i][j] >= 97 && scene->mainTilemap[i][j] <= 109)
 						{
 							if (dy > 0 && num == 1)
 							{
@@ -216,7 +219,7 @@ public:
 		for (int i = (top + height - height1) / 16 / sizeMultiplier; i < (top + height) / 16 / sizeMultiplier; i++)
 			for (int j = left / 16 / sizeMultiplier; j < (left + width1) / 16 / sizeMultiplier; j++)
 			{
-				if (TileMap[i][j] >= 97 && TileMap[i][j] <= 109)
+				if (scene->mainTilemap[i][j] >= 97 && scene->mainTilemap[i][j] <= 109)
 				{
 					return false;
 				}
