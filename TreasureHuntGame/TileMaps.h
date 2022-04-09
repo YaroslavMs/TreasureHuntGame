@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 
-const int H = 142;  //375
+const int H = 146-3;  //375
 const int W = 304; //132
 
 std::string TileMap[H] = {
@@ -129,7 +129,7 @@ std::string TileMap[H] = {
 "                                                                cnn   p      d                                                                               cE  A p A         A         A p      A         Ap           fbbbbbbbbbbbbbbbbbbbbbbbbbbbbl         VH d                                           ",
 "                                                                chhhhh       d                                                                               c       Z   F                         Q                   F VH  VH  VH  VH  VH  VH  VH  VH  VH VHhhhhhd                                           ",
 "                                                                c            d                                                                               c     p                                                                                            V  d                                           ",
-"                                                                c          o d                                                                               c        p  F    p            p       p         p         K      p       p      p    p   p  p   F     d                                           ",
+"                                                                c          o d                                                                               c        p  F    ps           p       p         p         K      p       p      p    p   p  p   F     d                                           ",
 "                                                                c   A     p  d                                                                               c                                                                                                     d                                           ",
 "                                                                cM  AM   hhhhd                                                                               maaaaaaaaaaaaaaaaaaaaaiVH  VjaaiVH  jaaiVH  VjaaaiVH  jaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaae                                           ",
 "                                                                c            d                                                                                                     c     d  c    d  c     d   c    d                                                                                           ",
@@ -144,7 +144,7 @@ std::string TileMap[H] = {
 "c                       F K F K F   o   p              K  p                  d                                                                                                                                                                                                                                 ",
 "c                                                                            d                                                                                                                                                                                                                                 ",
 "maaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaae                                                                                                                                                                                                                                 ",
-
+"                                                                                                                                                                                                                                                                                                               ",
 "                                                                                                                                                                                                                                                                                                               ",
 "                                                                                                                                                                                                                                                                                                               ",
 "                                                                                                                                                                                                                                                                                                               ",

@@ -33,13 +33,16 @@ public:
 		textures.push_back(load);
 		load.loadFromFile("Assets/Art/heart.png");                 //10
 		textures.push_back(load);
-		load.loadFromFile("Assets/Art/fon1.png");               //11
+		load.loadFromFile("Assets/Art/fon1.png");                  //11
 		textures.push_back(load);
 		load.loadFromFile("Assets/Art/Diamond5.png");              //12
 		textures.push_back(load);
 		load.loadFromFile("Assets/Art/weapon_free.png");           //13
 		textures.push_back(load);
-		load.loadFromFile("Assets/Art/05.png");           //14
+
+	//	load.loadFromFile("Assets/Art/05.png");           //14
+		load.loadFromFile("Assets/Art/Obelisk.png");               //14
+
 		textures.push_back(load);
 
 		sf::Font loadFont;
