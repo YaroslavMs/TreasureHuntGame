@@ -113,7 +113,7 @@ public:
 			{
 				if (j * 16 * sizeMultiplier - offsetX < -600 ||
 					i * 16 * sizeMultiplier - offsetY < -600  ||
-					j * 16 * sizeMultiplier - offsetX > 5000 ||
+					j * 16 * sizeMultiplier - offsetX > 4000 ||
 					i * 16 * sizeMultiplier - offsetY > 3000) {
 					continue;
 				}
