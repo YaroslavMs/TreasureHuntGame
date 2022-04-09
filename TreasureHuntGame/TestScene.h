@@ -56,6 +56,9 @@ public:
 		}
 		return false;
 	}
+	void Restart() {
+		player.Restart();
+	}
 	void Update(float time) override {
 
 		window.Renderer.draw(background);

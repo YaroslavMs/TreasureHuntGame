@@ -52,6 +52,7 @@ public:
 	//	delete[] mainTilemap;
 	}
 	virtual void Update(float time) = 0;
+	virtual void Restart() = 0;
 	virtual void DrawMap() = 0;
 
 };

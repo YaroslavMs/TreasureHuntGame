@@ -25,6 +25,7 @@ int main()
 			auto number = mainMenu.UpdateMenu();
 		}
 		if (test.isOver()) {
+			test.Restart();
 			gameStarted = false;
 		}
 		float time = clock.restart().asMicroseconds();
