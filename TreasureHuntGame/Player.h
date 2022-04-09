@@ -156,8 +156,8 @@ public:
 				if (i < TileMap->length()) {
 					if (j < TileMap[i].length()) {
 						if (TileMap[i][j] == 's') {
-							spawnPoint.left = j * 16 * sizeMultiplier;
-							spawnPoint.top = i * 16 * sizeMultiplier;
+							spawnPoint.left = j * 16 * sizeMultiplier - 10;
+							spawnPoint.top = i * 16 * sizeMultiplier - 30;
 
 						}
 						if (TileMap[i][j] == 'p') {
