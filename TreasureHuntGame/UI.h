@@ -18,11 +18,11 @@ class UI {
 public:
 	UI() {
 		coinsText.setFont(DATABASE.fonts.at(0));
-		coinsText.setCharacterSize(60);
+		coinsText.setCharacterSize(40);
 		coinsText.setFillColor(sf::Color::Yellow);
 		coinsText.setOutlineColor(sf::Color::Black);
 		coinsText.setOutlineThickness(2);
-		coinsText.setPosition(sf::Vector2f(120, 150));
+		coinsText.setPosition(sf::Vector2f(120, 165));
 		keyText.setFont(DATABASE.fonts.at(0));
 		keyText.setCharacterSize(40);
 		keyText.setFillColor(sf::Color::Yellow);
