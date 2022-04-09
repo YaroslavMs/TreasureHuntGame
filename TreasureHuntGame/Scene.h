@@ -32,7 +32,7 @@ public:
 
 	//sf::Sprite tileset, coin, healPotion, tileset1;
 
-	sf::Sprite tileset, coin, healPotion, obelisk;
+	sf::Sprite tileset, coin, healPotion, obelisk,tilep;
 
 	sf::FloatRect spawnPoint;
 //	CheckPoint checkpoints[5];

@@ -22,6 +22,7 @@ public:
 	//	checkpoints[1] = CheckPoint(131, 61);
 		mainTilemap = TileMap;
 		tileset.setTexture(DATABASE.textures.at(1));
+		tilep.setTexture(DATABASE.textures.at(15));
 		coin.setTexture(DATABASE.textures.at(12));
 		healPotion.setTexture(DATABASE.textures.at(13));
 		obelisk.setTexture(DATABASE.textures.at(14));
@@ -161,7 +162,12 @@ public:
 					continue;
 				}
 				else if (TileMap[i][j] == 't')  tileset.setTextureRect(sf::IntRect(1152, 464, 144, 80));
-				else if (TileMap[i][j] == 'L')  tileset.setTextureRect(sf::IntRect(0, 0, 25, 32));//door
+				else if (TileMap[i][j] == 'z') {
+
+
+					tilep.setTextureRect(sf::IntRect(0, 0, 25, 22));//door
+				}
+
 				else if (TileMap[i][j] == 'o') {
 					healPotion.setTextureRect(sf::IntRect(232, 230, 245 - 232, 18));
 					healPotion.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
