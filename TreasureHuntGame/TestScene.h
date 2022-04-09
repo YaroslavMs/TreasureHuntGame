@@ -23,6 +23,7 @@ public:
 		coin.setScale(sf::Vector2f(2 * sizeMultiplier, 2 * sizeMultiplier));
 		tileset.setScale(sf::Vector2f(sizeMultiplier, sizeMultiplier));
 		healPotion.setScale(sf::Vector2f(sizeMultiplier, sizeMultiplier));
+		tileset1.setTexture(DATABASE.textures.at(14));
 		height = 142;
 		width = 300;
 	}
@@ -142,6 +143,7 @@ public:
 
 				else if (TileMap[i][j] == 's')  tileset.setTextureRect(sf::IntRect(1392, 544, 16, 64));
 				else if (TileMap[i][j] == 't')  tileset.setTextureRect(sf::IntRect(1152, 464, 144, 80));
+				else if (TileMap[i][j] == 'L')  tileset1.setTextureRect(sf::IntRect(0, 0, 25, 32));//door
 				else if (TileMap[i][j] == 'o') {
 					healPotion.setTextureRect(sf::IntRect(232, 230, 245 - 232, 18));
 					healPotion.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
