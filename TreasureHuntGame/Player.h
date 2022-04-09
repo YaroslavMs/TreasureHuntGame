@@ -7,9 +7,8 @@ class Player {
 	Scene* scene;
 	bool facingRight = true;
 	bool lost = false;
-
 public:
-
+	int keysFound = 0;
 	float dx, dy;
 	int lives = 4, coinsCollected = 0;
 	sf::FloatRect rect;
@@ -155,12 +154,22 @@ public:
 			{
 				if (i < TileMap->length()) {
 					if (j < TileMap[i].length()) {
-						if (TileMap[i][j] == 's') {
+						if (TileMap[i][j] == '+') {
+							TileMap[i][j] = ' ';
+							keysFound++;
+
+						}
+						else if (TileMap[i][j] == 'z') {
+							if (keysFound == scene->allKeys) {
+								scene->levelCompleted = true;
+							}
+						}
+						else if (TileMap[i][j] == 's') {
 							spawnPoint.left = j * 16 * sizeMultiplier - 10;
 							spawnPoint.top = i * 16 * sizeMultiplier - 30;
 
 						}
-						if (TileMap[i][j] == 'p') {
+						else if (TileMap[i][j] == 'p') {
 							TileMap[i][j] = ' ';
 							coinsCollected++;
 

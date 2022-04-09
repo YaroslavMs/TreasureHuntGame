@@ -31,9 +31,10 @@ protected:
 public:
 
 	//sf::Sprite tileset, coin, healPotion, tileset1;
-
-	sf::Sprite tileset, coin, healPotion, obelisk,tilep;
-
+	bool levelCompleted = false;
+	sf::Sprite tileset, coin, healPotion, obelisk, door, key;
+	sf::Text doorText;
+	int allKeys = 3;
 	sf::FloatRect spawnPoint;
 //	CheckPoint checkpoints[5];
 	std::string* mainTilemap; //for colliders mainly

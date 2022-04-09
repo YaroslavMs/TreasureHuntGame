@@ -12,7 +12,7 @@ public:
 	Database() {
 		sf::Texture load;
 		load.loadFromFile("Assets/Art/0000.png");                  //0
-		textures.push_back(load);                                     
+		textures.push_back(load);
 		load.loadFromFile("Assets/Art/0000.png");                  //1
 		textures.push_back(load);
 		load.loadFromFile("Assets/Art/background.png");            //2
@@ -39,13 +39,13 @@ public:
 		textures.push_back(load);
 		load.loadFromFile("Assets/Art/weapon_free.png");           //13
 		textures.push_back(load);
-
-
 		load.loadFromFile("Assets/Art/Obelisk.png");               //14
-
 		textures.push_back(load);
-			load.loadFromFile("Assets/Art/44 (3).png");           //15
-			textures.push_back(load);
+		load.loadFromFile("Assets/Art/door.png");                  //15
+		textures.push_back(load);
+		load.loadFromFile("Assets/Art/key-blue.png");              //16
+		textures.push_back(load);
+
 		sf::Font loadFont;
 		loadFont.loadFromFile("Assets/Fonts/CaslonAntique.ttf");
 		fonts.push_back(loadFont);

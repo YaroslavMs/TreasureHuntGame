@@ -28,7 +28,7 @@ int main()
 			gameStarted = false;
 		}
 		float time = clock.restart().asMicroseconds();
-		if (gameStarted)
+		if (gameStarted && !test.levelCompleted)
 			test.Update(time);
 		sf::Event event;
 		while (window.Renderer.pollEvent(event)) {

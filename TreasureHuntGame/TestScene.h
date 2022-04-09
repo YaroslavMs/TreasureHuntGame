@@ -13,22 +13,30 @@
 class TestScene : public Scene {
 	Player player;
 	UI ui;
-	float currentSprite = 0, currentObelisk = 0;
+	float currentDiamond = 0, currentObelisk = 0, currentKey = 0;
 public:
 	
 	TestScene() : Scene(sf::FloatRect(100 * sizeMultiplier, 2200 * sizeMultiplier, 28 * 1.2 * sizeMultiplier, 40 * 1.2 * sizeMultiplier)), player(this) {
 	//	CheckPoint checkpoint[] = { CheckPoint(132, 61), CheckPoint(131, 61), CheckPoint(), CheckPoint(), CheckPoint() };
 	//	checkpoints[0] = CheckPoint(132, 61);
 	//	checkpoints[1] = CheckPoint(131, 61);
+		doorText.setFont(DATABASE.fonts.at(0));
+		doorText.setCharacterSize(20);
+		doorText.setFillColor(sf::Color::Yellow);
+		doorText.setOutlineColor(sf::Color::Black);
+		doorText.setOutlineThickness(2);
 		mainTilemap = TileMap;
 		tileset.setTexture(DATABASE.textures.at(1));
-		tilep.setTexture(DATABASE.textures.at(15));
+		door.setTexture(DATABASE.textures.at(15));
 		coin.setTexture(DATABASE.textures.at(12));
 		healPotion.setTexture(DATABASE.textures.at(13));
 		obelisk.setTexture(DATABASE.textures.at(14));
+		key.setTexture(DATABASE.textures.at(16));
 		coin.setScale(sf::Vector2f(2 * sizeMultiplier, 2 * sizeMultiplier));
 		tileset.setScale(sf::Vector2f(sizeMultiplier, sizeMultiplier));
 		healPotion.setScale(sf::Vector2f(sizeMultiplier, sizeMultiplier));
+		key.setScale(sf::Vector2f(2, 2));
+		door.setScale(sf::Vector2f(0.3, 0.3));
 
 	
 
@@ -82,8 +90,9 @@ public:
 			player.rect = sf::FloatRect(crouchRect.left, crouchRect.top + crouchRect.height - 40 * 1.2 * sizeMultiplier, crouchRect.width, 40 * 1.2 * sizeMultiplier);
 			player.crouching = false;
 		}
-		currentSprite += time * 0.003;
+		currentDiamond += time * 0.003;
 		currentObelisk += time * 0.003;
+		currentKey += time * 0.005;
 		DrawMap();
 		player.update(time);
 		ui.Update(time);
@@ -164,8 +173,14 @@ public:
 				else if (TileMap[i][j] == 't')  tileset.setTextureRect(sf::IntRect(1152, 464, 144, 80));
 				else if (TileMap[i][j] == 'z') {
 
-
-					tilep.setTextureRect(sf::IntRect(0, 0, 25, 22));//door
+					std::string str = std::to_string(player.keysFound) + " / " + std::to_string(allKeys) + " keys found.";
+					doorText.setString(str);
+					//door.setTextureRect(sf::IntRect(0, 0, 25, 22));//door
+					door.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY - 80);
+					doorText.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY - 100);
+					window.Renderer.draw(door);
+					window.Renderer.draw(doorText);
+					continue;
 				}
 
 				else if (TileMap[i][j] == 'o') {
@@ -176,12 +191,22 @@ public:
 
 				}
 				else if (TileMap[i][j] == 'p') {
-					if (currentSprite >= 5)
-						currentSprite = 0;
-					coin.setTextureRect(sf::IntRect(0 + 8 * (int)currentSprite, 0, 8, 9));
+					if (currentDiamond >= 5)
+						currentDiamond = 0;
+					coin.setTextureRect(sf::IntRect(0 + 8 * (int)currentDiamond, 0, 8, 9));
 					coin.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
 					window.Renderer.draw(coin);
 					continue;
+				}
+				else if (TileMap[i][j] == '+') {
+					if (currentKey >= 12)
+						currentKey = 0;
+					key.setTextureRect(sf::IntRect(10 + (int)currentKey * 32, 0, 12, 32));
+					key.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
+					window.Renderer.draw(key);
+					continue;
+
+
 				}
 					tileset.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
 					window.Renderer.draw(tileset);
