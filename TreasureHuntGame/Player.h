@@ -48,7 +48,15 @@ public:
 		rect = spawnPoint;
 	}
 	void Restart() {
-
+		spawnPoint = scene->spawnPoint;
+		coinsCollected = 0;
+		keysFound = 0;
+		dx = 0.1;
+		dy = 0.1;
+		currentFrame = 0;
+		lives = 5;
+		scene->mainTilemap = TileMap;
+		rect = spawnPoint;
 	}
 
 	void update(float time)

@@ -73,6 +73,8 @@ public:
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D))    player.dx = 0.1;
 
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))    player.Restart();
+
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 			if (player.onGround) {
 				if (player.crouching)
