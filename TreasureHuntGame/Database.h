@@ -45,6 +45,9 @@ public:
 		textures.push_back(load);
 		load.loadFromFile("Assets/Art/key-blue.png");              //16
 		textures.push_back(load);
+		load.loadFromFile("Assets/Art/traps1.png");                 //17
+		textures.push_back(load);
+
 
 		sf::Font loadFont;
 		loadFont.loadFromFile("Assets/Fonts/CaslonAntique.ttf");
