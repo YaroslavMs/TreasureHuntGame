@@ -45,8 +45,15 @@ public:
 		textures.push_back(load);
 		load.loadFromFile("Assets/Art/key-blue.png");              //16
 		textures.push_back(load);
-		load.loadFromFile("Assets/Art/traps1.png");                 //17
+		load.loadFromFile("Assets/Art/Saw.png");                   //17
 		textures.push_back(load);
+		load.loadFromFile("Assets/Art/FireTrap.png");              //18
+		textures.push_back(load);
+		load.loadFromFile("Assets/Art/LightningTrap.png");         //19
+		textures.push_back(load);
+		load.loadFromFile("Assets/Art/CeilingTrap.png");           //20
+		textures.push_back(load);
+
 
 
 		sf::Font loadFont;

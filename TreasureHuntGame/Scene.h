@@ -32,7 +32,7 @@ public:
 
 	//sf::Sprite tileset, coin, healPotion, tileset1;
 	bool levelCompleted = false;
-	sf::Sprite tileset, coin, healPotion, obelisk, door, key,trap;
+	sf::Sprite tileset, coin, healPotion, obelisk, door, key, saw, fireTrap, lightningTrap, ceilingTrap;
 	sf::Text doorText;
 	int allKeys = 3;
 	sf::FloatRect spawnPoint;
