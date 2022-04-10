@@ -12,7 +12,7 @@
 
 class TestScene : public Scene {
 	Player player;
-	float currentDiamond = 0, currentObelisk = 0, currentKey = 0;
+	float currentDiamond = 0, currentObelisk = 0, currentKey = 0, currentDiamond2 = 0, currentDiamond3 = 0, currentDiamond4 = 0, currentDiamond5 = 0, currentDiamond6 = 0;
 public:
 	UI ui;
 	TestScene() : Scene(sf::FloatRect(100 * sizeMultiplier, 2200 * sizeMultiplier, 28 * 1.2 * sizeMultiplier, 40 * 1.2 * sizeMultiplier)), player(this) {
@@ -31,6 +31,7 @@ public:
 		healPotion.setTexture(DATABASE.textures.at(13));
 		obelisk.setTexture(DATABASE.textures.at(14));
 		key.setTexture(DATABASE.textures.at(16));
+		trap.setTexture(DATABASE.textures.at(17));
 		coin.setScale(sf::Vector2f(2 * sizeMultiplier, 2 * sizeMultiplier));
 		tileset.setScale(sf::Vector2f(sizeMultiplier, sizeMultiplier));
 		healPotion.setScale(sf::Vector2f(sizeMultiplier, sizeMultiplier));
@@ -96,6 +97,11 @@ public:
 			currentDiamond += time * 0.003;
 			currentObelisk += time * 0.003;
 			currentKey += time * 0.005;
+			currentDiamond2 += time * 0.003;
+			currentDiamond3 += time * 0.003;
+			currentDiamond4 += time * 0.003;
+			currentDiamond5 += time * 0.003;
+			currentDiamond6 += time * 0.003;
 			DrawMap();
 			player.update(time);
 		}
@@ -180,7 +186,48 @@ public:
 					window.Renderer.draw(obelisk);
 					continue;
 				}
-				else if (mainTilemap[i][j] == 't')  tileset.setTextureRect(sf::IntRect(1152, 464, 144, 80));
+				else if (mainTilemap[i][j] == 't')   {
+					if (currentDiamond5 >= 16)
+						currentDiamond5 = 0;
+					trap.setTextureRect(sf::IntRect(52 + (int)currentDiamond4 * 148.2, 1579, 60, 86));
+					trap.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
+					window.Renderer.draw(trap);
+					continue;
+				}
+
+				else if (mainTilemap[i][j] == '1') {
+					trap.setTextureRect(sf::IntRect(56+(int)currentDiamond4*147.85, 2109, 56, 142));
+					if (currentDiamond4 >= 30)
+						currentDiamond4 = 0;
+					trap.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
+					window.Renderer.draw(trap);
+					continue;
+				}
+				else if (mainTilemap[i][j] == '2') {
+					if (currentDiamond2 >= 12)
+						currentDiamond2 = 0;
+					trap.setTextureRect(sf::IntRect(23+(int)currentDiamond2*74, 1300, 74, 170));
+					trap.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
+					window.Renderer.draw(trap);
+					continue;
+				}
+				else if (mainTilemap[i][j] == '3') {
+					if (currentDiamond3 >= 14)
+						currentDiamond3 = 0;
+					trap.setTextureRect(sf::IntRect(39 + (int)currentDiamond2*10 , 0, 114, 166));
+					trap.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
+					window.Renderer.draw(trap);
+					continue;
+				}
+				else if (mainTilemap[i][j] == '4') {
+				if (currentDiamond6 >= 14)
+					currentDiamond6 = 0;
+				trap.setTextureRect(sf::IntRect(39 + (int)currentDiamond2 * 101, 0, 114, 166));
+				trap.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
+				window.Renderer.draw(trap);
+				continue;
+				}
+
 				else if (mainTilemap[i][j] == 'z') {
 
 					std::string str = std::to_string(player.keysFound) + " / " + std::to_string(allKeys) + " keys found.";
