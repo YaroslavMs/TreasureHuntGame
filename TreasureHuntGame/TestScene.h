@@ -12,7 +12,7 @@
 
 class TestScene : public Scene {
 	Player player;
-	float currentDiamond = 0, currentObelisk = 0, currentKey = 0, currentFireTrap = 0, currentCeilingTrap = 0, currentLightningTrap = 0, currentSaw = 0;
+	
 public:
 	UI ui;
 	TestScene() : Scene(sf::FloatRect(100 * sizeMultiplier, 2200 * sizeMultiplier, 28 * 1.2 * sizeMultiplier, 40 * 1.2 * sizeMultiplier)), player(this) {

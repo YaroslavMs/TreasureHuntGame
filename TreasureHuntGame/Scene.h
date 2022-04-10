@@ -26,10 +26,10 @@ protected:
 	int width = 0;
 	int scrW, scrH;
 	sf::Sprite background;
-	
+	float currentDiamond = 0, currentObelisk = 0, currentKey = 0, currentCeilingTrap = 0, currentLightningTrap = 0, currentSaw = 0;
 	
 public:
-
+	float currentFireTrap = 0;
 	//sf::Sprite tileset, coin, healPotion, tileset1;
 	bool levelCompleted = false;
 	sf::Sprite tileset, coin, healPotion, obelisk, door, key, saw, fireTrap, lightningTrap, ceilingTrap;

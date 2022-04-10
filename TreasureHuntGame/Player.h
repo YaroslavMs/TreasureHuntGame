@@ -166,6 +166,8 @@ public:
 			{
 				if (i < scene->mainTilemap.size()) {
 					if (j < scene->mainTilemap[i].length()) {
+						if (scene->mainTilemap[i][j] == ' ')
+							continue;
 						if (scene->mainTilemap[i][j] == '+') {
 							scene->mainTilemap[i][j] = ' ';
 							keysFound++;
@@ -191,7 +193,10 @@ public:
 							lives++;
 
 						}
-						else if (scene->mainTilemap[i][j] == 110) {
+						else if (scene->mainTilemap[i][j] == '2' && ((int)scene->currentFireTrap >= 5 && (int)scene->currentFireTrap <= 6)) {
+							lost = true;
+						}
+						else if (scene->mainTilemap[i][j] == 110 || scene->mainTilemap[i][j] == 't') {
 							lost = true;
 						}
 						else if (scene->mainTilemap[i][j] >= 97 && scene->mainTilemap[i][j] <= 109)
