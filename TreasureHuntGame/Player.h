@@ -195,7 +195,7 @@ public:
 							lives++;
 
 						}
-						else if (scene->mainTilemap[i][j] == '2' && ((int)scene->currentFireTrap >= 5 && (int)scene->currentFireTrap < 6)) {
+						else if (scene->mainTilemap[i][j] == '2' && ((int)scene->currentFireTrap >= 4 && (int)scene->currentFireTrap <= 5)) {
 							lost = true;
 						}
 						else if (scene->mainTilemap[i][j] == 110 || scene->mainTilemap[i][j] == 't' || scene->mainTilemap[i][j] == '0' || scene->mainTilemap[i][j] == '3') {

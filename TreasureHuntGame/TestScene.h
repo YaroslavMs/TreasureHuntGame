@@ -212,12 +212,12 @@ public:
 				else if (mainTilemap[i][j] == '1') {
 					if (currentLightningTrap >= 12)
 						currentLightningTrap = 0;
-					if ((int)currentLightningTrap == 4) {
+					if ((int)currentLightningTrap == 3) {
 						for (int k = 1; k <= 5; k++) {
 							mainTilemap[i + k][j] = '0';
 						}
 					}
-					else if ((int)currentLightningTrap == 11) {
+					else if ((int)currentLightningTrap == 10) {
 						for (int k = 1; k <= 5; k++) {
 							mainTilemap[i + k][j] = ' ';
 						}
@@ -309,15 +309,15 @@ public:
 					else if(mainTilemap[i][j] == '3') {
 						if (currentCeilingTrap >= 14)
 							currentCeilingTrap = 0;
-						if ((int)currentCeilingTrap == 2) {
+						if ((int)currentCeilingTrap == 1) {
 							for (int k = 1; k <= 3; k++)
 								mainTilemap[i + k][j] = '0';
 						}
-						else if ((int)currentCeilingTrap == 6)
+						else if ((int)currentCeilingTrap == 5)
 							mainTilemap[i + 3][j] = ' ';
-						else if ((int)currentCeilingTrap == 8)
+						else if ((int)currentCeilingTrap == 7)
 							mainTilemap[i + 2][j] = ' ';
-						else if ((int)currentCeilingTrap == 10)
+						else if ((int)currentCeilingTrap == 9)
 							mainTilemap[i + 1][j] = ' ';
 						ceilingTrap.setTextureRect(sf::IntRect(10 + (int)currentCeilingTrap * 64, 0, 50, 64));
 						ceilingTrap.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
