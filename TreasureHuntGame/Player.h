@@ -196,7 +196,7 @@ public:
 						else if (scene->mainTilemap[i][j] == '2' && ((int)scene->currentFireTrap >= 5 && (int)scene->currentFireTrap <= 6)) {
 							lost = true;
 						}
-						else if (scene->mainTilemap[i][j] == 110 || scene->mainTilemap[i][j] == 't') {
+						else if (scene->mainTilemap[i][j] == 110 || scene->mainTilemap[i][j] == 't' || scene->mainTilemap[i][j] == '0' || scene->mainTilemap[i][j] == '3') {
 							lost = true;
 						}
 						else if (scene->mainTilemap[i][j] >= 97 && scene->mainTilemap[i][j] <= 109)

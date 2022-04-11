@@ -129,7 +129,7 @@ public:
 					continue;
 				}
 				else if (mainTilemap[i][j] == ' ') continue;
-				else if (mainTilemap[i][j] == '0') continue;//tile.setTextureRect(IntRect(1326, 864, 16, 16)); 
+				else if (mainTilemap[i][j] == '0') continue; //trap colliders
 				else if (mainTilemap[i][j] == 'a')  tileset.setTextureRect(sf::IntRect(240, 720, 16, 16));// низ
 				else if (mainTilemap[i][j] == 'c')  tileset.setTextureRect(sf::IntRect(176, 672, 16 * 2, 16 * 2));//ліва стіна
 				else if (mainTilemap[i][j] == 'd')  tileset.setTextureRect(sf::IntRect(512, 672, 16, 16));//права стіна
@@ -204,6 +204,16 @@ public:
 				else if (mainTilemap[i][j] == '1') {
 					if (currentLightningTrap >= 12)
 						currentLightningTrap = 0;
+					if ((int)currentLightningTrap == 4) {
+						for (int k = 1; k <= 5; k++) {
+							mainTilemap[i + k][j] = '0';
+						}
+					}
+					else if ((int)currentLightningTrap == 11) {
+						for (int k = 1; k <= 5; k++) {
+							mainTilemap[i + k][j] = ' ';
+						}
+					}
 					lightningTrap.setTextureRect(sf::IntRect(32 + (int)currentLightningTrap * 96, 0, 38, 98));
 					lightningTrap.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
 					window.Renderer.draw(lightningTrap);
@@ -220,6 +230,16 @@ public:
 				else if (mainTilemap[i][j] == '3') {
 					if (currentCeilingTrap >= 14)
 						currentCeilingTrap = 0;
+					if ((int)currentCeilingTrap == 2) {
+						for (int k = 1; k <= 3; k++)
+							mainTilemap[i + k][j] = '0';
+					}
+					else if ((int)currentCeilingTrap == 6)
+						mainTilemap[i + 3][j] = ' ';
+					else if ((int)currentCeilingTrap == 8)
+						mainTilemap[i + 2][j] = ' ';
+					else if ((int)currentCeilingTrap == 10)
+						mainTilemap[i + 1][j] = ' ';
 					ceilingTrap.setTextureRect(sf::IntRect(10 + (int)currentCeilingTrap * 64, 0, 50, 64));
 					ceilingTrap.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
 					window.Renderer.draw(ceilingTrap);
