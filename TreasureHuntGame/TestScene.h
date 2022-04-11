@@ -124,8 +124,8 @@ public:
 			{
 				if (j * 16 * sizeMultiplier - offsetX < -600 ||
 					i * 16 * sizeMultiplier - offsetY < -600 ||
-					j * 16 * sizeMultiplier - offsetX > 4000 ||
-					i * 16 * sizeMultiplier - offsetY > 3000) {
+					j * 16 * sizeMultiplier - offsetX > window.width + 600 ||
+					i * 16 * sizeMultiplier - offsetY > window.height + 600) {
 					continue;
 				}
 				else if (mainTilemap[i][j] == ' ') continue;
@@ -193,6 +193,7 @@ public:
 					continue;
 				}
 				else if (mainTilemap[i][j] == 't') {
+					mainTilemap[i + 1][j] = '0';
 					if (currentSaw >= 16)
 						currentSaw = 0;
 					saw.setTextureRect(sf::IntRect(16 + (int)currentSaw * 64, 0, 48 - 16, 36));
@@ -227,7 +228,7 @@ public:
 					window.Renderer.draw(fireTrap);
 					continue;
 				}
-				else if (mainTilemap[i][j] == '3') {
+				/*else if (mainTilemap[i][j] == '3') {
 					if (currentCeilingTrap >= 14)
 						currentCeilingTrap = 0;
 					if ((int)currentCeilingTrap == 2) {
@@ -244,7 +245,7 @@ public:
 					ceilingTrap.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
 					window.Renderer.draw(ceilingTrap);
 					continue;
-				}
+				}*/
 
 				else if (mainTilemap[i][j] == 'z') {
 
@@ -286,6 +287,37 @@ public:
 				tileset.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
 				window.Renderer.draw(tileset);
 			}
+			for (int i = 0; i < H; i++)
+				for (int j = 0; j < W; j++)
+				{
+					if (j * 16 * sizeMultiplier - offsetX < -600 ||
+						i * 16 * sizeMultiplier - offsetY < -600 ||
+						j * 16 * sizeMultiplier - offsetX > window.width + 600 ||
+						i * 16 * sizeMultiplier - offsetY > window.height + 600) {
+						continue;
+					}
+					if (mainTilemap[i][j] != '3') {
+						continue;
+						}
+					else {
+						if (currentCeilingTrap >= 14)
+							currentCeilingTrap = 0;
+						if ((int)currentCeilingTrap == 2) {
+							for (int k = 1; k <= 3; k++)
+								mainTilemap[i + k][j] = '0';
+						}
+						else if ((int)currentCeilingTrap == 6)
+							mainTilemap[i + 3][j] = ' ';
+						else if ((int)currentCeilingTrap == 8)
+							mainTilemap[i + 2][j] = ' ';
+						else if ((int)currentCeilingTrap == 10)
+							mainTilemap[i + 1][j] = ' ';
+						ceilingTrap.setTextureRect(sf::IntRect(10 + (int)currentCeilingTrap * 64, 0, 50, 64));
+						ceilingTrap.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
+						window.Renderer.draw(ceilingTrap);
+						continue;
+					}
+				}
 
 
 		//	window.Renderer.draw(player.idle);

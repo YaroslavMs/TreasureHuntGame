@@ -8,14 +8,15 @@ class Window
 
 public:
     sf::RenderWindow Renderer;
+    int width, height;
     Window() {
         SetFullscreenWindow();
     }
     void SetFullscreenWindow() {
-        auto x = sf::VideoMode::getDesktopMode().width;
-        auto y = sf::VideoMode::getDesktopMode().height;
+        width = sf::VideoMode::getDesktopMode().width;
+        height = sf::VideoMode::getDesktopMode().height;
         Renderer.clear();
-        Renderer.create(sf::VideoMode(x, y), "New Title", sf::Style::Fullscreen);
+        Renderer.create(sf::VideoMode(width, height), "New Title", sf::Style::Fullscreen);
     }
 };
 
