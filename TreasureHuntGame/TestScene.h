@@ -119,7 +119,7 @@ public:
 		}
 		else {
 			DrawMap();
-			ui.YouDiedMenu();
+			ui.YouDiedMenu(player);
 		}
 
 	};

@@ -160,7 +160,19 @@ public:
 
 
 	}
-	void YouDiedMenu() {
+	void YouDiedMenu(Player player) {
+		if (player.lives == 1) {
+			YouDied[1].setString("Restart");
+			YouDied[0].setString("You Lost");
+			YouDied[1].setOrigin(YouDied[1].getGlobalBounds().width / 2, YouDied[1].getGlobalBounds().height / 2);
+			YouDied[0].setOrigin(YouDied[0].getGlobalBounds().width / 2, YouDied[0].getGlobalBounds().height / 2);
+		}
+		else {
+			YouDied[1].setString("Respawn");
+			YouDied[0].setString("You Died");
+			YouDied[1].setOrigin(YouDied[1].getGlobalBounds().width / 2, YouDied[1].getGlobalBounds().height / 2);
+			YouDied[0].setOrigin(YouDied[0].getGlobalBounds().width / 2, YouDied[0].getGlobalBounds().height / 2);
+		}
 		sf::Mouse mouse;
 		sf::Vector2i mousePos = mouse.getPosition(window.Renderer);
 		button.setPosition(sf::Vector2f(window.width / 2 - button.getGlobalBounds().width / 2, window.height / 2 + 200));
