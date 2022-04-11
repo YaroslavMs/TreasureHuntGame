@@ -12,7 +12,6 @@
 
 class TestScene : public Scene {
 	Player player;
-	
 public:
 	UI ui;
 	TestScene() : Scene(sf::FloatRect(100 * sizeMultiplier, 2200 * sizeMultiplier, 28 * 1.2 * sizeMultiplier, 40 * 1.2 * sizeMultiplier)), player(this) {
@@ -63,57 +62,65 @@ public:
 		}
 		return false;
 	}
+	bool Lost() {
+		return player.lost;
+	}
 	void Restart() {
 		player.Restart();
 	}
+	void Respawn() {
+		player.LoseLife();
+	}
 	void Update(float time) override {
+		if (!player.lost) {
+			window.Renderer.draw(background);
 
-		window.Renderer.draw(background);
+			offsetX = player.rect.left - sf::VideoMode().getDesktopMode().width / 2;
+			offsetY = player.rect.top - sf::VideoMode().getDesktopMode().height / 2 - 150;
 
+			time = time / 400;
 
+			if (!ui.gamePaused) {
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::A))    player.dx = -0.1;
 
-		offsetX = player.rect.left - sf::VideoMode().getDesktopMode().width / 2;
-		offsetY = player.rect.top - sf::VideoMode().getDesktopMode().height / 2 - 150;
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D))    player.dx = 0.1;
 
-		time = time / 400;
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))    player.Restart();
 
-		if (!ui.gamePaused) {
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::A))    player.dx = -0.1;
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+					if (player.onGround) {
+						if (player.crouching)
+							player.dy = -0.20 * 1.2;
+						else  player.dy = -0.27 * 1.2;
+						player.onGround = false; player.jumped = true;
+					}
 
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D))    player.dx = 0.1;
-
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))    player.Restart();
-
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-				if (player.onGround) {
-					if (player.crouching)
-						player.dy = -0.20 * 1.2;
-					else  player.dy = -0.27 * 1.2;
-					player.onGround = false; player.jumped = true;
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::C) || sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)) {
+					player.crouching = true;
+					player.rect.height = 26 * 1.2 * sizeMultiplier;
 				}
-
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::C) || sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)) {
-				player.crouching = true;
-				player.rect.height = 26 * 1.2 * sizeMultiplier;
+				else if (player.CheckToStandCol()) {
+					sf::FloatRect crouchRect = player.rect;
+					player.rect = sf::FloatRect(crouchRect.left, crouchRect.top + crouchRect.height - 40 * 1.2 * sizeMultiplier, crouchRect.width, 40 * 1.2 * sizeMultiplier);
+					player.crouching = false;
+				}
+				currentDiamond += time * 0.003;
+				currentObelisk += time * 0.003;
+				currentKey += time * 0.005;
+				currentFireTrap += time * 0.002;
+				currentCeilingTrap += time * 0.0025;
+				currentLightningTrap += time * 0.002;
+				currentSaw += time * 0.003;
+				DrawMap();
+				player.update(time);
 			}
-			else if (player.CheckToStandCol()) {
-				sf::FloatRect crouchRect = player.rect;
-				player.rect = sf::FloatRect(crouchRect.left, crouchRect.top + crouchRect.height - 40 * 1.2 * sizeMultiplier, crouchRect.width, 40 * 1.2 * sizeMultiplier);
-				player.crouching = false;
-			}
-			currentDiamond += time * 0.003;
-			currentObelisk += time * 0.003;
-			currentKey += time * 0.005;
-			currentFireTrap += time * 0.002;
-			currentCeilingTrap += time * 0.0025;
-			currentLightningTrap += time * 0.002;
-			currentSaw += time * 0.003;
-			DrawMap();
-			player.update(time);
+			ui.Update(time);
+			ui.Draw(player);
 		}
-		ui.Update(time);
-		ui.Draw(player);
-
+		else {
+			DrawMap();
+			ui.YouDiedMenu();
+		}
 
 	};
 	void DrawMap() override {
@@ -192,7 +199,7 @@ public:
 					window.Renderer.draw(obelisk);
 					continue;
 				}
-				else if (mainTilemap[i][j] == 't') {
+				/*else if (mainTilemap[i][j] == 't') {
 					mainTilemap[i + 1][j] = '0';
 					if (currentSaw >= 16)
 						currentSaw = 0;
@@ -200,7 +207,7 @@ public:
 					saw.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
 					window.Renderer.draw(saw);
 					continue;
-				}
+				}*/
 
 				else if (mainTilemap[i][j] == '1') {
 					if (currentLightningTrap >= 12)
@@ -224,7 +231,7 @@ public:
 					if (currentFireTrap >= 9)
 						currentFireTrap = 0;
 					fireTrap.setTextureRect(sf::IntRect(10 + (int)currentFireTrap * 32, 20, 14, 44));
-					fireTrap.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY - 80);
+					fireTrap.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY - 85);
 					window.Renderer.draw(fireTrap);
 					continue;
 				}
@@ -296,10 +303,10 @@ public:
 						i * 16 * sizeMultiplier - offsetY > window.height + 600) {
 						continue;
 					}
-					if (mainTilemap[i][j] != '3') {
+					if (mainTilemap[i][j] != '3' && mainTilemap[i][j] != 't') {
 						continue;
 						}
-					else {
+					else if(mainTilemap[i][j] == '3') {
 						if (currentCeilingTrap >= 14)
 							currentCeilingTrap = 0;
 						if ((int)currentCeilingTrap == 2) {
@@ -315,6 +322,15 @@ public:
 						ceilingTrap.setTextureRect(sf::IntRect(10 + (int)currentCeilingTrap * 64, 0, 50, 64));
 						ceilingTrap.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
 						window.Renderer.draw(ceilingTrap);
+						continue;
+					}
+					else if (mainTilemap[i][j] == 't') {
+						mainTilemap[i + 1][j] = '0';
+						if (currentSaw >= 16)
+							currentSaw = 0;
+						saw.setTextureRect(sf::IntRect(16 + (int)currentSaw * 64, 0, 48 - 16, 36));
+						saw.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
+						window.Renderer.draw(saw);
 						continue;
 					}
 				}

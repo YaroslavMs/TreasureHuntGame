@@ -9,14 +9,22 @@
 
 
 class UI {
+	//Basic UI
 	sf::Sprite heartBorder, heart, diamond, key;
-	sf::Sprite background, button;
-	sf::Text text[3];
 	std::string amountOfCoins = "", keyString = "";
 	sf::Text coinsText, keyText;
-	int scrW, scrH;
 	float currentFrame = 0, currentKey = 0;
 
+	//Pause menu
+	sf::Sprite background, button;
+	sf::Text text[4];
+
+	//DeathPanel
+	sf::Text YouDied[2];
+	sf::Sprite Panel;
+	sf::Texture emtyTexture;
+
+	int scrW, scrH;
 public:
 	bool gamePaused = false;
 	UI() {
@@ -62,9 +70,9 @@ public:
 		text[0].setOrigin(text[0].getGlobalBounds().width / 2, text[0].getGlobalBounds().height / 2);
 		text[0].setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2, 200));
 		text[1].setString("Continue");
-		text[2].setString("Main menu");
-
-		for (int i = 1; i < 3; i++) {
+		text[2].setString("Restart");
+		text[3].setString("Main menu");
+		for (int i = 1; i < 4; i++) {
 			text[i].setFont(DATABASE.fonts.at(0));
 			text[i].setFillColor(sf::Color::Red);
 			text[i].setCharacterSize(80);
@@ -72,8 +80,30 @@ public:
 			text[i].setOutlineThickness(2);
 			text[i].setOrigin(text[i].getGlobalBounds().width / 2, text[i].getGlobalBounds().height / 2);
 		}
-		for (int i = 2; i <= 3; i++)
-			text[i - 1].setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2, 275 + 180 * i));
+		for (int i = 2; i <= 4; i++)
+			text[i - 1].setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2, 175 + 180 * i));
+
+		YouDied[0].setString("You Died");
+		YouDied[0].setFillColor(sf::Color::Red);
+		YouDied[0].setOutlineColor(sf::Color::Black);
+		YouDied[0].setOutlineThickness(10);
+		YouDied[0].setCharacterSize(280);
+		YouDied[0].setFont(DATABASE.fonts.at(0));
+		YouDied[0].setOrigin(YouDied[0].getGlobalBounds().width / 2, YouDied[0].getGlobalBounds().height / 2);
+		YouDied[0].setPosition(sf::Vector2f(window.width / 2, window.height / 2 - 100));
+
+		YouDied[1].setString("Respawn");
+		YouDied[1].setFillColor(sf::Color::Black);
+		YouDied[1].setOutlineColor(sf::Color::Red);
+		YouDied[1].setOutlineThickness(2);
+		YouDied[1].setCharacterSize(80);
+		YouDied[1].setFont(DATABASE.fonts.at(0));
+		YouDied[1].setOrigin(YouDied[1].getGlobalBounds().width / 2, YouDied[1].getGlobalBounds().height / 2);
+		YouDied[1].setPosition(sf::Vector2f(window.width / 2, window.height / 2 + 225));
+		Panel.setTexture(DATABASE.textures.at(2));
+		Panel.setPosition(0, 0);
+		Panel.setScale(sf::Vector2f(scrW / Panel.getGlobalBounds().width, scrH / Panel.getGlobalBounds().height));
+		Panel.setColor(sf::Color(225, 0, 0, 60));
 	}
 
 	void Update(float time) {
@@ -115,9 +145,9 @@ public:
 		window.Renderer.draw(background);
 		sf::Mouse mouse;
 		sf::Vector2i mousePos = mouse.getPosition(window.Renderer);
-		for (int i = 2; i <= 3; i++) {
+		for (int i = 2; i <= 4; i++) {
 
-			button.setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2 - 100 * 2, 250 + 180 * i));
+			button.setPosition(sf::Vector2f(window.width / 2 - 100 * 2, 150 + 180 * i));
 			if (CheckCollision(button.getGlobalBounds(), mousePos)) {
 				button.setColor(sf::Color(100, 0, 0, 255));
 			}
@@ -130,6 +160,24 @@ public:
 
 
 	}
+	void YouDiedMenu() {
+		sf::Mouse mouse;
+		sf::Vector2i mousePos = mouse.getPosition(window.Renderer);
+		button.setPosition(sf::Vector2f(window.width / 2 - button.getGlobalBounds().width / 2, window.height / 2 + 200));
+		if (CheckCollision(button.getGlobalBounds(), mousePos)) {
+			button.setColor(sf::Color(100, 0, 0, 255));
+		}
+		else button.setColor(sf::Color::White);
+		window.Renderer.draw(Panel);
+		window.Renderer.draw(button);
+		window.Renderer.draw(YouDied[1]);
+		window.Renderer.draw(YouDied[0]);
+	}
+	bool RespawnButton(sf::Vector2i mousePos) {
+		button.setPosition(sf::Vector2f(window.width / 2 - button.getGlobalBounds().width / 2, window.height / 2 + 200));
+		return CheckCollision(button.getGlobalBounds(), mousePos);
+	}
+
 	bool CheckCollision(sf::FloatRect rect, sf::Vector2i mousePos) {
 		if (mousePos.x < rect.left)
 			return false;
@@ -143,8 +191,8 @@ public:
 	}
 
 	int MouseClicked(sf::Mouse mouse) {
-		for (int i = 2; i <= 3; i++) {
-			button.setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2 - 100 * 2, 250 + 180 * i));
+		for (int i = 2; i <= 4; i++) {
+			button.setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2 - 100 * 2, 150 + 180 * i));
 			if ((CheckCollision(button.getGlobalBounds(), mouse.getPosition(window.Renderer)))) {
 				return i;
 			}

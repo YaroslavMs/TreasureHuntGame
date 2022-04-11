@@ -32,6 +32,7 @@ public:
 	float currentFireTrap = 0;
 	//sf::Sprite tileset, coin, healPotion, tileset1;
 	bool levelCompleted = false;
+	bool* Lost;
 	sf::Sprite tileset, coin, healPotion, obelisk, door, key, saw, fireTrap, lightningTrap, ceilingTrap;
 	sf::Text doorText;
 	int allKeys = 3;

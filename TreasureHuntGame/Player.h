@@ -6,8 +6,9 @@
 class Player {
 	Scene* scene;
 	bool facingRight = true;
-	bool lost = false;
+	
 public:
+	bool lost = false;
 	int keysFound = 0;
 	float dx, dy;
 	int lives = 5, coinsCollected = 0;
@@ -41,6 +42,7 @@ public:
 		//	delete scene;
 	}
 	void LoseLife() {
+		lost = false;
 		dx = 0.1;
 		dy = 0.1;
 		currentFrame = 0;
@@ -146,10 +148,10 @@ public:
 				window.Renderer.draw(run);
 			}
 		}
-		if (lost) {
-			lost = false;
-			LoseLife();
-		}
+	//	if (lost) {
+	//		lost = false;
+	//		LoseLife();
+	//	}
 		dx = 0;
 	}
 
@@ -193,7 +195,7 @@ public:
 							lives++;
 
 						}
-						else if (scene->mainTilemap[i][j] == '2' && ((int)scene->currentFireTrap >= 5 && (int)scene->currentFireTrap <= 6)) {
+						else if (scene->mainTilemap[i][j] == '2' && ((int)scene->currentFireTrap >= 5 && (int)scene->currentFireTrap < 6)) {
 							lost = true;
 						}
 						else if (scene->mainTilemap[i][j] == 110 || scene->mainTilemap[i][j] == 't' || scene->mainTilemap[i][j] == '0' || scene->mainTilemap[i][j] == '3') {

@@ -40,8 +40,8 @@ int main()
 			}
 			if (event.type == sf::Event::EventType::MouseButtonPressed) {
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
+					sf::Mouse mouse;
 					if (!gameStarted) {
-						sf::Mouse mouse;
 						auto number = mainMenu.MouseClicked(mouse);
 						if (number == 1) {
 							gameStarted = true;
@@ -54,15 +54,22 @@ int main()
 						}
 					}
 					else if (test.ui.gamePaused) {
-						sf::Mouse mouse;
 						auto number = test.ui.MouseClicked(mouse);
 						if (number == 2) {
 							test.ui.gamePaused = false;
 						}
 						else if (number == 3) {
 							test.ui.gamePaused = false;
+							test.Restart();
+						}
+						else if (number == 4) {
+							test.ui.gamePaused = false;
 							gameStarted = false;
 						}
+					}
+					else if (test.Lost()) {
+						if (test.ui.RespawnButton(mouse.getPosition()))
+							test.Respawn();
 					}
 				}
 			}
