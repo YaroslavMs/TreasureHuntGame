@@ -68,8 +68,11 @@ int main()
 						}
 					}
 					else if (test.Lost()) {
-						if (test.ui.RespawnButton(mouse.getPosition()))
+						if (test.ui.RespawnButton(mouse.getPosition())) {
 							test.Respawn();
+							if (test.isOver())
+								test.Restart();
+						}
 					}
 				}
 			}
