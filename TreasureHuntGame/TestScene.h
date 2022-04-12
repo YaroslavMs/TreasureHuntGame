@@ -43,8 +43,11 @@ public:
 		ceilingTrap.setScale(sf::Vector2f(sizeMultiplier, sizeMultiplier));
 		key.setScale(sf::Vector2f(2, 2));
 		door.setScale(sf::Vector2f(0.3, 0.3));
-
-
+		allCoins = 0;
+		for (int i = 0; i < H; i++)
+			for (int j = 0; j < W; j++)
+				if (mainTilemap[i][j] == 'p')
+					allCoins++;
 
 		obelisk.setScale(sf::Vector2f(0.7, 0.7));
 
@@ -72,7 +75,7 @@ public:
 		player.LoseLife();
 	}
 	void Update(float time) override {
-		if (!player.lost) {
+		if (!player.lost && !levelCompleted) {
 			window.Renderer.draw(background);
 
 			offsetX = player.rect.left - sf::VideoMode().getDesktopMode().width / 2;
@@ -117,9 +120,13 @@ public:
 			ui.Update(time);
 			ui.Draw(player);
 		}
-		else {
+		else if(player.lost){
 			DrawMap();
 			ui.YouDiedMenu(player);
+		}
+		else if (levelCompleted) {
+			DrawMap();
+			ui.WinMenu(score);
 		}
 
 	};

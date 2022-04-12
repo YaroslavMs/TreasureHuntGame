@@ -24,6 +24,10 @@ class UI {
 	sf::Sprite Panel;
 	sf::Texture emtyTexture;
 
+	//WinPanel
+	sf::Text winButtonsT[3], youWinText;
+	sf::Sprite winPanel, Star, winPanelButton, winButton;
+
 	int scrW, scrH;
 public:
 	bool gamePaused = false;
@@ -104,6 +108,40 @@ public:
 		Panel.setPosition(0, 0);
 		Panel.setScale(sf::Vector2f(scrW / Panel.getGlobalBounds().width, scrH / Panel.getGlobalBounds().height));
 		Panel.setColor(sf::Color(225, 0, 0, 60));
+
+
+		winPanel.setTexture(DATABASE.textures.at(2));
+		winPanel.setPosition(scrW / 4, scrH / 4);
+		winPanel.setScale(sf::Vector2f(scrW / winPanel.getGlobalBounds().width / 2, scrH / winPanel.getGlobalBounds().height / 2));
+		winPanel.setColor(sf::Color(60, 30, 0));
+		youWinText.setString("Level Completed");
+		youWinText.setFillColor(sf::Color::Red);
+		youWinText.setOutlineColor(sf::Color::White);
+		youWinText.setOutlineThickness(2);
+		youWinText.setCharacterSize(120);
+		youWinText.setFont(DATABASE.fonts.at(0));
+		youWinText.setOrigin(youWinText.getGlobalBounds().width / 2, youWinText.getGlobalBounds().height / 2);
+		youWinText.setPosition(sf::Vector2f(window.width / 2, window.height / 4 + 25));
+		Star.setTexture(DATABASE.textures.at(21));
+		Star.setTextureRect(sf::IntRect(6, 6, 20, 22));
+		Star.setOrigin(Star.getGlobalBounds().width / 2, Star.getGlobalBounds().height / 2);
+		Star.setScale(sf::Vector2f(5, 5));
+		winButtonsT[0].setString("To Main menu");
+		winButtonsT[1].setString("Restart");
+		winButtonsT[2].setString("Next level");
+		for (int i = 0; i < 3; i++) {
+			winButtonsT[i].setFont(DATABASE.fonts.at(0));
+			winButtonsT[i].setFillColor(sf::Color::Red);
+			winButtonsT[i].setCharacterSize(50);
+			winButtonsT[i].setOutlineColor(sf::Color::White);
+			winButtonsT[i].setOutlineThickness(2);
+			winButtonsT[i].setOrigin(winButtonsT[i].getGlobalBounds().width / 2, winButtonsT[i].getGlobalBounds().height / 2);
+		}
+		winButton.setTexture(DATABASE.textures.at(2));
+		winButton.setColor(sf::Color(160, 80, 0));
+		winButton.setTextureRect(sf::IntRect(0, 0, 200, 60));
+		winButton.setScale(1.5, 1.5);
+
 	}
 
 	void Update(float time) {
@@ -111,6 +149,8 @@ public:
 		currentKey += time * 0.003;
 	}
 	void Draw(Player player) {
+	//	WinMenu();
+
 		amountOfCoins = player.coinsCollected <= 0 ? "" : std::to_string(player.coinsCollected);
 		keyString = std::to_string(player.keysFound) + " / " + std::to_string(3) + " keys found.";
 		coinsText.setString(amountOfCoins);
@@ -160,6 +200,29 @@ public:
 
 
 	}
+	void WinMenu(int stars) {
+		window.Renderer.draw(winPanel);
+		window.Renderer.draw(youWinText);
+		for (int i = 0; i < 3; i++) {
+			Star.setPosition(sf::Vector2f(scrW / 2 - scrW / 16 + scrW / 16 * i, scrH / 6 * 3));
+			if (i >= stars)
+				Star.setColor(sf::Color(0, 0, 0, 70));
+			else Star.setColor(sf::Color::White);
+			window.Renderer.draw(Star);
+		}
+		sf::Mouse mouse;
+		sf::Vector2i mousePos = mouse.getPosition(window.Renderer);
+		for (int i = 0; i < 3; i++) {
+			winButton.setPosition(sf::Vector2f(scrW / 2 - scrW / 6 + scrW / 6 * i - winButton.getGlobalBounds().width / 2, scrH / 2 + scrH / 5 - winButton.getGlobalBounds().height / 2));
+			winButtonsT[i].setPosition(sf::Vector2f(scrW / 2 - scrW / 6 + scrW / 6 * i, scrH / 2 + scrH / 5));
+			if (CheckCollision(winButton.getGlobalBounds(), mousePos)) {
+				winButton.setColor(sf::Color(100, 0, 0, 255));
+			}
+			else winButton.setColor(sf::Color(160, 80, 0));
+			window.Renderer.draw(winButton);
+			window.Renderer.draw(winButtonsT[i]);
+		}
+	}
 	void YouDiedMenu(Player player) {
 		if (player.lives == 1) {
 			YouDied[1].setString("Restart");
@@ -206,6 +269,14 @@ public:
 		for (int i = 2; i <= 4; i++) {
 			button.setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2 - 100 * 2, 150 + 180 * i));
 			if ((CheckCollision(button.getGlobalBounds(), mouse.getPosition(window.Renderer)))) {
+				return i;
+			}
+		}
+	}
+	int MouseClickedWinMenu(sf::Mouse mouse) {
+		for (int i = 0; i < 3; i++) {
+			winButton.setPosition(sf::Vector2f(scrW / 2 - scrW / 6 + scrW / 6 * i - winButton.getGlobalBounds().width / 2, scrH / 2 + scrH / 5 - winButton.getGlobalBounds().height / 2));
+			if ((CheckCollision(winButton.getGlobalBounds(), mouse.getPosition(window.Renderer)))) {
 				return i;
 			}
 		}

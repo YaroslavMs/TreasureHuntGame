@@ -53,6 +53,8 @@ public:
 		textures.push_back(load);
 		load.loadFromFile("Assets/Art/CeilingTrap.png");           //20
 		textures.push_back(load);
+		load.loadFromFile("Assets/Art/Star.png");                  //21
+		textures.push_back(load);
 
 
 

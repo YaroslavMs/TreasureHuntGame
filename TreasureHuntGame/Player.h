@@ -4,10 +4,11 @@
 #include "Database.h"
 
 class Player {
-	Scene* scene;
+	
 	bool facingRight = true;
 	
 public:
+	Scene* scene;
 	bool lost = false;
 	int keysFound = 0;
 	float dx, dy;
@@ -177,6 +178,7 @@ public:
 						}
 						else if (scene->mainTilemap[i][j] == 'z') {
 							if (keysFound == scene->allKeys) {
+								scene->score = ((float)coinsCollected / (float)scene->allCoins) * 3;
 								scene->levelCompleted = true;
 							}
 						}

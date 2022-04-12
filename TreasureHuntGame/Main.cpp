@@ -29,7 +29,7 @@ int main()
 			gameStarted = false;
 		}
 		float time = clock.restart().asMicroseconds();
-		if (gameStarted && !test.levelCompleted)
+		if (gameStarted/* && !test.levelCompleted*/)
 			test.Update(time);
 		sf::Event event;
 		while (window.Renderer.pollEvent(event)) {
@@ -73,6 +73,18 @@ int main()
 							if (test.isOver())
 								test.Restart();
 						}
+					}
+					else if (test.levelCompleted) {
+						auto number = test.ui.MouseClickedWinMenu(mouse);
+						if (number == 0) {
+							test.levelCompleted = false;
+							gameStarted = false;
+						}
+						if (number == 1) {
+							test.levelCompleted = false;
+							test.Restart();
+						}
+
 					}
 				}
 			}

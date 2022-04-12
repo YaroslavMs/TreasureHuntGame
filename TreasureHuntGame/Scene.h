@@ -29,10 +29,10 @@ protected:
 	float currentDiamond = 0, currentObelisk = 0, currentKey = 0, currentCeilingTrap = 0, currentLightningTrap = 0, currentSaw = 0;
 	
 public:
+	int allCoins = 0, score = 0;
 	float currentFireTrap = 0;
 	//sf::Sprite tileset, coin, healPotion, tileset1;
 	bool levelCompleted = false;
-	bool* Lost;
 	sf::Sprite tileset, coin, healPotion, obelisk, door, key, saw, fireTrap, lightningTrap, ceilingTrap;
 	sf::Text doorText;
 	int allKeys = 3;
