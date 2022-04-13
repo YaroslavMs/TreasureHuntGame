@@ -162,7 +162,7 @@ public:
 				}
 				else if (mainTilemap[i][j] == ' ') continue;
 				else if (mainTilemap[i][j] == '0') continue; //trap colliders
-				else if (mainTilemap[i][j] == '4') std::cout << "y: " << i * 16 * sizeMultiplier << " x: " << j * 16 * sizeMultiplier << "\n";
+				else if (mainTilemap[i][j] == '4' && mainTilemap[i][j] == '5') continue;
 				else if (mainTilemap[i][j] == 'a')  tileset.setTextureRect(sf::IntRect(240, 720, 16, 16));// низ
 				else if (mainTilemap[i][j] == 'c')  tileset.setTextureRect(sf::IntRect(176, 672, 16 * 2, 16 * 2));//ліва стіна
 				else if (mainTilemap[i][j] == 'd')  tileset.setTextureRect(sf::IntRect(512, 672, 16, 16));//права стіна
