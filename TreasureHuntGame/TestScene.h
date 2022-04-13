@@ -8,16 +8,21 @@
 #include "Database.h"
 #include "Renderer.h"
 #include "Player.h"
+#include "Enemy.h"
 #include "UI.h"
 
 class TestScene : public Scene {
 	Player player;
+	std::vector<Enemy> enemies;
 public:
 	UI ui;
-	TestScene() : Scene(sf::FloatRect(100 * sizeMultiplier, 2200 * sizeMultiplier, 28 * 1.2 * sizeMultiplier, 40 * 1.2 * sizeMultiplier)), player(this) {
+	TestScene() : Scene(sf::FloatRect(100 * sizeMultiplier, 2200 * sizeMultiplier, 28 * 1.2 * sizeMultiplier, 40 * 1.2 * sizeMultiplier)), player(this){
 		//	CheckPoint checkpoint[] = { CheckPoint(132, 61), CheckPoint(131, 61), CheckPoint(), CheckPoint(), CheckPoint() };
 		//	checkpoints[0] = CheckPoint(132, 61);
 		//	checkpoints[1] = CheckPoint(131, 61);
+		offsetX = player.rect.left - sf::VideoMode().getDesktopMode().width / 2;
+		offsetY = player.rect.top - sf::VideoMode().getDesktopMode().height / 2 - 150;
+
 		mainTilemap = TileMap;
 		doorText.setFont(DATABASE.fonts.at(0));
 		doorText.setCharacterSize(20);
@@ -45,19 +50,23 @@ public:
 		door.setScale(sf::Vector2f(0.3, 0.3));
 		allCoins = 0;
 		for (int i = 0; i < H; i++)
-			for (int j = 0; j < W; j++)
+			for (int j = 0; j < W; j++) {
 				if (mainTilemap[i][j] == 'p')
 					allCoins++;
+				else if (mainTilemap[i][j] == '4') {
+					Enemy enemy(i, j, this);
+					enemies.push_back(enemy);
+				}
+			}
 
 		obelisk.setScale(sf::Vector2f(0.7, 0.7));
 
 		height = 142;
 		width = 300;
-
 	}
-	//~TestScene() {
-	//	player.~Player();
-	//}
+	~TestScene() {
+	//	delete enemy;
+	}
 	bool isOver() {
 		if (player.lives <= 0) {
 			player.lives = 5;
@@ -107,6 +116,9 @@ public:
 					player.rect = sf::FloatRect(crouchRect.left, crouchRect.top + crouchRect.height - 40 * 1.2 * sizeMultiplier, crouchRect.width, 40 * 1.2 * sizeMultiplier);
 					player.crouching = false;
 				}
+				
+				//enemy->
+				//
 				currentDiamond += time * 0.003;
 				currentObelisk += time * 0.003;
 				currentKey += time * 0.005;
@@ -119,8 +131,14 @@ public:
 			}
 			ui.Update(time);
 			ui.Draw(player);
+			for (int i = 0; i < enemies.size(); i++)
+			{
+				enemies[i].Update(time);
+				if (player.rect.intersects(enemies[i].rect))
+					player.lost = true;
+			}
 		}
-		else if(player.lost){
+		else if (player.lost) {
 			DrawMap();
 			ui.YouDiedMenu(player);
 		}
@@ -144,6 +162,7 @@ public:
 				}
 				else if (mainTilemap[i][j] == ' ') continue;
 				else if (mainTilemap[i][j] == '0') continue; //trap colliders
+				else if (mainTilemap[i][j] == '4') std::cout << "y: " << i * 16 * sizeMultiplier << " x: " << j * 16 * sizeMultiplier << "\n";
 				else if (mainTilemap[i][j] == 'a')  tileset.setTextureRect(sf::IntRect(240, 720, 16, 16));// низ
 				else if (mainTilemap[i][j] == 'c')  tileset.setTextureRect(sf::IntRect(176, 672, 16 * 2, 16 * 2));//ліва стіна
 				else if (mainTilemap[i][j] == 'd')  tileset.setTextureRect(sf::IntRect(512, 672, 16, 16));//права стіна
@@ -206,15 +225,6 @@ public:
 					window.Renderer.draw(obelisk);
 					continue;
 				}
-				/*else if (mainTilemap[i][j] == 't') {
-					mainTilemap[i + 1][j] = '0';
-					if (currentSaw >= 16)
-						currentSaw = 0;
-					saw.setTextureRect(sf::IntRect(16 + (int)currentSaw * 64, 0, 48 - 16, 36));
-					saw.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
-					window.Renderer.draw(saw);
-					continue;
-				}*/
 
 				else if (mainTilemap[i][j] == '1') {
 					if (currentLightningTrap >= 12)
@@ -242,24 +252,6 @@ public:
 					window.Renderer.draw(fireTrap);
 					continue;
 				}
-				/*else if (mainTilemap[i][j] == '3') {
-					if (currentCeilingTrap >= 14)
-						currentCeilingTrap = 0;
-					if ((int)currentCeilingTrap == 2) {
-						for (int k = 1; k <= 3; k++)
-							mainTilemap[i + k][j] = '0';
-					}
-					else if ((int)currentCeilingTrap == 6)
-						mainTilemap[i + 3][j] = ' ';
-					else if ((int)currentCeilingTrap == 8)
-						mainTilemap[i + 2][j] = ' ';
-					else if ((int)currentCeilingTrap == 10)
-						mainTilemap[i + 1][j] = ' ';
-					ceilingTrap.setTextureRect(sf::IntRect(10 + (int)currentCeilingTrap * 64, 0, 50, 64));
-					ceilingTrap.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
-					window.Renderer.draw(ceilingTrap);
-					continue;
-				}*/
 
 				else if (mainTilemap[i][j] == 'z') {
 
@@ -301,51 +293,51 @@ public:
 				tileset.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
 				window.Renderer.draw(tileset);
 			}
-			for (int i = 0; i < H; i++)
-				for (int j = 0; j < W; j++)
-				{
-					if (j * 16 * sizeMultiplier - offsetX < -600 ||
-						i * 16 * sizeMultiplier - offsetY < -600 ||
-						j * 16 * sizeMultiplier - offsetX > window.width + 600 ||
-						i * 16 * sizeMultiplier - offsetY > window.height + 600) {
-						continue;
-					}
-					if (mainTilemap[i][j] != '3' && mainTilemap[i][j] != 't') {
-						continue;
-						}
-					else if(mainTilemap[i][j] == '3') {
-						if (currentCeilingTrap >= 14)
-							currentCeilingTrap = 0;
-						if ((int)currentCeilingTrap == 1) {
-							for (int k = 1; k <= 3; k++)
-								mainTilemap[i + k][j] = '0';
-						}
-						else if ((int)currentCeilingTrap == 5)
-							mainTilemap[i + 3][j] = ' ';
-						else if ((int)currentCeilingTrap == 7)
-							mainTilemap[i + 2][j] = ' ';
-						else if ((int)currentCeilingTrap == 9)
-							mainTilemap[i + 1][j] = ' ';
-						ceilingTrap.setTextureRect(sf::IntRect(10 + (int)currentCeilingTrap * 64, 0, 50, 64));
-						ceilingTrap.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
-						window.Renderer.draw(ceilingTrap);
-						continue;
-					}
-					else if (mainTilemap[i][j] == 't') {
-						mainTilemap[i + 1][j] = '0';
-						if (currentSaw >= 16)
-							currentSaw = 0;
-						saw.setTextureRect(sf::IntRect(16 + (int)currentSaw * 64, 0, 48 - 16, 36));
-						saw.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
-						window.Renderer.draw(saw);
-						continue;
-					}
+		for (int i = 0; i < H; i++)
+			for (int j = 0; j < W; j++)
+			{
+				if (j * 16 * sizeMultiplier - offsetX < -600 ||
+					i * 16 * sizeMultiplier - offsetY < -600 ||
+					j * 16 * sizeMultiplier - offsetX > window.width + 600 ||
+					i * 16 * sizeMultiplier - offsetY > window.height + 600) {
+					continue;
 				}
+				if (mainTilemap[i][j] != '3' && mainTilemap[i][j] != 't') {
+					continue;
+				}
+				else if (mainTilemap[i][j] == '3') {
+					if (currentCeilingTrap >= 14)
+						currentCeilingTrap = 0;
+					if ((int)currentCeilingTrap == 1) {
+						for (int k = 1; k <= 3; k++)
+							mainTilemap[i + k][j] = '0';
+					}
+					else if ((int)currentCeilingTrap == 5)
+						mainTilemap[i + 3][j] = ' ';
+					else if ((int)currentCeilingTrap == 7)
+						mainTilemap[i + 2][j] = ' ';
+					else if ((int)currentCeilingTrap == 9)
+						mainTilemap[i + 1][j] = ' ';
+					ceilingTrap.setTextureRect(sf::IntRect(10 + (int)currentCeilingTrap * 64, 0, 50, 64));
+					ceilingTrap.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
+					window.Renderer.draw(ceilingTrap);
+					continue;
+				}
+				else if (mainTilemap[i][j] == 't') {
+					mainTilemap[i + 1][j] = '0';
+					if (currentSaw >= 16)
+						currentSaw = 0;
+					saw.setTextureRect(sf::IntRect(16 + (int)currentSaw * 64, 0, 48 - 16, 36));
+					saw.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
+					window.Renderer.draw(saw);
+					continue;
+				}
+			}
 
 
 		//	window.Renderer.draw(player.idle);
 
 
 
-	};
+	}
 };

@@ -55,6 +55,8 @@ public:
 		textures.push_back(load);
 		load.loadFromFile("Assets/Art/Star.png");                  //21
 		textures.push_back(load);
+		load.loadFromFile("Assets/Art/s.png");                     //22
+		textures.push_back(load);
 
 
 

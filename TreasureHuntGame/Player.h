@@ -6,7 +6,6 @@
 class Player {
 	
 	bool facingRight = true;
-	
 public:
 	Scene* scene;
 	bool lost = false;
@@ -226,6 +225,9 @@ public:
 				}
 
 			}
+	//	for (auto i : scene->enemies)
+	//		if (rect.intersects(i.rect))
+	//			lost = true;
 	}
 	bool CheckToStandCol() {
 		float height1 = 40 * 1.2 * sizeMultiplier;
