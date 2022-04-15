@@ -22,8 +22,8 @@
 
 class Scene {
 protected:
-	int height = 0;
-	int width = 0;
+//	int height = 0;
+//	int width = 0;
 	int scrW, scrH;
 	sf::Sprite background;
 	float currentDiamond = 0, currentObelisk = 0, currentKey = 0, currentCeilingTrap = 0, currentLightningTrap = 0, currentSaw = 0;

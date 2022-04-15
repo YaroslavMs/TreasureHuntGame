@@ -6,7 +6,10 @@
 class Player {
 	
 	bool facingRight = true;
+	float soundTimer = 0;
+	sf::Sound footstep, coinSound, keySound, healSound;
 public:
+	sf::Sound hitSound;
 	Scene* scene;
 	bool lost = false;
 	int keysFound = 0;
@@ -37,6 +40,16 @@ public:
 		spawnPoint = scene->spawnPoint;
 		dx = dy = 0.1;
 		currentFrame = 0;
+		footstep.setBuffer(DATABASE.soundBuffers.at(0));
+		footstep.setVolume(10);
+		coinSound.setBuffer(DATABASE.soundBuffers.at(1));
+		coinSound.setVolume(10);
+		keySound.setBuffer(DATABASE.soundBuffers.at(2));
+		keySound.setVolume(10);
+		hitSound.setBuffer(DATABASE.soundBuffers.at(3));
+		hitSound.setVolume(10);
+		healSound.setBuffer(DATABASE.soundBuffers.at(4));
+		healSound.setVolume(10);
 	}
 	~Player() {
 		//	delete scene;
@@ -63,6 +76,7 @@ public:
 
 	void update(float time)
 	{
+		soundTimer += time * 0.05;
 		if (crouching)
 			rect.left += dx * time * 0.6f * sizeMultiplier;
 		else rect.left += dx * time * sizeMultiplier;
@@ -75,6 +89,10 @@ public:
 		Collision(1);
 
 		if (jumped) {
+			if (soundTimer > 40) {
+				soundTimer = 0;
+				footstep.play();
+			}
 			currentFrame = 0;
 			jumped = 0;
 			jumping = 1;
@@ -91,12 +109,17 @@ public:
 		if (dx < 0) facingRight = 0;
 		
 		if (crouching) {
+			
 			if (dx == 0) {
 				if (facingRight)crouch.setTextureRect(sf::IntRect(42, 52, 30, 30));
 				else crouch.setTextureRect(sf::IntRect(42 + 30, 52, -30, 30));
 				window.Renderer.draw(crouch);
 			}
 			else {
+				if (soundTimer > 60) {
+					soundTimer = 0;
+					footstep.play();
+				}
 				if (currentFrame >= 8) currentFrame = 0;
 
 				if (dx > 0) {
@@ -144,7 +167,10 @@ public:
 				else if (dx < 0) {
 					run.setTextureRect(sf::IntRect(41 + 120 * int(currentFrame) + 30, 40, -30, 41));
 				}
-
+				if (soundTimer > 40) {
+					soundTimer = 0;
+					footstep.play();
+				}
 				window.Renderer.draw(run);
 			}
 		}
@@ -172,6 +198,7 @@ public:
 							continue;
 						if (scene->mainTilemap[i][j] == '+') {
 							scene->mainTilemap[i][j] = ' ';
+							keySound.play();
 							keysFound++;
 
 						}
@@ -188,18 +215,22 @@ public:
 						}
 						else if (scene->mainTilemap[i][j] == 'p') {
 							scene->mainTilemap[i][j] = ' ';
+							coinSound.play();
 							coinsCollected++;
 
 						}
 						else if (scene->mainTilemap[i][j] == 'o' && lives < 5) {
+							healSound.play();
 							scene->mainTilemap[i][j] = ' ';
 							lives++;
 
 						}
 						else if (scene->mainTilemap[i][j] == '2' && ((int)scene->currentFireTrap >= 4 && (int)scene->currentFireTrap <= 5)) {
+							hitSound.play();
 							lost = true;
 						}
 						else if (scene->mainTilemap[i][j] == 110 || scene->mainTilemap[i][j] == 't' || scene->mainTilemap[i][j] == '0' || scene->mainTilemap[i][j] == '3') {
+							hitSound.play();
 							lost = true;
 						}
 						else if (scene->mainTilemap[i][j] >= 97 && scene->mainTilemap[i][j] <= 109)

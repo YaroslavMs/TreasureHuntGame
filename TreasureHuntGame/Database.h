@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Window.hpp>
+#include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include <vector>
 
@@ -9,6 +10,7 @@ class Database {
 public:
 	std::vector<sf::Texture> textures;
 	std::vector<sf::Font> fonts;
+	std::vector<sf::SoundBuffer> soundBuffers;
 	Database() {
 		sf::Texture load;
 		load.loadFromFile("Assets/Art/0000.png");                  //0
@@ -63,6 +65,19 @@ public:
 		sf::Font loadFont;
 		loadFont.loadFromFile("Assets/Fonts/CaslonAntique.ttf");
 		fonts.push_back(loadFont);
+
+
+		sf::SoundBuffer loadSound;
+		loadSound.loadFromFile("Assets/sfx/footsteps-4.wav");         //0
+		soundBuffers.push_back(loadSound);                          
+		loadSound.loadFromFile("Assets/sfx/Fruit collect 1.wav");     //1
+		soundBuffers.push_back(loadSound);
+		loadSound.loadFromFile("Assets/sfx/Big Egg collect 1.wav");   //2
+		soundBuffers.push_back(loadSound);
+		loadSound.loadFromFile("Assets/sfx/Hit.wav");                 //3
+		soundBuffers.push_back(loadSound);
+		loadSound.loadFromFile("Assets/sfx/Bubble 1.wav");            //4
+		soundBuffers.push_back(loadSound);
 
 	}
 	void AddTextureToDatabase(sf::Texture texture) {

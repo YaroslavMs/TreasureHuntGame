@@ -45,7 +45,7 @@ public:
 
 		for (int k = rect.top / 16 / sizeMultiplier; k < (rect.top + rect.height) / 16 / sizeMultiplier; k++)
 			for (int l = rect.left / 16 / sizeMultiplier; l < (rect.left + rect.width) / 16 / sizeMultiplier; l++)
-				if ((TileMap[k][l] == '5'))
+				if ((scene->mainTilemap[k][l] == '5'))
 				{
 					if (dx > 0) {
 						dx *= -1;

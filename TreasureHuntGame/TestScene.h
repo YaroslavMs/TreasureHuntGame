@@ -61,8 +61,8 @@ public:
 
 		obelisk.setScale(sf::Vector2f(0.7, 0.7));
 
-		height = 142;
-		width = 300;
+		//height = 142;
+	//	width = 300;
 	}
 	~TestScene() {
 	//	delete enemy;
@@ -77,7 +77,7 @@ public:
 	bool Lost() {
 		return player.lost;
 	}
-	void Restart() {
+	void Restart()override {
 		player.Restart();
 	}
 	void Respawn() {
@@ -134,8 +134,10 @@ public:
 			for (int i = 0; i < enemies.size(); i++)
 			{
 				enemies[i].Update(time);
-				if (player.rect.intersects(enemies[i].rect))
+				if (player.rect.intersects(enemies[i].rect)) {
+					player.hitSound.play();
 					player.lost = true;
+				}
 			}
 		}
 		else if (player.lost) {
@@ -306,18 +308,27 @@ public:
 					continue;
 				}
 				else if (mainTilemap[i][j] == '3') {
+					mainTilemap[i][j + 1] == 0;
 					if (currentCeilingTrap >= 14)
 						currentCeilingTrap = 0;
 					if ((int)currentCeilingTrap == 1) {
-						for (int k = 1; k <= 3; k++)
+						for (int k = 1; k <= 3; k++) {
 							mainTilemap[i + k][j] = '0';
+							mainTilemap[i + k][j + 1] = '0';
+						}
 					}
-					else if ((int)currentCeilingTrap == 5)
+					else if ((int)currentCeilingTrap == 5) {
 						mainTilemap[i + 3][j] = ' ';
-					else if ((int)currentCeilingTrap == 7)
+						mainTilemap[i + 3][j + 1] = ' ';
+					}
+					else if ((int)currentCeilingTrap == 7) {
 						mainTilemap[i + 2][j] = ' ';
-					else if ((int)currentCeilingTrap == 9)
+						mainTilemap[i + 2][j + 1] = ' ';
+					}
+					else if ((int)currentCeilingTrap == 9) {
 						mainTilemap[i + 1][j] = ' ';
+						mainTilemap[i + 1][j + 1] = ' ';
+					}
 					ceilingTrap.setTextureRect(sf::IntRect(10 + (int)currentCeilingTrap * 64, 0, 50, 64));
 					ceilingTrap.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
 					window.Renderer.draw(ceilingTrap);
