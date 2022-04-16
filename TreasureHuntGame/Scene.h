@@ -22,11 +22,12 @@
 
 class Scene {
 protected:
-	int height = 0;
-	int width = 0;
+//	int height = 0;
+//	int width = 0;
 	int scrW, scrH;
 	sf::Sprite background;
 	float currentDiamond = 0, currentObelisk = 0, currentKey = 0, currentCeilingTrap = 0, currentLightningTrap = 0, currentSaw = 0;
+	sf::Sound backgroundMus;
 	
 public:
 	int allCoins = 0, score = 0;
@@ -47,6 +48,9 @@ public:
 		background.setTexture(DATABASE.textures.at(11));
 		//background.setTextureRect(sf::IntRect(0,200,1920,620));
 		background.setScale(sf::Vector2f(sf::VideoMode::getDesktopMode().width / background.getGlobalBounds().width / 1, sf::VideoMode::getDesktopMode().height / background.getGlobalBounds().height / 1));
+
+		backgroundMus.setBuffer(DATABASE.soundBuffers.at(8));
+		backgroundMus.setVolume(10);
 	}
 	~Scene() {
 	//	delete[] checkpoints;

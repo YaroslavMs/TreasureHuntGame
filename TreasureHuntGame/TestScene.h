@@ -61,8 +61,8 @@ public:
 
 		obelisk.setScale(sf::Vector2f(0.7, 0.7));
 
-		height = 142;
-		width = 300;
+		//height = 142;
+	//	width = 300;
 	}
 	~TestScene() {
 	//	delete enemy;
@@ -77,13 +77,17 @@ public:
 	bool Lost() {
 		return player.lost;
 	}
-	void Restart() {
+	void Restart()override {
 		player.Restart();
 	}
 	void Respawn() {
 		player.LoseLife();
 	}
 	void Update(float time) override {
+		if (backgroundMus.getStatus() == sf::Music::Stopped) {
+			backgroundMus.play();
+		}
+
 		if (!player.lost && !levelCompleted) {
 			window.Renderer.draw(background);
 
@@ -100,11 +104,13 @@ public:
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))    player.Restart();
 
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-					if (player.onGround) {
-						if (player.crouching)
-							player.dy = -0.20 * 1.2;
-						else  player.dy = -0.27 * 1.2;
-						player.onGround = false; player.jumped = true;
+					if (player.CanJump()) {
+						if (player.onGround) {
+							if (player.crouching)
+								player.dy = -0.20 * 1.2;
+							else  player.dy = -0.27 * 1.2;
+							player.onGround = false; player.jumped = true;
+						}
 					}
 
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::C) || sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)) {
@@ -134,8 +140,10 @@ public:
 			for (int i = 0; i < enemies.size(); i++)
 			{
 				enemies[i].Update(time);
-				if (player.rect.intersects(enemies[i].rect))
+				if (player.rect.intersects(enemies[i].rect)) {
+					player.hitSound.play();
 					player.lost = true;
+				}
 			}
 		}
 		else if (player.lost) {
@@ -162,7 +170,7 @@ public:
 				}
 				else if (mainTilemap[i][j] == ' ') continue;
 				else if (mainTilemap[i][j] == '0') continue; //trap colliders
-				else if (mainTilemap[i][j] == '4' || mainTilemap[i][j] == '5') continue;
+				else if (mainTilemap[i][j] == '4' || mainTilemap[i][j] == '5' || mainTilemap[i][j] == 'o') continue;
 				else if (mainTilemap[i][j] == 'a')  tileset.setTextureRect(sf::IntRect(240, 720, 16, 16));// низ
 				else if (mainTilemap[i][j] == 'c')  tileset.setTextureRect(sf::IntRect(176, 672, 16 * 2, 16 * 2));//ліва стіна
 				else if (mainTilemap[i][j] == 'd')  tileset.setTextureRect(sf::IntRect(512, 672, 16, 16));//права стіна
@@ -264,14 +272,6 @@ public:
 					window.Renderer.draw(doorText);
 					continue;
 				}
-
-				else if (mainTilemap[i][j] == 'o') {
-					healPotion.setTextureRect(sf::IntRect(232, 230, 245 - 232, 18));
-					healPotion.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
-					window.Renderer.draw(healPotion);
-					continue;
-
-				}
 				else if (mainTilemap[i][j] == 'p') {
 					if (currentDiamond >= 5)
 						currentDiamond = 0;
@@ -302,22 +302,39 @@ public:
 					i * 16 * sizeMultiplier - offsetY > window.height + 600) {
 					continue;
 				}
-				if (mainTilemap[i][j] != '3' && mainTilemap[i][j] != 't') {
+				if (mainTilemap[i][j] != '3' && mainTilemap[i][j] != 't' && mainTilemap[i][j] != 'o') {
 					continue;
 				}
+				else if (mainTilemap[i][j] == 'o') {
+					healPotion.setTextureRect(sf::IntRect(232, 230, 245 - 232, 18));
+					healPotion.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
+					window.Renderer.draw(healPotion);
+					continue;
+
+				}
+				
 				else if (mainTilemap[i][j] == '3') {
+					mainTilemap[i][j + 1] == 0;
 					if (currentCeilingTrap >= 14)
 						currentCeilingTrap = 0;
 					if ((int)currentCeilingTrap == 1) {
-						for (int k = 1; k <= 3; k++)
+						for (int k = 1; k <= 3; k++) {
 							mainTilemap[i + k][j] = '0';
+							mainTilemap[i + k][j + 1] = '0';
+						}
 					}
-					else if ((int)currentCeilingTrap == 5)
+					else if ((int)currentCeilingTrap == 5) {
 						mainTilemap[i + 3][j] = ' ';
-					else if ((int)currentCeilingTrap == 7)
+						mainTilemap[i + 3][j + 1] = ' ';
+					}
+					else if ((int)currentCeilingTrap == 7) {
 						mainTilemap[i + 2][j] = ' ';
-					else if ((int)currentCeilingTrap == 9)
+						mainTilemap[i + 2][j + 1] = ' ';
+					}
+					else if ((int)currentCeilingTrap == 9) {
 						mainTilemap[i + 1][j] = ' ';
+						mainTilemap[i + 1][j + 1] = ' ';
+					}
 					ceilingTrap.setTextureRect(sf::IntRect(10 + (int)currentCeilingTrap * 64, 0, 50, 64));
 					ceilingTrap.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
 					window.Renderer.draw(ceilingTrap);

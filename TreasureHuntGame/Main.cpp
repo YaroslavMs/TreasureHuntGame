@@ -78,6 +78,7 @@ int main()
 						auto number = test.ui.MouseClickedWinMenu(mouse);
 						if (number == 0) {
 							test.levelCompleted = false;
+							test.Restart();
 							gameStarted = false;
 						}
 						if (number == 1) {
