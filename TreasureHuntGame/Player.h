@@ -41,17 +41,17 @@ public:
 		dx = dy = 0.1;
 		currentFrame = 0;
 		footstep.setBuffer(DATABASE.soundBuffers.at(0));
-		footstep.setVolume(10);
+		footstep.setVolume(Volume);
 		coinSound.setBuffer(DATABASE.soundBuffers.at(1));
-		coinSound.setVolume(10);
+		coinSound.setVolume(Volume);
 		keySound.setBuffer(DATABASE.soundBuffers.at(2));
-		keySound.setVolume(10);
+		keySound.setVolume(Volume);
 		hitSound.setBuffer(DATABASE.soundBuffers.at(3));
-		hitSound.setVolume(10);
+		hitSound.setVolume(Volume);
 		healSound.setBuffer(DATABASE.soundBuffers.at(4));
-		healSound.setVolume(10);
+		healSound.setVolume(Volume);
 		finishSound.setBuffer(DATABASE.soundBuffers.at(5));
-		finishSound.setVolume(10);
+		finishSound.setVolume(Volume);
 	}
 	~Player() {
 		//	delete scene;
