@@ -68,7 +68,7 @@ public:
 
 
 		sf::SoundBuffer loadSound;
-		loadSound.loadFromFile("Assets/sfx/Retro FootStep Grass 01.wav");         //0
+		loadSound.loadFromFile("Assets/sfx/step24.wav");         //0
 		soundBuffers.push_back(loadSound);                          
 		loadSound.loadFromFile("Assets/sfx/Fruit collect 1.wav");     //1
 		soundBuffers.push_back(loadSound);
