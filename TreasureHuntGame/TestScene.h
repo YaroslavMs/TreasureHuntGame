@@ -164,7 +164,7 @@ public:
 				}
 				else if (mainTilemap[i][j] == ' ') continue;
 				else if (mainTilemap[i][j] == '0') continue; //trap colliders
-				else if (mainTilemap[i][j] == '4' || mainTilemap[i][j] == '5') continue;
+				else if (mainTilemap[i][j] == '4' || mainTilemap[i][j] == '5' || mainTilemap[i][j] == 'o') continue;
 				else if (mainTilemap[i][j] == 'a')  tileset.setTextureRect(sf::IntRect(240, 720, 16, 16));// низ
 				else if (mainTilemap[i][j] == 'c')  tileset.setTextureRect(sf::IntRect(176, 672, 16 * 2, 16 * 2));//ліва стіна
 				else if (mainTilemap[i][j] == 'd')  tileset.setTextureRect(sf::IntRect(512, 672, 16, 16));//права стіна
@@ -266,14 +266,6 @@ public:
 					window.Renderer.draw(doorText);
 					continue;
 				}
-
-				else if (mainTilemap[i][j] == 'o') {
-					healPotion.setTextureRect(sf::IntRect(232, 230, 245 - 232, 18));
-					healPotion.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
-					window.Renderer.draw(healPotion);
-					continue;
-
-				}
 				else if (mainTilemap[i][j] == 'p') {
 					if (currentDiamond >= 5)
 						currentDiamond = 0;
@@ -304,9 +296,17 @@ public:
 					i * 16 * sizeMultiplier - offsetY > window.height + 600) {
 					continue;
 				}
-				if (mainTilemap[i][j] != '3' && mainTilemap[i][j] != 't') {
+				if (mainTilemap[i][j] != '3' && mainTilemap[i][j] != 't' && mainTilemap[i][j] != 'o') {
 					continue;
 				}
+				else if (mainTilemap[i][j] == 'o') {
+					healPotion.setTextureRect(sf::IntRect(232, 230, 245 - 232, 18));
+					healPotion.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
+					window.Renderer.draw(healPotion);
+					continue;
+
+				}
+				
 				else if (mainTilemap[i][j] == '3') {
 					mainTilemap[i][j + 1] == 0;
 					if (currentCeilingTrap >= 14)

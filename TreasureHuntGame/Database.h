@@ -68,7 +68,7 @@ public:
 
 
 		sf::SoundBuffer loadSound;
-		loadSound.loadFromFile("Assets/sfx/footsteps-4.wav");         //0
+		loadSound.loadFromFile("Assets/sfx/Retro FootStep Grass 01.wav");         //0
 		soundBuffers.push_back(loadSound);                          
 		loadSound.loadFromFile("Assets/sfx/Fruit collect 1.wav");     //1
 		soundBuffers.push_back(loadSound);
@@ -79,6 +79,8 @@ public:
 		loadSound.loadFromFile("Assets/sfx/Bubble 1.wav");            //4
 		soundBuffers.push_back(loadSound);
 		loadSound.loadFromFile("Assets/sfx/levelCompleted.wav");      //5
+		soundBuffers.push_back(loadSound);
+		loadSound.loadFromFile("Assets/sfx/button.wav");              //6
 		soundBuffers.push_back(loadSound);
 
 	}

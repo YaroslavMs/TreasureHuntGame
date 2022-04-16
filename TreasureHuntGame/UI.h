@@ -29,9 +29,14 @@ class UI {
 	sf::Sprite winPanel, Star, winPanelButton, winButton;
 
 	int scrW, scrH;
+	sf::Sound clickSound;
 public:
 	bool gamePaused = false;
 	UI() {
+		clickSound.setBuffer(DATABASE.soundBuffers.at(6));
+		clickSound.setVolume(10);
+
+
 		coinsText.setFont(DATABASE.fonts.at(0));
 		coinsText.setCharacterSize(40);
 		coinsText.setFillColor(sf::Color::Yellow);
@@ -250,7 +255,11 @@ public:
 	}
 	bool RespawnButton(sf::Vector2i mousePos) {
 		button.setPosition(sf::Vector2f(window.width / 2 - button.getGlobalBounds().width / 2, window.height / 2 + 200));
-		return CheckCollision(button.getGlobalBounds(), mousePos);
+		if (CheckCollision(button.getGlobalBounds(), mousePos)) {
+			clickSound.play();
+			return true;
+		}
+		return false;
 	}
 
 	bool CheckCollision(sf::FloatRect rect, sf::Vector2i mousePos) {
@@ -269,6 +278,7 @@ public:
 		for (int i = 2; i <= 4; i++) {
 			button.setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2 - 100 * 2, 150 + 180 * i));
 			if ((CheckCollision(button.getGlobalBounds(), mouse.getPosition(window.Renderer)))) {
+				clickSound.play();
 				return i;
 			}
 		}
@@ -277,6 +287,7 @@ public:
 		for (int i = 0; i < 3; i++) {
 			winButton.setPosition(sf::Vector2f(scrW / 2 - scrW / 6 + scrW / 6 * i - winButton.getGlobalBounds().width / 2, scrH / 2 + scrH / 5 - winButton.getGlobalBounds().height / 2));
 			if ((CheckCollision(winButton.getGlobalBounds(), mouse.getPosition(window.Renderer)))) {
+				clickSound.play();
 				return i;
 			}
 		}
