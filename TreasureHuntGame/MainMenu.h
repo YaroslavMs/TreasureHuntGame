@@ -11,11 +11,14 @@ class MainMenu {
 	sf::Sprite background, button;
 	sf::Text text[3], name;
 	sf::Sound clickSound;
+	sf::Sound music;
 
 public:
 	MainMenu() {
 		clickSound.setBuffer(DATABASE.soundBuffers.at(6));
 		clickSound.setVolume(10);
+		music.setBuffer(DATABASE.soundBuffers.at(7));
+		music.setVolume(10);
 
 		background.setTexture(DATABASE.textures.at(0));
 		background.setTextureRect(sf::IntRect(1160, 81, 1294 - 1160, 190 - 81));
@@ -48,6 +51,9 @@ public:
 
 	}
 	int UpdateMenu() {
+		if (music.getStatus() == sf::Sound::Stopped || music.getStatus() == sf::Sound::Paused) {
+			music.play();
+		}
 		window.Renderer.draw(background);
 		sf::Mouse mouse;
 		sf::Vector2i mousePos = mouse.getPosition(window.Renderer);
@@ -82,6 +88,7 @@ public:
 			button.setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2 - 100 * 2, 250 + 180 * i));
 			if ((CheckCollision(button.getGlobalBounds(), mouse.getPosition(window.Renderer)))) {
 				clickSound.play();
+				music.pause();
 				return i;
 			}
 		}

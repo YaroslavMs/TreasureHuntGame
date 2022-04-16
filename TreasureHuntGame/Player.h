@@ -4,7 +4,7 @@
 #include "Database.h"
 
 class Player {
-	
+
 	bool facingRight = true;
 	float soundTimer = 0;
 	sf::Sound footstep, coinSound, keySound, healSound, finishSound;
@@ -96,8 +96,9 @@ public:
 				footstep.play();
 			}
 			currentFrame = 0;
-			jumped = 0;
 			jumping = 1;
+			jumped = 0;
+
 		}
 		currentFrame += time * 0.005;
 		idle.setPosition(rect.left - scene->offsetX, rect.top - scene->offsetY);
@@ -109,9 +110,9 @@ public:
 
 		if (dx > 0) facingRight = 1;
 		if (dx < 0) facingRight = 0;
-		
+
 		if (crouching) {
-			
+
 			if (dx == 0) {
 				if (facingRight)crouch.setTextureRect(sf::IntRect(42, 52, 30, 30));
 				else crouch.setTextureRect(sf::IntRect(42 + 30, 52, -30, 30));
@@ -176,10 +177,10 @@ public:
 				window.Renderer.draw(run);
 			}
 		}
-	//	if (lost) {
-	//		lost = false;
-	//		LoseLife();
-	//	}
+		//	if (lost) {
+		//		lost = false;
+		//		LoseLife();
+		//	}
 		dx = 0;
 	}
 
@@ -259,9 +260,9 @@ public:
 				}
 
 			}
-	//	for (auto i : scene->enemies)
-	//		if (rect.intersects(i.rect))
-	//			lost = true;
+		//	for (auto i : scene->enemies)
+		//		if (rect.intersects(i.rect))
+		//			lost = true;
 	}
 	bool CheckToStandCol() {
 		float height1 = 40 * 1.2 * sizeMultiplier;
@@ -280,5 +281,23 @@ public:
 			}
 
 		return true;
+	}
+	bool CanJump() {
+		auto top = rect.top;
+		auto height = rect.height;
+		auto left = rect.left;
+		auto width = rect.width;
+
+		int i = int(top) / 16 / sizeMultiplier - 1;
+		for (int j = (int)left / 16 / sizeMultiplier; j < (left + width) / 16 / sizeMultiplier; j++)
+		{
+			if (scene->mainTilemap[i][j] >= 97 && scene->mainTilemap[i][j] <= 109)
+			{
+				return false;
+			}
+		}
+		return true;
+
+
 	}
 };

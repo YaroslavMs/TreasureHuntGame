@@ -84,6 +84,10 @@ public:
 		player.LoseLife();
 	}
 	void Update(float time) override {
+		if (backgroundMus.getStatus() == sf::Music::Stopped) {
+			backgroundMus.play();
+		}
+
 		if (!player.lost && !levelCompleted) {
 			window.Renderer.draw(background);
 
@@ -100,11 +104,13 @@ public:
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))    player.Restart();
 
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-					if (player.onGround) {
-						if (player.crouching)
-							player.dy = -0.20 * 1.2;
-						else  player.dy = -0.27 * 1.2;
-						player.onGround = false; player.jumped = true;
+					if (player.CanJump()) {
+						if (player.onGround) {
+							if (player.crouching)
+								player.dy = -0.20 * 1.2;
+							else  player.dy = -0.27 * 1.2;
+							player.onGround = false; player.jumped = true;
+						}
 					}
 
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::C) || sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)) {
