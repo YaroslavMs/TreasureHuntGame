@@ -7,7 +7,7 @@ class Player {
 	
 	bool facingRight = true;
 	float soundTimer = 0;
-	sf::Sound footstep, coinSound, keySound, healSound;
+	sf::Sound footstep, coinSound, keySound, healSound, finishSound;
 public:
 	sf::Sound hitSound;
 	Scene* scene;
@@ -50,6 +50,8 @@ public:
 		hitSound.setVolume(10);
 		healSound.setBuffer(DATABASE.soundBuffers.at(4));
 		healSound.setVolume(10);
+		finishSound.setBuffer(DATABASE.soundBuffers.at(5));
+		finishSound.setVolume(10);
 	}
 	~Player() {
 		//	delete scene;
@@ -204,6 +206,7 @@ public:
 						}
 						else if (scene->mainTilemap[i][j] == 'z') {
 							if (keysFound == scene->allKeys) {
+								finishSound.play();
 								scene->score = ((float)coinsCollected / (float)scene->allCoins) * 3;
 								scene->levelCompleted = true;
 							}

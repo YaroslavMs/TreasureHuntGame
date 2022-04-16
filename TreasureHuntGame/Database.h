@@ -78,6 +78,8 @@ public:
 		soundBuffers.push_back(loadSound);
 		loadSound.loadFromFile("Assets/sfx/Bubble 1.wav");            //4
 		soundBuffers.push_back(loadSound);
+		loadSound.loadFromFile("Assets/sfx/levelCompleted.wav");      //5
+		soundBuffers.push_back(loadSound);
 
 	}
 	void AddTextureToDatabase(sf::Texture texture) {
