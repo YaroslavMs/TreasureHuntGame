@@ -34,8 +34,7 @@ public:
 	bool gamePaused = false;
 	UI() {
 		clickSound.setBuffer(DATABASE.soundBuffers.at(6));
-		clickSound.setVolume(10);
-
+		clickSound.setVolume(Volume);
 
 		coinsText.setFont(DATABASE.fonts.at(0));
 		coinsText.setCharacterSize(40);
@@ -147,6 +146,9 @@ public:
 		winButton.setTextureRect(sf::IntRect(0, 0, 200, 60));
 		winButton.setScale(1.5, 1.5);
 
+	}
+	void UpdateVolume() {
+		clickSound.setVolume(Volume);
 	}
 
 	void Update(float time) {

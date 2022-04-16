@@ -50,7 +50,7 @@ public:
 		background.setScale(sf::Vector2f(sf::VideoMode::getDesktopMode().width / background.getGlobalBounds().width / 1, sf::VideoMode::getDesktopMode().height / background.getGlobalBounds().height / 1));
 
 		backgroundMus.setBuffer(DATABASE.soundBuffers.at(8));
-		backgroundMus.setVolume(10);
+		backgroundMus.setVolume(Volume);
 	}
 	~Scene() {
 	//	delete[] checkpoints;
