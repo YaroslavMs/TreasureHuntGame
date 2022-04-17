@@ -16,7 +16,7 @@ class TestScene : public Scene {
 	std::vector<Enemy> enemies;
 public:
 	UI ui;
-	TestScene() : Scene(sf::FloatRect(100 * sizeMultiplier, 2200 * sizeMultiplier, 28 * 1.2 * sizeMultiplier, 40 * 1.2 * sizeMultiplier)), player(this){
+	TestScene() : Scene(sf::FloatRect(100 * sizeMultiplier, 180 * sizeMultiplier, 28 * 1.2 * sizeMultiplier, 40 * 1.2 * sizeMultiplier)), player(this){
 		//	CheckPoint checkpoint[] = { CheckPoint(132, 61), CheckPoint(131, 61), CheckPoint(), CheckPoint(), CheckPoint() };
 		//	checkpoints[0] = CheckPoint(132, 61);
 		//	checkpoints[1] = CheckPoint(131, 61);
