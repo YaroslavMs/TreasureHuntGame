@@ -13,12 +13,22 @@ class MainMenu {
 	sf::Sound clickSound;
 	sf::Sound music;
 
+	//OptionsMenu
+	sf::Text Opt;
+	sf::Text options[1];
+	sf::CircleShape volumeCircle;
+	sf::RectangleShape volumeRect, volumeAmount;
+	sf::FloatRect changeVolumeCol;
+	sf::Text LeaveOptMenu;
+
+
 public:
+	bool MainMenuIsActive = true;
 	MainMenu() {
 		clickSound.setBuffer(DATABASE.soundBuffers.at(6));
-		clickSound.setVolume(10);
+		clickSound.setVolume(Volume);
 		music.setBuffer(DATABASE.soundBuffers.at(7));
-		music.setVolume(10);
+		music.setVolume(Volume);
 
 		background.setTexture(DATABASE.textures.at(0));
 		background.setTextureRect(sf::IntRect(1160, 81, 1294 - 1160, 190 - 81));
@@ -49,12 +59,69 @@ public:
 			text[i - 1].setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2, 275 + 180 * i));
 
 
+		Opt.setString("Options");
+		Opt.setFillColor(sf::Color::Red);
+		Opt.setOutlineColor(sf::Color::White);
+		Opt.setOutlineThickness(5);
+		Opt.setCharacterSize(200);
+		Opt.setFont(DATABASE.fonts.at(0));
+		Opt.setOrigin(Opt.getGlobalBounds().width / 2, Opt.getGlobalBounds().height / 2);
+		Opt.setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2, 70));
+
+		options[0].setString("Volume: ");
+		for (int i = 0; i < 1; i++) {
+			options[i].setFont(DATABASE.fonts.at(0));
+			options[i].setFillColor(sf::Color::Red);
+			options[i].setCharacterSize(80);
+			options[i].setOutlineColor(sf::Color::White);
+			options[i].setOutlineThickness(2);
+			options[i].setOrigin(options[i].getGlobalBounds().width / 2, options[i].getGlobalBounds().height / 2);
+		}
+		for (int i = 1; i <= 1; i++)
+			options[i - 1].setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 8, 100 + 180 * i));
+
+		volumeRect.setSize(sf::Vector2f(100 * 4, 3 * 4));
+		volumeRect.setFillColor(sf::Color::Black);
+		volumeRect.setOrigin(sf::Vector2f(0, volumeRect.getSize().y / 2));
+		volumeRect.setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 8 + 200, 310));
+		changeVolumeCol.left = sf::VideoMode::getDesktopMode().width / 8 + 200;
+		changeVolumeCol.top = 310 - volumeRect.getSize().y * 2;
+		changeVolumeCol.width = volumeRect.getSize().x;
+		changeVolumeCol.height = volumeRect.getSize().y * 4;
+
+		volumeAmount.setSize(sf::Vector2f(Volume * 4, 3 * 4));
+		volumeAmount.setFillColor(sf::Color::Red);
+		volumeAmount.setOrigin(sf::Vector2f(0, volumeRect.getSize().y / 2));
+		volumeAmount.setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 8 + 200, 310));
+
+		volumeCircle.setRadius(10);
+		volumeCircle.setOrigin(sf::Vector2f(10, 10));
+		volumeCircle.setFillColor(sf::Color::White);
+		volumeCircle.setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 8 + 200 + Volume * 4, 310));
+
+		LeaveOptMenu.setString("Main menu");
+		LeaveOptMenu.setFont(DATABASE.fonts.at(0));
+		LeaveOptMenu.setFillColor(sf::Color::Red);
+		LeaveOptMenu.setCharacterSize(80);
+		LeaveOptMenu.setOutlineColor(sf::Color::White);
+		LeaveOptMenu.setOutlineThickness(2);
+		LeaveOptMenu.setOrigin(LeaveOptMenu.getGlobalBounds().width / 2, LeaveOptMenu.getGlobalBounds().height / 2);
+		LeaveOptMenu.setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2,sf::VideoMode::getDesktopMode().height - 100));
+
 	}
 	int UpdateMenu() {
 		if (music.getStatus() == sf::Sound::Stopped || music.getStatus() == sf::Sound::Paused) {
 			music.play();
 		}
 		window.Renderer.draw(background);
+		if (MainMenuIsActive) {
+			DrawMainMenu();
+		}
+		else OptionsMenu();
+		return 0;
+	}
+	void DrawMainMenu() {
+
 		sf::Mouse mouse;
 		sf::Vector2i mousePos = mouse.getPosition(window.Renderer);
 		for (int i = 1; i <= 3; i++) {
@@ -68,7 +135,35 @@ public:
 			window.Renderer.draw(text[i - 1]);
 		}
 		window.Renderer.draw(name);
-		return 0;
+
+	}
+	void OptionsMenu() {
+		sf::Mouse mouse;
+		sf::Vector2i mousePos = mouse.getPosition(window.Renderer);
+		window.Renderer.draw(Opt);
+		window.Renderer.draw(options[0]);
+		window.Renderer.draw(volumeRect);
+		window.Renderer.draw(volumeAmount);
+		window.Renderer.draw(volumeCircle);
+
+		button.setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2 - 200, sf::VideoMode::getDesktopMode().height - 120));
+		if (CheckCollision(button.getGlobalBounds(), mousePos)) {
+			button.setColor(sf::Color(100, 0, 0, 255));
+		}
+		else button.setColor(sf::Color::White);
+		window.Renderer.draw(button);
+		window.Renderer.draw(LeaveOptMenu);
+
+	}
+	void ChangeVolume() {
+		sf::Mouse mouse;
+		sf::Vector2i mousePos = mouse.getPosition(window.Renderer);
+		if (CheckCollision(changeVolumeCol, mousePos)) {
+			volumeCircle.setPosition(sf::Vector2f(mousePos.x, 310));
+			Volume = (mousePos.x - (sf::VideoMode::getDesktopMode().width / 8 + 200)) / 4;
+			volumeAmount.setSize(sf::Vector2f(Volume * 4, 3 * 4));
+
+		}
 	}
 
 	bool CheckCollision(sf::FloatRect rect, sf::Vector2i mousePos) {
@@ -84,14 +179,30 @@ public:
 	}
 
 	int MouseClicked(sf::Mouse mouse) {
-		for (int i = 1; i <= 3; i++) {
-			button.setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2 - 100 * 2, 250 + 180 * i));
-			if ((CheckCollision(button.getGlobalBounds(), mouse.getPosition(window.Renderer)))) {
-				clickSound.play();
-				music.pause();
-				return i;
+		if (MainMenuIsActive) {
+			for (int i = 1; i <= 3; i++) {
+				button.setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2 - 100 * 2, 250 + 180 * i));
+				if ((CheckCollision(button.getGlobalBounds(), mouse.getPosition(window.Renderer)))) {
+					clickSound.play();
+					music.pause();
+					if (i == 2)
+						MainMenuIsActive = false;
+					return i;
+				}
 			}
 		}
+		else {
+			button.setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2 - 200, sf::VideoMode::getDesktopMode().height - 120));
+			if ((CheckCollision(button.getGlobalBounds(), mouse.getPosition(window.Renderer)))) {
+				clickSound.play();
+				MainMenuIsActive = true;
+			}
+		}
+		return 0;
+	}
+	void UpdateVolume() {
+		clickSound.setVolume(Volume);
+		music.setVolume(Volume);
 	}
 
 

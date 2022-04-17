@@ -38,6 +38,13 @@ int main()
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) && !test.Lost()) {
 				test.ui.gamePaused = true;
 			}
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)){
+				if (!mainMenu.MainMenuIsActive && !gameStarted) {
+					mainMenu.ChangeVolume();
+					test.UpdateVolume();
+					mainMenu.UpdateVolume();
+				}
+			}
 			if (event.type == sf::Event::EventType::MouseButtonPressed) {
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
 					sf::Mouse mouse;

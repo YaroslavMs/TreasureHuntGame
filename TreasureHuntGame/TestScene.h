@@ -357,4 +357,9 @@ public:
 
 
 	}
+	void UpdateVolume() {
+		player.UpdateVolume();
+		ui.UpdateVolume();
+		backgroundMus.setVolume(Volume);
+	}
 };

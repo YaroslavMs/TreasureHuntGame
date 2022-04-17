@@ -300,4 +300,12 @@ public:
 
 
 	}
+	void UpdateVolume() {
+		footstep.setVolume(Volume);
+		coinSound.setVolume(Volume);
+		keySound.setVolume(Volume);
+		hitSound.setVolume(Volume);
+		healSound.setVolume(Volume);
+		finishSound.setVolume(Volume);
+	}
 };
