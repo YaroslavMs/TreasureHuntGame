@@ -209,6 +209,9 @@ public:
 							if (keysFound == scene->allKeys) {
 								finishSound.play();
 								scene->score = ((float)coinsCollected / (float)scene->allCoins) * 3;
+								if (scene->score == 0) {
+									scene->score = 1;
+								}
 								scene->levelCompleted = true;
 							}
 						}

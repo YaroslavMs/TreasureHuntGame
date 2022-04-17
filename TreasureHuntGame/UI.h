@@ -4,7 +4,6 @@
 #include "Renderer.h"
 #include "Scene.h"
 #include "Database.h"
-#include "Sprite.h"
 #include "Player.h"
 
 

@@ -5,7 +5,6 @@
 #include "Renderer.h"
 #include "Scene.h"
 #include "Database.h"
-#include "Sprite.h"
 #include "TestScene.h"
 #include "MainMenu.h"
 //#include "Object.h"
@@ -14,7 +13,7 @@ int main()
 {
 	bool gameStarted = false;
 	MainMenu mainMenu;
-	Level levels[2] = { Level(FirstMap, sf::Vector2f(100, 2200)), Level(SecondMap, sf::Vector2f(100, 180)) };
+	Level levels[2] = { Level(FirstMap, sf::Vector2f(100, 2200), 0), Level(SecondMap, sf::Vector2f(100, 180), 1) };
 	sf::Clock clock;
 	int currentLevel = 0;
 	while (window.Renderer.isOpen()) {
@@ -81,6 +80,7 @@ int main()
 					}
 					else if (levels[currentLevel].levelCompleted) {
 						auto number = levels[currentLevel].ui.MouseClickedWinMenu(mouse);
+						levels[currentLevel].SaveScore();
 						if (number == 0) {
 							levels[currentLevel].levelCompleted = false;
 							levels[currentLevel].Restart();

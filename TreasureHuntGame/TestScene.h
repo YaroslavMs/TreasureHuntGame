@@ -3,7 +3,6 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 #include "TileMaps.h"
-#include "Object.h"
 #include "Scene.h"
 #include "Database.h"
 #include "Renderer.h"
@@ -16,10 +15,11 @@ class Level : public Scene {
 	std::vector<Enemy> enemies;
 public:
 	UI ui;
-	Level(std::vector<std::string> Tilemap, sf::Vector2f pos) : Scene(sf::FloatRect(pos.x * sizeMultiplier, pos.y * sizeMultiplier, 28 * 1.2 * sizeMultiplier, 40 * 1.2 * sizeMultiplier)), player(this){
+	Level(std::vector<std::string> Tilemap, sf::Vector2f pos, int levelNumb) : Scene(sf::FloatRect(pos.x * sizeMultiplier, pos.y * sizeMultiplier, 28 * 1.2 * sizeMultiplier, 40 * 1.2 * sizeMultiplier)), player(this){
 		offsetX = player.rect.left - sf::VideoMode().getDesktopMode().width / 2;
 		offsetY = player.rect.top - sf::VideoMode().getDesktopMode().height / 2 - 150;
 
+		levelNumber = levelNumb;
 		mainTilemap = Tilemap;
 		copyTilemap = Tilemap;
 		doorText.setFont(DATABASE.fonts.at(0));
@@ -58,9 +58,10 @@ public:
 			}
 
 		obelisk.setScale(sf::Vector2f(0.7, 0.7));
-
+		LoadScore();
 		//height = 142;
 	//	width = 300;
+		
 	}
 	~Level() {
 	//	delete enemy;
