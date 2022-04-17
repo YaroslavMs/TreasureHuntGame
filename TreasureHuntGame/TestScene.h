@@ -156,10 +156,8 @@ public:
 
 	};
 	void DrawMap() override {
-
-
-		for (int i = 0; i < H; i++)
-			for (int j = 0; j < W; j++)
+		for (int i = 0; i < mainTilemap.size(); i++)
+			for (int j = 0; j <= mainTilemap[i].length(); j++)
 			{
 				if (j * 16 * sizeMultiplier - offsetX < -600 ||
 					i * 16 * sizeMultiplier - offsetY < -600 ||
@@ -292,8 +290,8 @@ public:
 				tileset.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
 				window.Renderer.draw(tileset);
 			}
-		for (int i = 0; i < H; i++)
-			for (int j = 0; j < W; j++)
+		for (int i = 0; i < mainTilemap.size(); i++)
+			for (int j = 0; j <= mainTilemap[i].length(); j++)
 			{
 				if (j * 16 * sizeMultiplier - offsetX < -600 ||
 					i * 16 * sizeMultiplier - offsetY < -600 ||
