@@ -66,7 +66,7 @@ public:
 	void SaveScore() {
 		
 		if (score > bestScore) {
-			std::string file = "Saves/Level" + std::to_string(levelNumber) + ".bin";
+			std::string file = "Saves/Level" + std::to_string(levelNumber) + ".dat";
 			std::ofstream saveFile(file, std::ios::out | std::ios::binary);
 			if (saveFile) {
 				saveFile.write((char*)&score, sizeof(score));
@@ -77,7 +77,7 @@ public:
 		}
 	}
 	void LoadScore() {
-		std::string file = "Saves/Level" + std::to_string(levelNumber) + ".bin";
+		std::string file = "Saves/Level" + std::to_string(levelNumber) + ".dat";
 		std::ifstream loadFile(file, std::ios::out | std::ios::binary);
 		if (loadFile) {
 			loadFile.read((char*)&bestScore, sizeof(score));

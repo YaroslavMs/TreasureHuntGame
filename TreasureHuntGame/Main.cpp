@@ -9,8 +9,12 @@
 #include "MainMenu.h"
 //#include "Object.h"
 
+void SaveVolume();
+void LoadVolume();
+
 int main()
 {
+	LoadVolume();
 	bool gameStarted = false;
 	MainMenu mainMenu;
 	Level levels[2] = { Level(FirstMap, sf::Vector2f(100, 2200), 0), Level(SecondMap, sf::Vector2f(100, 180), 1) };
@@ -102,7 +106,25 @@ int main()
 		if (window.Renderer.isOpen())
 			window.Renderer.display();
 	}
+	SaveVolume();
 	//	if (scene != nullptr)
 	//		delete scene;
 		//	delete menu;
+}
+
+
+void SaveVolume() {
+
+		std::ofstream saveFile("Saves/Volume.dat", std::ios::out | std::ios::binary);
+		if (saveFile) {
+			saveFile.write((char*)&Volume, sizeof(Volume));
+			saveFile.close();
+		}
+}
+void LoadVolume() {
+	std::ifstream loadFile("Saves/Volume.dat", std::ios::out | std::ios::binary);
+	if (loadFile) {
+		loadFile.read((char*)&Volume, sizeof(Volume));
+		loadFile.close();
+	}
 }
