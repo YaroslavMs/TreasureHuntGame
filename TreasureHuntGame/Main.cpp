@@ -14,34 +14,32 @@ int main()
 {
 	bool gameStarted = false;
 	MainMenu mainMenu;
-	TestScene test;
-	//Scene* scene = nullptr; //= &test;
+	Level levels[2] = { Level(FirstMap, sf::Vector2f(100, 2200)), Level(SecondMap, sf::Vector2f(100, 180)) };
 	sf::Clock clock;
-	sf::Sprite heart;
+	int currentLevel = 0;
 	while (window.Renderer.isOpen()) {
 		window.Renderer.clear(sf::Color::Black);
-		//window.Renderer.draw(fonSp);
 		if (!gameStarted) {
 			auto number = mainMenu.UpdateMenu();
 		}
-		if (test.isOver()) {
-			test.Restart();
+		if (levels[currentLevel].isOver()) {
+			levels[currentLevel].Restart();
 			gameStarted = false;
 		}
 		float time = clock.restart().asMicroseconds();
-		if (gameStarted/* && !test.levelCompleted*/)
-			test.Update(time);
+		if (gameStarted)
+			levels[currentLevel].Update(time);
 		sf::Event event;
 		while (window.Renderer.pollEvent(event)) {
 			if (event.type == sf::Event::EventType::Closed)
 				window.Renderer.close();
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) && !test.Lost()) {
-				test.ui.gamePaused = true;
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) && !levels[currentLevel].Lost()) {
+				levels[currentLevel].ui.gamePaused = true;
 			}
-			if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)){
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
 				if (!mainMenu.MainMenuIsActive && !gameStarted) {
 					mainMenu.ChangeVolume();
-					test.UpdateVolume();
+					levels[currentLevel].UpdateVolume();
 					mainMenu.UpdateVolume();
 				}
 			}
@@ -60,37 +58,41 @@ int main()
 							window.Renderer.close();
 						}
 					}
-					else if (test.ui.gamePaused) {
-						auto number = test.ui.MouseClicked(mouse);
+					else if (levels[currentLevel].ui.gamePaused) {
+						auto number = levels[currentLevel].ui.MouseClicked(mouse);
 						if (number == 2) {
-							test.ui.gamePaused = false;
+							levels[currentLevel].ui.gamePaused = false;
 						}
 						else if (number == 3) {
-							test.ui.gamePaused = false;
-							test.Restart();
+							levels[currentLevel].ui.gamePaused = false;
+							levels[currentLevel].Restart();
 						}
 						else if (number == 4) {
-							test.ui.gamePaused = false;
+							levels[currentLevel].ui.gamePaused = false;
 							gameStarted = false;
 						}
 					}
-					else if (test.Lost()) {
-						if (test.ui.RespawnButton(mouse.getPosition())) {
-							test.Respawn();
-							if (test.isOver())
-								test.Restart();
+					else if (levels[currentLevel].Lost()) {
+						if (levels[currentLevel].ui.RespawnButton(mouse.getPosition())) {
+							levels[currentLevel].Respawn();
+							if (levels[currentLevel].isOver())
+								levels[currentLevel].Restart();
 						}
 					}
-					else if (test.levelCompleted) {
-						auto number = test.ui.MouseClickedWinMenu(mouse);
+					else if (levels[currentLevel].levelCompleted) {
+						auto number = levels[currentLevel].ui.MouseClickedWinMenu(mouse);
 						if (number == 0) {
-							test.levelCompleted = false;
-							test.Restart();
+							levels[currentLevel].levelCompleted = false;
+							levels[currentLevel].Restart();
 							gameStarted = false;
 						}
-						if (number == 1) {
-							test.levelCompleted = false;
-							test.Restart();
+						else if (number == 1) {
+							levels[currentLevel].levelCompleted = false;
+							levels[currentLevel].Restart();
+						}
+						else if (number == 2) {
+							if (currentLevel < 1)
+								currentLevel++;
 						}
 
 					}

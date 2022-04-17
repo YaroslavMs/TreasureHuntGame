@@ -11,19 +11,17 @@
 #include "Enemy.h"
 #include "UI.h"
 
-class TestScene : public Scene {
+class Level : public Scene {
 	Player player;
 	std::vector<Enemy> enemies;
 public:
 	UI ui;
-	TestScene() : Scene(sf::FloatRect(100 * sizeMultiplier, 180 * sizeMultiplier, 28 * 1.2 * sizeMultiplier, 40 * 1.2 * sizeMultiplier)), player(this){
-		//	CheckPoint checkpoint[] = { CheckPoint(132, 61), CheckPoint(131, 61), CheckPoint(), CheckPoint(), CheckPoint() };
-		//	checkpoints[0] = CheckPoint(132, 61);
-		//	checkpoints[1] = CheckPoint(131, 61);
+	Level(std::vector<std::string> Tilemap, sf::Vector2f pos) : Scene(sf::FloatRect(pos.x * sizeMultiplier, pos.y * sizeMultiplier, 28 * 1.2 * sizeMultiplier, 40 * 1.2 * sizeMultiplier)), player(this){
 		offsetX = player.rect.left - sf::VideoMode().getDesktopMode().width / 2;
 		offsetY = player.rect.top - sf::VideoMode().getDesktopMode().height / 2 - 150;
 
-		mainTilemap = TileMap;
+		mainTilemap = Tilemap;
+		copyTilemap = Tilemap;
 		doorText.setFont(DATABASE.fonts.at(0));
 		doorText.setCharacterSize(20);
 		doorText.setFillColor(sf::Color::Yellow);
@@ -64,7 +62,7 @@ public:
 		//height = 142;
 	//	width = 300;
 	}
-	~TestScene() {
+	~Level() {
 	//	delete enemy;
 	}
 	bool isOver() {

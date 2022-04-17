@@ -72,7 +72,7 @@ public:
 		dy = 0.1;
 		currentFrame = 0;
 		lives = 5;
-		scene->mainTilemap = TileMap;
+		scene->mainTilemap = scene->copyTilemap;
 		rect = spawnPoint;
 	}
 
