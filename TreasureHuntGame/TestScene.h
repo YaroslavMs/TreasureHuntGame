@@ -15,13 +15,15 @@ class Level : public Scene {
 	std::vector<Enemy> enemies;
 public:
 	UI ui;
-	Level(std::vector<std::string> Tilemap, sf::Vector2f pos, int levelNumb) : Scene(sf::FloatRect(pos.x * sizeMultiplier, pos.y * sizeMultiplier, 28 * 1.2 * sizeMultiplier, 40 * 1.2 * sizeMultiplier)), player(this){
+	Level(std::vector<std::string> Tilemap, sf::Vector2f pos, int levelNumb) : Scene(sf::FloatRect(pos.x* sizeMultiplier, pos.y* sizeMultiplier, 28 * 1.2 * sizeMultiplier, 40 * 1.2 * sizeMultiplier)), player(this) {
 		offsetX = player.rect.left - sf::VideoMode().getDesktopMode().width / 2;
 		offsetY = player.rect.top - sf::VideoMode().getDesktopMode().height / 2 - 150;
 
 		levelNumber = levelNumb;
 		mainTilemap = Tilemap;
 		copyTilemap = Tilemap;
+		H = mainTilemap.size();
+		W = mainTilemap[1].length();
 		doorText.setFont(DATABASE.fonts.at(0));
 		doorText.setCharacterSize(20);
 		doorText.setFillColor(sf::Color::Yellow);
@@ -61,10 +63,10 @@ public:
 		LoadScore();
 		//height = 142;
 	//	width = 300;
-		
+
 	}
 	~Level() {
-	//	delete enemy;
+		//	delete enemy;
 	}
 	bool isOver() {
 		if (player.lives <= 0) {
@@ -121,7 +123,7 @@ public:
 					player.rect = sf::FloatRect(crouchRect.left, crouchRect.top + crouchRect.height - 40 * 1.2 * sizeMultiplier, crouchRect.width, 40 * 1.2 * sizeMultiplier);
 					player.crouching = false;
 				}
-				
+
 				//enemy->
 				//
 				currentDiamond += time * 0.003;
@@ -133,17 +135,18 @@ public:
 				currentSaw += time * 0.003;
 				DrawMap();
 				player.update(time);
+				for (int i = 0; i < enemies.size(); i++)
+				{
+					enemies[i].Update(time);
+					if (player.rect.intersects(enemies[i].rect)) {
+						player.hitSound.play();
+						player.lost = true;
+					}
+				}
 			}
 			ui.Update(time);
 			ui.Draw(player);
-			for (int i = 0; i < enemies.size(); i++)
-			{
-				enemies[i].Update(time);
-				if (player.rect.intersects(enemies[i].rect)) {
-					player.hitSound.play();
-					player.lost = true;
-				}
-			}
+
 		}
 		else if (player.lost) {
 			DrawMap();
@@ -156,8 +159,8 @@ public:
 
 	};
 	void DrawMap() override {
-		for (int i = 0; i < mainTilemap.size(); i++)
-			for (int j = 0; j <= mainTilemap[i].length(); j++)
+		for (int i = 0; i < H; i++)
+			for (int j = 0; j <= W; j++)
 			{
 				if (j * 16 * sizeMultiplier - offsetX < -600 ||
 					i * 16 * sizeMultiplier - offsetY < -600 ||
@@ -290,8 +293,8 @@ public:
 				tileset.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
 				window.Renderer.draw(tileset);
 			}
-		for (int i = 0; i < mainTilemap.size(); i++)
-			for (int j = 0; j <= mainTilemap[i].length(); j++)
+		for (int i = 0; i < H; i++)
+			for (int j = 0; j <= W; j++)
 			{
 				if (j * 16 * sizeMultiplier - offsetX < -600 ||
 					i * 16 * sizeMultiplier - offsetY < -600 ||
@@ -309,7 +312,7 @@ public:
 					continue;
 
 				}
-				
+
 				else if (mainTilemap[i][j] == '3') {
 					mainTilemap[i][j + 1] == 0;
 					if (currentCeilingTrap >= 14)

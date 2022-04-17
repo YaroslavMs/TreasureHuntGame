@@ -170,7 +170,7 @@ public:
 				else if (dx < 0) {
 					run.setTextureRect(sf::IntRect(41 + 120 * int(currentFrame) + 30, 40, -30, 41));
 				}
-				if (soundTimer > 40) {
+				if (soundTimer > 50) {
 					soundTimer = 0;
 					footstep.play();
 				}

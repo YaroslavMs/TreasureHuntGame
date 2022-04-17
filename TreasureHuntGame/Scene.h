@@ -32,7 +32,7 @@ protected:
 public:
 	int allCoins = 0, score = 0, bestScore = 0;
 	float currentFireTrap = 0;
-	int levelNumber;
+	int levelNumber, W = 0, H = 0;
 	//sf::Sprite tileset, coin, healPotion, tileset1;
 	bool levelCompleted = false;
 	sf::Sprite tileset, coin, healPotion, obelisk, door, key, saw, fireTrap, lightningTrap, ceilingTrap;
