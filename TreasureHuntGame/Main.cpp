@@ -16,7 +16,7 @@ int main()
 	LoadVolume();
 	
 	MainMenu mainMenu;
-	Level levels[3] = { Level(FirstMap, sf::Vector2f(100, 1100), 0), Level(SecondMap, sf::Vector2f(100, 180), 1), Level(TreeMap, sf::Vector2f(100, 2200), 2) };
+	Level* levels = new Level[]{ Level(FirstMap, sf::Vector2f(100, 1100), 0), Level(SecondMap, sf::Vector2f(100, 180), 1), Level(TreeMap, sf::Vector2f(100, 2200), 2) };
 	sf::Clock clock;
 	int currentLevel = 0;
 	while (window.Renderer.isOpen()) {
@@ -102,9 +102,7 @@ int main()
 			window.Renderer.display();
 	}
 	SaveVolume();
-	//	if (scene != nullptr)
-	//		delete scene;
-		//	delete menu;
+	delete[] levels;
 }
 
 

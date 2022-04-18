@@ -33,7 +33,7 @@ class MainMenu {
 	sf::Text LevelsT;
 	sf::Sprite levelButton, Lock, Star;
 	sf::Text levelNumb;
-	int amountOfLevels = 2;
+	const int amountOfLevels = 3;
 
 public:
 	ActiveMenu currentMenu = ActiveMenu::MainMenu;
@@ -159,7 +159,7 @@ public:
 		Star.setOrigin(Star.getGlobalBounds().width / 2, Star.getGlobalBounds().height / 2);
 		Star.setScale(sf::Vector2f(2, 2));
 	}
-	int UpdateMenu(Level levels[2]) {
+	int UpdateMenu(Level levels[]) {
 
 		if (music.getStatus() == sf::Sound::Stopped || music.getStatus() == sf::Sound::Paused) {
 			music.play();
@@ -232,7 +232,7 @@ public:
 		return true;
 	}
 
-	int MouseClicked(sf::Mouse mouse, Level levels[2]) {
+	int MouseClicked(sf::Mouse mouse, Level levels[]) {
 		if (currentMenu == ActiveMenu::MainMenu) {
 			for (int i = 1; i <= 3; i++) {
 				button.setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2 - 100 * 2, 250 + 180 * i));
@@ -275,7 +275,7 @@ public:
 		music.setVolume(Volume);
 	}
 
-	void LevelsMenu(Level levels[2]) {
+	void LevelsMenu(Level levels[]) {
 		sf::Mouse mouse;
 		sf::Vector2i mousePos = mouse.getPosition(window.Renderer);
 		window.Renderer.draw(LevelsT);
