@@ -66,6 +66,7 @@ public:
 	void SaveScore() {
 		
 		if (score > bestScore) {
+			bestScore = score;
 			std::string file = "Saves/Level" + std::to_string(levelNumber) + ".dat";
 			std::ofstream saveFile(file, std::ios::out | std::ios::binary);
 			if (saveFile) {

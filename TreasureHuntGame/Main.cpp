@@ -14,7 +14,7 @@ void LoadVolume();
 int main()
 {
 	LoadVolume();
-	bool gameStarted = false;
+	
 	MainMenu mainMenu;
 	Level levels[3] = { Level(FirstMap, sf::Vector2f(100, 1100), 0), Level(SecondMap, sf::Vector2f(100, 180), 1), Level(TreeMap, sf::Vector2f(100, 2200), 2) };
 	sf::Clock clock;
@@ -22,7 +22,7 @@ int main()
 	while (window.Renderer.isOpen()) {
 		window.Renderer.clear(sf::Color::Black);
 		if (!gameStarted) {
-			auto number = mainMenu.UpdateMenu();
+			auto number = mainMenu.UpdateMenu(levels);
 		}
 		if (levels[currentLevel].isOver()) {
 			levels[currentLevel].Restart();
@@ -39,7 +39,7 @@ int main()
 				levels[currentLevel].ui.gamePaused = true;
 			}
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
-				if (!mainMenu.MainMenuIsActive && !gameStarted) {
+				if (mainMenu.currentMenu == ActiveMenu::OptionsMenu && !gameStarted) {
 					mainMenu.ChangeVolume();
 					levels[currentLevel].UpdateVolume();
 					mainMenu.UpdateVolume();
@@ -49,15 +49,10 @@ int main()
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
 					sf::Mouse mouse;
 					if (!gameStarted) {
-						auto number = mainMenu.MouseClicked(mouse);
-						if (number == 1) {
+						auto number = mainMenu.MouseClicked(mouse, levels);
+						if (number != -1) {
 							gameStarted = true;
-						}
-						if (number == 2) {
-							gameStarted = false;
-						}
-						if (number == 3) {
-							window.Renderer.close();
+							currentLevel = number;
 						}
 					}
 					else if (levels[currentLevel].ui.gamePaused) {
@@ -71,6 +66,7 @@ int main()
 						}
 						else if (number == 4) {
 							levels[currentLevel].ui.gamePaused = false;
+							mainMenu.currentMenu = ActiveMenu::MainMenu;
 							gameStarted = false;
 						}
 					}

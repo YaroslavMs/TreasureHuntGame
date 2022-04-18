@@ -35,7 +35,7 @@ public:
 		textures.push_back(load);
 		load.loadFromFile("Assets/Art/heart.png");                 //10
 		textures.push_back(load);
-		load.loadFromFile("Assets/Art/123.png");                  //11
+		load.loadFromFile("Assets/Art/123.png");                   //11
 		textures.push_back(load);
 		load.loadFromFile("Assets/Art/Diamond5.png");              //12
 		textures.push_back(load);
@@ -59,6 +59,11 @@ public:
 		textures.push_back(load);
 		load.loadFromFile("Assets/Art/s.png");                     //22
 		textures.push_back(load);
+		load.loadFromFile("Assets/Art/buttons_4x.png");            //23
+		textures.push_back(load);
+		load.loadFromFile("Assets/Art/Slaves.png");                //24
+		textures.push_back(load);
+
 
 
 
@@ -96,3 +101,4 @@ public:
 Database DATABASE;
 int sizeMultiplier = 3;
 int Volume = 10;
+bool gameStarted = false;
