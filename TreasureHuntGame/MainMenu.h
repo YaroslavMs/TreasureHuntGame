@@ -31,7 +31,7 @@ class MainMenu {
 
 	//Levels menu
 	sf::Text LevelsT;
-	sf::Sprite levelButton, Lock;
+	sf::Sprite levelButton, Lock, Star;
 	sf::Text levelNumb;
 	int amountOfLevels = 2;
 
@@ -138,7 +138,7 @@ public:
 		levelButton.setTextureRect(sf::IntRect(4, 4, 59, 59));
 		levelButton.setOrigin(sf::Vector2f(27.5, 27.5));
 		levelButton.setScale(4, 4);
-		levelButton.setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2, sf::VideoMode::getDesktopMode().height / 2)); 
+		levelButton.setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2, sf::VideoMode::getDesktopMode().height / 2));
 		levelButton.setColor(sf::Color(70, 0, 0, 255));
 
 		Lock.setTexture(DATABASE.textures.at(24));
@@ -153,6 +153,11 @@ public:
 		levelNumb.setFillColor(sf::Color::Red);
 		levelNumb.setCharacterSize(140);
 		levelNumb.setOrigin(levelNumb.getGlobalBounds().width / 2, levelNumb.getGlobalBounds().height);
+
+		Star.setTexture(DATABASE.textures.at(21));
+		Star.setTextureRect(sf::IntRect(6, 6, 20, 22));
+		Star.setOrigin(Star.getGlobalBounds().width / 2, Star.getGlobalBounds().height / 2);
+		Star.setScale(sf::Vector2f(2, 2));
 	}
 	int UpdateMenu(Level levels[2]) {
 
@@ -163,7 +168,7 @@ public:
 		if (currentMenu == ActiveMenu::MainMenu) {
 			DrawMainMenu();
 		}
-		else if(currentMenu == ActiveMenu::OptionsMenu)
+		else if (currentMenu == ActiveMenu::OptionsMenu)
 			OptionsMenu();
 		else if (currentMenu == ActiveMenu::LevelsMenu)
 			LevelsMenu(levels);
@@ -262,7 +267,7 @@ public:
 				}
 			}
 		}
-		
+
 		return -1;
 	}
 	void UpdateVolume() {
@@ -282,17 +287,24 @@ public:
 			Lock.setPosition(sf::Vector2f(200 + 300 * i, sf::VideoMode::getDesktopMode().height / 2));
 			levelButton.setColor(sf::Color(70, 0, 0, 255));
 			if (i == 0 || levels[i - 1].bestScore > 0) {
+
 				if (CheckCollision(levelButton.getGlobalBounds(), mousePos)) {
 					levelButton.setColor(sf::Color(50, 0, 0, 255));
 				}
-				
+
 			}
-			
 			window.Renderer.draw(levelButton);
 			window.Renderer.draw(levelNumb);
 			if (i != 0 && levels[i - 1].bestScore == 0)
 				window.Renderer.draw(Lock);
-
+			if (i == 0 || levels[i - 1].bestScore > 0)
+				for (int j = 0; j < 3; j++) {
+					Star.setPosition(sf::Vector2f(200 + 300 * i - levelButton.getLocalBounds().width+ levelButton.getLocalBounds().width * j, sf::VideoMode::getDesktopMode().height / 2 + levelButton.getLocalBounds().height * 1.3));
+					if (j >= levels[i].bestScore)
+						Star.setColor(sf::Color(0, 0, 0, 70));
+					else Star.setColor(sf::Color::White);
+					window.Renderer.draw(Star);
+				}
 		}
 		button.setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2 - 200, sf::VideoMode::getDesktopMode().height - 120));
 		if (CheckCollision(button.getGlobalBounds(), mousePos)) {
@@ -303,5 +315,4 @@ public:
 		window.Renderer.draw(LeaveOptMenu);
 
 	}
-
 };
