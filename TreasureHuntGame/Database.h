@@ -4,6 +4,9 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 
+
+#include "KeyButtons.h"
+
 class Database {
 
 

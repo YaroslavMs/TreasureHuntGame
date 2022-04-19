@@ -4,6 +4,7 @@
 #include <iostream>
 #include "Renderer.h"
 #include "Database.h"
+#include "KeyButtons.h"
 
 enum class ActiveMenu
 {
@@ -21,12 +22,15 @@ class MainMenu {
 	sf::Sound music;
 
 	//OptionsMenu
-	sf::Text Opt;
-	sf::Text options[1];
+	sf::Text Opt, ButtonsText[3][5];
+	sf::Text volumeText;
 	sf::CircleShape volumeCircle;
 	sf::RectangleShape volumeRect, volumeAmount;
+	sf::RectangleShape Fields[2][4];
 	sf::FloatRect changeVolumeCol;
-	sf::Text LeaveOptMenu;
+	sf::Text LeaveOptMenu, resetSet;
+	int iChangeable = -1, jChangable = -1;
+	bool Picked = false;
 
 
 	//Levels menu
@@ -77,41 +81,38 @@ public:
 		Opt.setFillColor(sf::Color::Red);
 		Opt.setOutlineColor(sf::Color::White);
 		Opt.setOutlineThickness(5);
-		Opt.setCharacterSize(200);
+		Opt.setCharacterSize(120);
 		Opt.setFont(DATABASE.fonts.at(0));
-		Opt.setOrigin(Opt.getGlobalBounds().width / 2, Opt.getGlobalBounds().height / 2);
-		Opt.setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2, 70));
+		Opt.setOrigin(Opt.getGlobalBounds().width / 2, Opt.getGlobalBounds().height);
+		Opt.setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2, 120));
 
-		options[0].setString("Volume: ");
-		for (int i = 0; i < 1; i++) {
-			options[i].setFont(DATABASE.fonts.at(0));
-			options[i].setFillColor(sf::Color::Red);
-			options[i].setCharacterSize(80);
-			options[i].setOutlineColor(sf::Color::White);
-			options[i].setOutlineThickness(2);
-			options[i].setOrigin(options[i].getGlobalBounds().width / 2, options[i].getGlobalBounds().height / 2);
-		}
-		for (int i = 1; i <= 1; i++)
-			options[i - 1].setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 8, 100 + 180 * i));
+		volumeText.setString("Volume: ");
+		volumeText.setFont(DATABASE.fonts.at(0));
+		volumeText.setFillColor(sf::Color::Red);
+		volumeText.setCharacterSize(60);
+		volumeText.setOutlineColor(sf::Color::White);
+		volumeText.setOutlineThickness(2);
+		volumeText.setOrigin(0, volumeText.getGlobalBounds().height);
+		volumeText.setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2 - Opt.getGlobalBounds().width, 100 + 180));
 
 		volumeRect.setSize(sf::Vector2f(100 * 4, 3 * 4));
 		volumeRect.setFillColor(sf::Color::Black);
 		volumeRect.setOrigin(sf::Vector2f(0, volumeRect.getSize().y / 2));
-		volumeRect.setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 8 + 200, 310));
-		changeVolumeCol.left = sf::VideoMode::getDesktopMode().width / 8 + 200;
-		changeVolumeCol.top = 310 - volumeRect.getSize().y * 2;
+		volumeRect.setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2 - Opt.getGlobalBounds().width + 200, 280));
+		changeVolumeCol.left = sf::VideoMode::getDesktopMode().width / 2 - Opt.getGlobalBounds().width + 200;
+		changeVolumeCol.top = 280 - volumeRect.getSize().y * 2;
 		changeVolumeCol.width = volumeRect.getSize().x;
 		changeVolumeCol.height = volumeRect.getSize().y * 4;
 
 		volumeAmount.setSize(sf::Vector2f(Volume * 4, 3 * 4));
 		volumeAmount.setFillColor(sf::Color::Red);
 		volumeAmount.setOrigin(sf::Vector2f(0, volumeRect.getSize().y / 2));
-		volumeAmount.setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 8 + 200, 310));
+		volumeAmount.setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2 - Opt.getGlobalBounds().width + 200, 280));
 
 		volumeCircle.setRadius(10);
 		volumeCircle.setOrigin(sf::Vector2f(10, 10));
 		volumeCircle.setFillColor(sf::Color::White);
-		volumeCircle.setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 8 + 200 + Volume * 4, 310));
+		volumeCircle.setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2 - Opt.getGlobalBounds().width + 200 + Volume * 4, 280));
 
 		LeaveOptMenu.setString("Main menu");
 		LeaveOptMenu.setFont(DATABASE.fonts.at(0));
@@ -122,7 +123,44 @@ public:
 		LeaveOptMenu.setOrigin(LeaveOptMenu.getGlobalBounds().width / 2, LeaveOptMenu.getGlobalBounds().height / 2);
 		LeaveOptMenu.setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2, sf::VideoMode::getDesktopMode().height - 100));
 
+		resetSet.setString("Reset Settings");
+		resetSet.setFont(DATABASE.fonts.at(0));
+		resetSet.setFillColor(sf::Color::Red);
+		resetSet.setCharacterSize(80);
+		resetSet.setOutlineColor(sf::Color::White);
+		resetSet.setOutlineThickness(2);
+		resetSet.setOrigin(resetSet.getGlobalBounds().width / 2, resetSet.getGlobalBounds().height / 2);
+		resetSet.setPosition(sf::Vector2f(300, sf::VideoMode::getDesktopMode().height - 100));
 
+		ButtonsText[0][0].setString("Action");
+		ButtonsText[1][0].setString("Primary");
+		ButtonsText[2][0].setString("Secondary");
+		ButtonsText[0][1].setString("Jump");
+		ButtonsText[0][2].setString("Left");
+		ButtonsText[0][3].setString("Right");
+		ButtonsText[0][4].setString("Crouch");
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 5; j++) {
+
+				ButtonsText[i][j].setFillColor(sf::Color::Red);
+				ButtonsText[i][j].setOutlineColor(sf::Color::White);
+				ButtonsText[i][j].setOutlineThickness(3);
+				ButtonsText[i][j].setCharacterSize(60);
+				ButtonsText[i][j].setFont(DATABASE.fonts.at(0));
+				ButtonsText[i][j].setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2 - ButtonsText[1][0].getGlobalBounds().width / 2 - 500 + i * 500, 380 + 100 * j));
+			}
+		}
+		for (int i = 0; i < 2; i++) {
+			for (int j = 0; j < 4; j++) {
+				Fields[i][j].setSize(sf::Vector2f(260, 60));
+				Fields[i][j].setFillColor(sf::Color(192, 192, 192));
+				Fields[i][j].setOutlineColor(sf::Color::White);
+				Fields[i][j].setOutlineThickness(3);
+				Fields[i][j].setOutlineColor(sf::Color::Red);
+				Fields[i][j].setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2 - ButtonsText[1][0].getGlobalBounds().width / 2 + i * 500 - 30, 480 + 100 * j + 10));
+
+			}
+		}
 
 		//Levels menu
 		LevelsT.setString("Levels");
@@ -145,7 +183,6 @@ public:
 		Lock.setOrigin(sf::Vector2f(7.5, 7.5));
 		Lock.setScale(11, 11);
 		Lock.setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2, sf::VideoMode::getDesktopMode().height / 2));
-		//	levelButton.setColor(sf::Color(100, 255, 255, 255));
 
 		levelNumb.setString("1");
 		levelNumb.setStyle(sf::Text::Bold);
@@ -195,7 +232,7 @@ public:
 		sf::Mouse mouse;
 		sf::Vector2i mousePos = mouse.getPosition(window.Renderer);
 		window.Renderer.draw(Opt);
-		window.Renderer.draw(options[0]);
+		window.Renderer.draw(volumeText);
 		window.Renderer.draw(volumeRect);
 		window.Renderer.draw(volumeAmount);
 		window.Renderer.draw(volumeCircle);
@@ -206,15 +243,69 @@ public:
 		}
 		else button.setColor(sf::Color::White);
 		window.Renderer.draw(button);
+		button.setPosition(sf::Vector2f(100, sf::VideoMode::getDesktopMode().height - 120));
+		if (CheckCollision(button.getGlobalBounds(), mousePos)) {
+			button.setColor(sf::Color(100, 0, 0, 255));
+		}
+		else button.setColor(sf::Color::White);
+		window.Renderer.draw(button);
 		window.Renderer.draw(LeaveOptMenu);
+		window.Renderer.draw(resetSet);
+		for (int i = 0; i < 2; i++) {
+			for (int j = 0; j < 4; j++) {
+				window.Renderer.draw(Fields[i][j]);
+				if (i == iChangeable && j == jChangable)
+					ButtonsText[i + 1][j + 1].setString("|");
+				else ButtonsText[i + 1][j + 1].setString(KeyNames[Controls.keys[j][i]]);
+			}
+		}
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 5; j++) {
+
+				window.Renderer.draw(ButtonsText[i][j]);
+			}
+		}
+
+
+	}
+	void CheckField() {
+		sf::Mouse mouse;
+		sf::Vector2i mousePos = mouse.getPosition(window.Renderer);
+		for (int i = 0; i < 2; i++) {
+			for (int j = 0; j < 4; j++) {
+				if (CheckCollision(Fields[i][j].getGlobalBounds(), mousePos)) {
+					if (Picked) {
+						Picked = false;
+						jChangable = -5;
+						iChangeable = -5;
+					}
+					else {
+						iChangeable = i;
+						jChangable = j;
+						Picked = true;
+					}
+				}
+
+
+			}
+		}
+	}
+	void ChangeButton(sf::Keyboard::Key key) {
+		if (Picked) {
+			Controls.keys[jChangable][iChangeable] = key;
+			jChangable = -1;
+			iChangeable = -1;
+			Picked = false;
+		}
+
 
 	}
 	void ChangeVolume() {
 		sf::Mouse mouse;
 		sf::Vector2i mousePos = mouse.getPosition(window.Renderer);
 		if (CheckCollision(changeVolumeCol, mousePos)) {
-			volumeCircle.setPosition(sf::Vector2f(mousePos.x, 310));
-			Volume = (mousePos.x - (sf::VideoMode::getDesktopMode().width / 8 + 200)) / 4;
+			volumeCircle.setPosition(sf::Vector2f(mousePos.x, 280));
+			Volume = (mousePos.x - ((sf::VideoMode::getDesktopMode().width / 2 - Opt.getGlobalBounds().width) + 200)) / 4;
 			volumeAmount.setSize(sf::Vector2f(Volume * 4, 3 * 4));
 
 		}
@@ -252,6 +343,14 @@ public:
 			if ((CheckCollision(button.getGlobalBounds(), mouse.getPosition(window.Renderer)))) {
 				clickSound.play();
 				currentMenu = ActiveMenu::MainMenu;
+			}
+			else if (currentMenu == ActiveMenu::OptionsMenu) {
+				button.setPosition(sf::Vector2f(100, sf::VideoMode::getDesktopMode().height - 120));
+				if ((CheckCollision(button.getGlobalBounds(), mouse.getPosition(window.Renderer)))) {
+					clickSound.play();
+					ResetSettings();
+				}
+
 			}
 			else if (currentMenu == ActiveMenu::LevelsMenu) {
 				for (int i = 0; i < amountOfLevels; i++) {
@@ -299,7 +398,7 @@ public:
 				window.Renderer.draw(Lock);
 			if (i == 0 || levels[i - 1].bestScore > 0)
 				for (int j = 0; j < 3; j++) {
-					Star.setPosition(sf::Vector2f(200 + 300 * i - levelButton.getLocalBounds().width+ levelButton.getLocalBounds().width * j, sf::VideoMode::getDesktopMode().height / 2 + levelButton.getLocalBounds().height * 1.3));
+					Star.setPosition(sf::Vector2f(200 + 300 * i - levelButton.getLocalBounds().width + levelButton.getLocalBounds().width * j, sf::VideoMode::getDesktopMode().height / 2 + levelButton.getLocalBounds().height * 1.3));
 					if (j >= levels[i].bestScore)
 						Star.setColor(sf::Color(0, 0, 0, 70));
 					else Star.setColor(sf::Color::White);
@@ -314,5 +413,11 @@ public:
 		window.Renderer.draw(button);
 		window.Renderer.draw(LeaveOptMenu);
 
+	}
+	void ResetSettings() {
+		Controls = KeyButtons();
+		Volume = 10;
+		volumeCircle.setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2 - Opt.getGlobalBounds().width + 200 + Volume * 4, 280));
+		volumeAmount.setSize(sf::Vector2f(Volume * 4, 3 * 4));
 	}
 };

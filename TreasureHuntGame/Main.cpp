@@ -10,11 +10,14 @@
 
 void SaveVolume();
 void LoadVolume();
+void SaveControls();
+void LoadControls();
 
 int main()
 {
 	LoadVolume();
-	
+	LoadControls();
+	sf::Keyboard::Key changeKey;
 	MainMenu mainMenu;
 	Level* levels = new Level[]{ Level(FirstMap, sf::Vector2f(100, 1100), 0), Level(SecondMap, sf::Vector2f(100, 180), 1), Level(TreeMap, sf::Vector2f(100, 2200), 2) };
 	sf::Clock clock;
@@ -38,8 +41,13 @@ int main()
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) && !levels[currentLevel].Lost()) {
 				levels[currentLevel].ui.gamePaused = true;
 			}
+			if (event.type == sf::Event::KeyPressed && mainMenu.currentMenu == ActiveMenu::OptionsMenu) {
+				changeKey = event.key.code;
+				mainMenu.ChangeButton(changeKey);
+			}
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
 				if (mainMenu.currentMenu == ActiveMenu::OptionsMenu && !gameStarted) {
+					mainMenu.CheckField();
 					mainMenu.ChangeVolume();
 					levels[currentLevel].UpdateVolume();
 					mainMenu.UpdateVolume();
@@ -101,6 +109,7 @@ int main()
 		if (window.Renderer.isOpen())
 			window.Renderer.display();
 	}
+	SaveControls();
 	SaveVolume();
 	delete[] levels;
 }
@@ -118,6 +127,21 @@ void LoadVolume() {
 	std::ifstream loadFile("Saves/Volume.dat", std::ios::out | std::ios::binary);
 	if (loadFile) {
 		loadFile.read((char*)&Volume, sizeof(Volume));
+		loadFile.close();
+	}
+}
+void SaveControls() {
+
+	std::ofstream saveFile("Saves/Controls.dat", std::ios::out | std::ios::binary);
+	if (saveFile) {
+		saveFile.write((char*)&Controls, sizeof(Controls));
+		saveFile.close();
+	}
+}
+void LoadControls() {
+	std::ifstream loadFile("Saves/Controls.dat", std::ios::out | std::ios::binary);
+	if (loadFile) {
+		loadFile.read((char*)&Controls, sizeof(Controls));
 		loadFile.close();
 	}
 }
