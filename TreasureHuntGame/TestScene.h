@@ -9,6 +9,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "UI.h"
+#include "KeyButtons.h"
 
 class Level : public Scene {
 	Player player;
@@ -98,13 +99,11 @@ public:
 			time = time / 400;
 
 			if (!ui.gamePaused) {
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::A))    player.dx = -0.1;
+				if (sf::Keyboard::isKeyPressed(Controls.keys[1][0]) || sf::Keyboard::isKeyPressed(Controls.keys[1][1]))    player.dx = -0.1;
 
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D))    player.dx = 0.1;
+				if (sf::Keyboard::isKeyPressed(Controls.keys[2][0]) || sf::Keyboard::isKeyPressed(Controls.keys[2][1]))    player.dx = 0.1;
 
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))    player.Restart();
-
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+				if (sf::Keyboard::isKeyPressed(Controls.keys[0][0]) || sf::Keyboard::isKeyPressed(Controls.keys[0][1]))
 					if (player.CanJump()) {
 						if (player.onGround) {
 							if (player.crouching)
@@ -114,7 +113,7 @@ public:
 						}
 					}
 
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::C) || sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)) {
+				if (sf::Keyboard::isKeyPressed(Controls.keys[3][0]) || sf::Keyboard::isKeyPressed(Controls.keys[3][1])) {
 					player.crouching = true;
 					player.rect.height = 26 * 1.2 * sizeMultiplier;
 				}
