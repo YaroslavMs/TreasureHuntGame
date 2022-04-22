@@ -16,7 +16,7 @@ public:
 	float currentFireTrap = 0;
 	int levelNumber, W = 0, H = 0;
 	bool levelCompleted = false;
-	sf::Sprite tileset, coin, healPotion, obelisk, door, key, saw, fireTrap, lightningTrap, ceilingTrap, speedBoost, gravityBoost;
+	sf::Sprite tileset, coin, healPotion, obelisk, door, key, saw, fireTrap, lightningTrap, ceilingTrap, speedBoost, gravityBoost, shieldBoost;
 	sf::Text doorText;
 	int allKeys = 3;
 	sf::FloatRect spawnPoint;

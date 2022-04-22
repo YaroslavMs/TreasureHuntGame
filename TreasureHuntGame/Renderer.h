@@ -10,11 +10,11 @@ public:
     sf::RenderWindow Renderer;
     int width, height;
     Window() {
+        width = sf::VideoMode::getDesktopMode().width;
+        height = sf::VideoMode::getDesktopMode().height;
         SetFullscreenWindow();
     }
     void SetFullscreenWindow() {
-        width = sf::VideoMode::getDesktopMode().width;
-        height = sf::VideoMode::getDesktopMode().height;
         Renderer.clear();
         Renderer.create(sf::VideoMode(width, height), "New Title", sf::Style::Fullscreen);
     }

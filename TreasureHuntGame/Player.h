@@ -7,7 +7,7 @@ class Player {
 
 	bool facingRight = true;
 	float soundTimer = 0;
-	sf::Sound footstep, coinSound, keySound, healSound, finishSound;
+	sf::Sound footstep, coinSound, keySound, healSound, finishSound, boostColSound;
 public:
 	sf::Sound hitSound;
 	Scene* scene;
@@ -18,13 +18,14 @@ public:
 	sf::FloatRect rect;
 	sf::FloatRect spawnPoint;
 	bool onGround = false, jumping = false, jumped = false, crouching = false;
-	sf::Sprite idle, run, jump, fall, crouch, crouchWalk;
+	sf::Sprite idle, run, jump, fall, crouch, crouchWalk, shield;
 	float currentFrame;
 
 
 	//boost
 	float speedBoostTime, speedBoostPower = 1.3;
 	float gravityBoostTime, gravityBoostPower = 0.8;
+	float shieldTime;
 
 	Player(Scene* scene)
 	{
@@ -35,12 +36,15 @@ public:
 		fall.setTexture(DATABASE.textures.at(6));
 		crouch.setTexture(DATABASE.textures.at(7));
 		crouchWalk.setTexture(DATABASE.textures.at(8));
+		shield.setTexture(DATABASE.textures.at(26));
 		idle.setScale(1.2 * sizeMultiplier, 1.2 * sizeMultiplier);
 		run.setScale(1.2 * sizeMultiplier, 1.2 * sizeMultiplier);
 		jump.setScale(1.2 * sizeMultiplier, 1.2 * sizeMultiplier);
 		fall.setScale(1.2 * sizeMultiplier, 1.2 * sizeMultiplier);
 		crouch.setScale(1.1 * sizeMultiplier, 1.1 * sizeMultiplier);
 		crouchWalk.setScale(1.1 * sizeMultiplier, 1.1 * sizeMultiplier);
+		shield.setOrigin(sf::Vector2f(shield.getLocalBounds().width / 2 - 140, shield.getLocalBounds().height / 2 - 180));
+		shield.setScale(0.35, 0.35);
 		rect = scene->spawnPoint;
 		spawnPoint = scene->spawnPoint;
 		dx = dy = 0.1;
@@ -57,6 +61,10 @@ public:
 		healSound.setVolume(Volume);
 		finishSound.setBuffer(DATABASE.soundBuffers.at(5));
 		finishSound.setVolume(Volume);
+		boostColSound.setBuffer(DATABASE.soundBuffers.at(9));
+		boostColSound.setVolume(Volume);
+
+
 	}
 	~Player() {
 		//	delete scene;
@@ -67,6 +75,8 @@ public:
 		dy = 0.1;
 		currentFrame = 0;
 		speedBoostTime = 0;
+		gravityBoostTime = 0;
+		shieldTime = 0;
 		lives--;
 		rect = spawnPoint;
 	}
@@ -74,6 +84,9 @@ public:
 		spawnPoint = scene->spawnPoint;
 		coinsCollected = 0;
 		keysFound = 0;
+		speedBoostTime = 0;
+		gravityBoostTime = 0;
+		shieldTime = 0;
 		dx = 0.1;
 		dy = 0.1;
 		currentFrame = 0;
@@ -97,8 +110,7 @@ public:
 			else rect.left += dx * time * sizeMultiplier;
 		}
 		Collision(0);
-
-		if(gravityBoostTime > 0)
+		if (gravityBoostTime > 0)
 			gravityBoostTime -= (time * 400 / 1000000.0f);
 		if (!onGround) {
 			if (gravityBoostTime > 0)
@@ -196,10 +208,12 @@ public:
 				window.Renderer.draw(run);
 			}
 		}
-		//	if (lost) {
-		//		lost = false;
-		//		LoseLife();
-		//	}
+		if (shieldTime > 0) {
+			shieldTime -= (time * 400 / 1000000.0f);
+			shield.setPosition(rect.left - scene->offsetX, rect.top - scene->offsetY);
+			window.Renderer.draw(shield);
+		}
+
 		dx = 0;
 	}
 
@@ -251,19 +265,26 @@ public:
 							lives++;
 
 						}
-						else if (scene->mainTilemap[i][j] == '2' && ((int)scene->currentFireTrap >= 4 && (int)scene->currentFireTrap <= 5)) {
+						else if (scene->mainTilemap[i][j] == '2' && ((int)scene->currentFireTrap >= 4 && (int)scene->currentFireTrap <= 5) && shieldTime <= 0) {
 							hitSound.play();
 							lost = true;
 						}
-						else if (scene->mainTilemap[i][j] == 110 || scene->mainTilemap[i][j] == 't' || scene->mainTilemap[i][j] == '0' || scene->mainTilemap[i][j] == '3') {
+						else if ((scene->mainTilemap[i][j] == 110 || scene->mainTilemap[i][j] == 't' || scene->mainTilemap[i][j] == '0' || scene->mainTilemap[i][j] == '3') && shieldTime <= 0) {
 							hitSound.play();
 							lost = true;
+						}
+						else if (scene->mainTilemap[i][j] == '7') {
+							boostColSound.play();
+							shieldTime = 3;
+							scene->mainTilemap[i][j] = ' ';
 						}
 						else if (scene->mainTilemap[i][j] == '8') {
+							boostColSound.play();
 							speedBoostTime = 10;
 							scene->mainTilemap[i][j] = ' ';
 						}
 						else if (scene->mainTilemap[i][j] == '9') {
+							boostColSound.play();
 							gravityBoostTime = 10;
 							scene->mainTilemap[i][j] = ' ';
 						}
@@ -337,5 +358,6 @@ public:
 		hitSound.setVolume(Volume);
 		healSound.setVolume(Volume);
 		finishSound.setVolume(Volume);
+		boostColSound.setVolume(Volume);
 	}
 };

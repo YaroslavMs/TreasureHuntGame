@@ -68,6 +68,10 @@ public:
 		textures.push_back(load);
 		load.loadFromFile("Assets/Art/GUI_1x.png");                //25
 		textures.push_back(load);
+		load.loadFromFile("Assets/Art/shield.png");                //26
+		textures.push_back(load);
+		load.loadFromFile("Assets/Art/29.png");                    //27
+		textures.push_back(load);
 
 
 
@@ -95,6 +99,8 @@ public:
 		loadSound.loadFromFile("Assets/sfx/menuMusic.wav");           //7
 		soundBuffers.push_back(loadSound);
 		loadSound.loadFromFile("Assets/sfx/theme.wav");               //8
+		soundBuffers.push_back(loadSound);
+		loadSound.loadFromFile("Assets/sfx/boosts.wav");               //9
 		soundBuffers.push_back(loadSound);
 
 	}

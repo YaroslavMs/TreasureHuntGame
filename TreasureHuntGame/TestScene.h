@@ -48,6 +48,8 @@ public:
 		gravityBoost.setTexture(DATABASE.textures.at(25));
 		gravityBoost.setTextureRect(sf::IntRect(73, 64, 7, 8));
 		gravityBoost.setScale(sf::Vector2f(sizeMultiplier * 2, sizeMultiplier * 2));
+		shieldBoost.setTexture(DATABASE.textures.at(27));
+		shieldBoost.setScale(sf::Vector2f(sizeMultiplier, sizeMultiplier));
 
 
 		coin.setScale(sf::Vector2f(2 * sizeMultiplier, 2 * sizeMultiplier));
@@ -140,9 +142,11 @@ public:
 				for (int i = 0; i < enemies.size(); i++)
 				{
 					enemies[i].Update(time);
-					if (player.rect.intersects(enemies[i].rect)) {
-						player.hitSound.play();
-						player.lost = true;
+					if (player.shieldTime <= 0) {
+						if (player.rect.intersects(enemies[i].rect)) {
+							player.hitSound.play();
+							player.lost = true;
+						}
 					}
 				}
 			}
@@ -174,7 +178,7 @@ public:
 				else if (mainTilemap[i][j] == '0') continue; //trap colliders
 				else if (mainTilemap[i][j] == '4' || mainTilemap[i][j] == '5' || mainTilemap[i][j] == 'o') continue;
 				else if (mainTilemap[i][j] == '3' || mainTilemap[i][j] == 't' || mainTilemap[i][j] == 'o') continue;
-				else if (mainTilemap[i][j] == '8' || mainTilemap[i][j] == '9') continue;
+				else if (mainTilemap[i][j] == '8' || mainTilemap[i][j] == '9' || mainTilemap[i][j] == '7') continue;
 				else if (mainTilemap[i][j] == 'a')  tileset.setTextureRect(sf::IntRect(240, 720, 16, 16));// низ
 				else if (mainTilemap[i][j] == 'c')  tileset.setTextureRect(sf::IntRect(176, 672, 16 * 2, 16 * 2));//ліва стіна
 				else if (mainTilemap[i][j] == 'd')  tileset.setTextureRect(sf::IntRect(512, 672, 16, 16));//права стіна
@@ -253,123 +257,122 @@ public:
 					}
 					lightningTrap.setTextureRect(sf::IntRect(32 + (int)currentLightningTrap * 96, 0, 38, 98));
 					lightningTrap.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
-window.Renderer.draw(lightningTrap);
-continue;
+					window.Renderer.draw(lightningTrap);
+					continue;
 				}
 				else if (mainTilemap[i][j] == '2') {
-				if (currentFireTrap >= 9)
-					currentFireTrap = 0;
-				fireTrap.setTextureRect(sf::IntRect(10 + (int)currentFireTrap * 32, 20, 14, 44));
-				fireTrap.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY - 85);
-				window.Renderer.draw(fireTrap);
-				continue;
+					if (currentFireTrap >= 9)
+						currentFireTrap = 0;
+					fireTrap.setTextureRect(sf::IntRect(10 + (int)currentFireTrap * 32, 20, 14, 44));
+					fireTrap.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY - 85);
+					window.Renderer.draw(fireTrap);
+					continue;
 				}
 
 				else if (mainTilemap[i][j] == 'z') {
 
-				std::string str = std::to_string(player.keysFound) + " / " + std::to_string(allKeys) + " keys found.";
-				doorText.setString(str);
-				//door.setTextureRect(sf::IntRect(0, 0, 25, 22));//door
-				door.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY - 80);
-				doorText.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY - 100);
-				window.Renderer.draw(door);
-				window.Renderer.draw(doorText);
-				continue;
+					std::string str = std::to_string(player.keysFound) + " / " + std::to_string(allKeys) + " keys found.";
+					doorText.setString(str);
+					door.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY - 80);
+					doorText.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY - 100);
+					window.Renderer.draw(door);
+					window.Renderer.draw(doorText);
+					continue;
 				}
 				else if (mainTilemap[i][j] == 'p') {
-				if (currentDiamond >= 5)
-					currentDiamond = 0;
-				coin.setTextureRect(sf::IntRect(0 + 8 * (int)currentDiamond, 0, 8, 9));
-				coin.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
-				window.Renderer.draw(coin);
-				continue;
+					if (currentDiamond >= 5)
+						currentDiamond = 0;
+					coin.setTextureRect(sf::IntRect(0 + 8 * (int)currentDiamond, 0, 8, 9));
+					coin.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
+					window.Renderer.draw(coin);
+					continue;
 				}
 				else if (mainTilemap[i][j] == '+') {
-				if (currentKey >= 12)
-					currentKey = 0;
-				key.setTextureRect(sf::IntRect(10 + (int)currentKey * 32, 0, 12, 32));
-				key.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
-				window.Renderer.draw(key);
-				continue;
+					if (currentKey >= 12)
+						currentKey = 0;
+					key.setTextureRect(sf::IntRect(10 + (int)currentKey * 32, 0, 12, 32));
+					key.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
+					window.Renderer.draw(key);
+					continue;
 
 
 				}
 				tileset.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
 				window.Renderer.draw(tileset);
 			}
-			for (int i = 0; i < H; i++)
-				for (int j = 0; j <= W; j++)
-				{
-					if (j * 16 * sizeMultiplier - offsetX < -600 ||
-						i * 16 * sizeMultiplier - offsetY < -600 ||
-						j * 16 * sizeMultiplier - offsetX > window.width + 600 ||
-						i * 16 * sizeMultiplier - offsetY > window.height + 600) {
-						continue;
-					}
-					if (mainTilemap[i][j] != '3' && mainTilemap[i][j] != 't' && mainTilemap[i][j] != 'o' && mainTilemap[i][j] != '8' && mainTilemap[i][j] != '9') {
-						continue;
-					}
-					else if (mainTilemap[i][j] == 'o') {
-						healPotion.setTextureRect(sf::IntRect(232, 230, 245 - 232, 18));
-						healPotion.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
-						window.Renderer.draw(healPotion);
-						continue;
+		//second layer
+		for (int i = 0; i < H; i++)
+			for (int j = 0; j <= W; j++)
+			{
+				if (j * 16 * sizeMultiplier - offsetX < -600 ||
+					i * 16 * sizeMultiplier - offsetY < -600 ||
+					j * 16 * sizeMultiplier - offsetX > window.width + 600 ||
+					i * 16 * sizeMultiplier - offsetY > window.height + 600) {
+					continue;
+				}
+				if (mainTilemap[i][j] != '3' && mainTilemap[i][j] != 't' && mainTilemap[i][j] != 'o' && mainTilemap[i][j] != '8' && mainTilemap[i][j] != '9' && mainTilemap[i][j] != '7') {
+					continue;
+				}
+				else if (mainTilemap[i][j] == 'o') {
+					healPotion.setTextureRect(sf::IntRect(232, 230, 245 - 232, 18));
+					healPotion.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
+					window.Renderer.draw(healPotion);
+					continue;
 
-					}
+				}
 
-					else if (mainTilemap[i][j] == '3') {
-						mainTilemap[i][j + 1] == 0;
-						if (currentCeilingTrap >= 14)
-							currentCeilingTrap = 0;
-						if ((int)currentCeilingTrap == 1) {
-							for (int k = 1; k <= 3; k++) {
-								mainTilemap[i + k][j] = '0';
-								mainTilemap[i + k][j + 1] = '0';
-							}
+				else if (mainTilemap[i][j] == '3') {
+					mainTilemap[i][j + 1] == 0;
+					if (currentCeilingTrap >= 14)
+						currentCeilingTrap = 0;
+					if ((int)currentCeilingTrap == 1) {
+						for (int k = 1; k <= 3; k++) {
+							mainTilemap[i + k][j] = '0';
+							mainTilemap[i + k][j + 1] = '0';
 						}
-						else if ((int)currentCeilingTrap == 5) {
-							mainTilemap[i + 3][j] = ' ';
-							mainTilemap[i + 3][j + 1] = ' ';
-						}
-						else if ((int)currentCeilingTrap == 7) {
-							mainTilemap[i + 2][j] = ' ';
-							mainTilemap[i + 2][j + 1] = ' ';
-						}
-						else if ((int)currentCeilingTrap == 9) {
-							mainTilemap[i + 1][j] = ' ';
-							mainTilemap[i + 1][j + 1] = ' ';
-						}
-						ceilingTrap.setTextureRect(sf::IntRect(10 + (int)currentCeilingTrap * 64, 0, 50, 64));
-						ceilingTrap.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
-						window.Renderer.draw(ceilingTrap);
-						continue;
 					}
-					else if (mainTilemap[i][j] == 't') {
-						mainTilemap[i + 1][j] = '0';
-						if (currentSaw >= 16)
-							currentSaw = 0;
-						saw.setTextureRect(sf::IntRect(16 + (int)currentSaw * 64, 0, 48 - 16, 36));
-						saw.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
-						window.Renderer.draw(saw);
-						continue;
+					else if ((int)currentCeilingTrap == 5) {
+						mainTilemap[i + 3][j] = ' ';
+						mainTilemap[i + 3][j + 1] = ' ';
 					}
-					else if (mainTilemap[i][j] == '8') {
-						speedBoost.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
-						window.Renderer.draw(speedBoost);
-						continue;
+					else if ((int)currentCeilingTrap == 7) {
+						mainTilemap[i + 2][j] = ' ';
+						mainTilemap[i + 2][j + 1] = ' ';
 					}
-					else if (mainTilemap[i][j] == '9') {
-						gravityBoost.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
-						window.Renderer.draw(gravityBoost);
-						continue;
+					else if ((int)currentCeilingTrap == 9) {
+						mainTilemap[i + 1][j] = ' ';
+						mainTilemap[i + 1][j + 1] = ' ';
 					}
+					ceilingTrap.setTextureRect(sf::IntRect(10 + (int)currentCeilingTrap * 64, 0, 50, 64));
+					ceilingTrap.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
+					window.Renderer.draw(ceilingTrap);
+					continue;
+				}
+				else if (mainTilemap[i][j] == 't') {
+					mainTilemap[i + 1][j] = '0';
+					if (currentSaw >= 16)
+						currentSaw = 0;
+					saw.setTextureRect(sf::IntRect(16 + (int)currentSaw * 64, 0, 48 - 16, 36));
+					saw.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
+					window.Renderer.draw(saw);
+					continue;
+				}
+				else if (mainTilemap[i][j] == '7') {
+					shieldBoost.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
+					window.Renderer.draw(shieldBoost);
+					continue;
+				}
+				else if (mainTilemap[i][j] == '8') {
+					speedBoost.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
+					window.Renderer.draw(speedBoost);
+					continue;
+				}
+				else if (mainTilemap[i][j] == '9') {
+					gravityBoost.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
+					window.Renderer.draw(gravityBoost);
+					continue;
+				}
 			}
-
-
-		//	window.Renderer.draw(player.idle);
-
-
-
 	}
 	void UpdateVolume() {
 		player.UpdateVolume();

@@ -13,7 +13,7 @@ class UI {
 	std::string amountOfCoins = "", keyString = "", timeString = "";
 	sf::Text coinsText, keyText;
 	float currentFrame = 0, currentKey = 0;
-	sf::Sprite speedBoost, gravityBoost;
+	sf::Sprite speedBoost, gravityBoost, shieldBoost;
 	sf::Text timeLeft;
 
 	//Pause menu
@@ -68,7 +68,8 @@ public:
 		gravityBoost.setTexture(DATABASE.textures.at(25));
 		gravityBoost.setTextureRect(sf::IntRect(73, 64, 7, 8));
 		gravityBoost.setScale(sf::Vector2f(sizeMultiplier * 3, sizeMultiplier * 3));
-
+		shieldBoost.setTexture(DATABASE.textures.at(27));
+		shieldBoost.setScale(sf::Vector2f(sizeMultiplier, sizeMultiplier));
 		scrW = sf::VideoMode::getDesktopMode().width;
 		scrH = sf::VideoMode::getDesktopMode().height;
 
@@ -209,6 +210,14 @@ public:
 			timeLeft.setString(timeString);
 			timeLeft.setPosition(sf::Vector2f(120, 500));
 			window.Renderer.draw(gravityBoost);
+			window.Renderer.draw(timeLeft);
+		}
+		if (player.shieldTime > 0) {
+			shieldBoost.setPosition(50, 600);
+			timeString = std::to_string(player.shieldTime).substr(0, 3);
+			timeLeft.setString(timeString);
+			timeLeft.setPosition(sf::Vector2f(120, 610));
+			window.Renderer.draw(shieldBoost);
 			window.Renderer.draw(timeLeft);
 		}
 		window.Renderer.draw(key);
