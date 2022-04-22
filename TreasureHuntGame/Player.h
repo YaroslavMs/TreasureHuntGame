@@ -9,7 +9,7 @@ class Player {
 	float soundTimer = 0;
 	sf::Sound footstep, coinSound, keySound, healSound, finishSound, boostColSound;
 public:
-	sf::Sound hitSound;
+	sf::Sound hitSound, shieldSound;
 	Scene* scene;
 	bool lost = false;
 	int keysFound = 0;
@@ -63,6 +63,8 @@ public:
 		finishSound.setVolume(Volume);
 		boostColSound.setBuffer(DATABASE.soundBuffers.at(9));
 		boostColSound.setVolume(Volume);
+		shieldSound.setBuffer(DATABASE.soundBuffers.at(10));
+		shieldSound.setVolume(Volume);
 
 
 	}
@@ -81,6 +83,7 @@ public:
 		rect = spawnPoint;
 	}
 	void Restart() {
+		shieldSound.stop();
 		spawnPoint = scene->spawnPoint;
 		coinsCollected = 0;
 		keysFound = 0;
@@ -97,6 +100,9 @@ public:
 
 	void update(float time)
 	{
+		if (shieldSound.getStatus() == sf::Music::Paused) {
+			shieldSound.play();
+		}
 		soundTimer += time * 0.05;
 		if (speedBoostTime > 0) {
 			if (crouching)
@@ -213,6 +219,7 @@ public:
 			shield.setPosition(rect.left - scene->offsetX, rect.top - scene->offsetY);
 			window.Renderer.draw(shield);
 		}
+		else shieldSound.stop();
 
 		dx = 0;
 	}
@@ -275,6 +282,7 @@ public:
 						}
 						else if (scene->mainTilemap[i][j] == '7') {
 							boostColSound.play();
+							shieldSound.play();
 							shieldTime = 3;
 							scene->mainTilemap[i][j] = ' ';
 						}
@@ -359,5 +367,6 @@ public:
 		healSound.setVolume(Volume);
 		finishSound.setVolume(Volume);
 		boostColSound.setVolume(Volume);
+		shieldSound.setVolume(Volume);
 	}
 };

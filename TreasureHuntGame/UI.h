@@ -224,8 +224,9 @@ public:
 		window.Renderer.draw(coinsText);
 		window.Renderer.draw(keyText);
 		window.Renderer.draw(diamond);
-		if (gamePaused)
+		if (gamePaused) {
 			PauseMenu();
+		}
 	}
 
 	void PauseMenu() {

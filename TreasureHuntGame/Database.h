@@ -100,7 +100,9 @@ public:
 		soundBuffers.push_back(loadSound);
 		loadSound.loadFromFile("Assets/sfx/theme.wav");               //8
 		soundBuffers.push_back(loadSound);
-		loadSound.loadFromFile("Assets/sfx/boosts.wav");               //9
+		loadSound.loadFromFile("Assets/sfx/boosts.wav");              //9
+		soundBuffers.push_back(loadSound);
+		loadSound.loadFromFile("Assets/sfx/ShieldElectric.wav");      //10
 		soundBuffers.push_back(loadSound);
 
 	}

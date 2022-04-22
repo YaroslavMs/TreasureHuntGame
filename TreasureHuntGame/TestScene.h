@@ -150,6 +150,8 @@ public:
 					}
 				}
 			}
+			else if (ui.gamePaused)
+				player.shieldSound.pause();
 			ui.Update(time);
 			ui.Draw(player);
 
