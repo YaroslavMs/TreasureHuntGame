@@ -21,6 +21,11 @@ public:
 	sf::Sprite idle, run, jump, fall, crouch, crouchWalk;
 	float currentFrame;
 
+
+	//boost
+	float speedBoostTime, speedBoostPower = 1.3;
+	float gravityBoostTime, gravityBoostPower = 0.8;
+
 	Player(Scene* scene)
 	{
 		this->scene = scene;
@@ -61,6 +66,7 @@ public:
 		dx = 0.1;
 		dy = 0.1;
 		currentFrame = 0;
+		speedBoostTime = 0;
 		lives--;
 		rect = spawnPoint;
 	}
@@ -79,13 +85,26 @@ public:
 	void update(float time)
 	{
 		soundTimer += time * 0.05;
-		if (crouching)
-			rect.left += dx * time * 0.6f * sizeMultiplier;
-		else rect.left += dx * time * sizeMultiplier;
+		if (speedBoostTime > 0) {
+			if (crouching)
+				rect.left += dx * time * 0.6f * sizeMultiplier * speedBoostPower;
+			else rect.left += dx * time * sizeMultiplier * speedBoostPower;
+			speedBoostTime -= (time * 400 / 1000000.0f);
+		}
+		else {
+			if (crouching)
+				rect.left += dx * time * 0.6f * sizeMultiplier;
+			else rect.left += dx * time * sizeMultiplier;
+		}
 		Collision(0);
 
-
-		if (!onGround) dy = dy + 0.0005 * time;
+		if(gravityBoostTime > 0)
+			gravityBoostTime -= (time * 400 / 1000000.0f);
+		if (!onGround) {
+			if (gravityBoostTime > 0)
+				dy = dy + 0.0005 * time * gravityBoostPower;
+			else dy = dy + 0.0005 * time;
+		}
 		rect.top += dy * time * 2;
 		onGround = false;
 		Collision(1);
@@ -239,6 +258,14 @@ public:
 						else if (scene->mainTilemap[i][j] == 110 || scene->mainTilemap[i][j] == 't' || scene->mainTilemap[i][j] == '0' || scene->mainTilemap[i][j] == '3') {
 							hitSound.play();
 							lost = true;
+						}
+						else if (scene->mainTilemap[i][j] == '8') {
+							speedBoostTime = 10;
+							scene->mainTilemap[i][j] = ' ';
+						}
+						else if (scene->mainTilemap[i][j] == '9') {
+							gravityBoostTime = 10;
+							scene->mainTilemap[i][j] = ' ';
 						}
 						else if (scene->mainTilemap[i][j] >= 97 && scene->mainTilemap[i][j] <= 109)
 						{

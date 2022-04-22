@@ -66,6 +66,8 @@ public:
 		textures.push_back(load);
 		load.loadFromFile("Assets/Art/Slaves.png");                //24
 		textures.push_back(load);
+		load.loadFromFile("Assets/Art/GUI_1x.png");                //25
+		textures.push_back(load);
 
 
 

@@ -37,7 +37,7 @@ class MainMenu {
 	sf::Text LevelsT;
 	sf::Sprite levelButton, Lock, Star;
 	sf::Text levelNumb;
-	const int amountOfLevels = 3;
+	const int amountOfLevels = 5;
 
 public:
 	ActiveMenu currentMenu = ActiveMenu::MainMenu;

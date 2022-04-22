@@ -10,9 +10,11 @@
 class UI {
 	//Basic UI
 	sf::Sprite heartBorder, heart, diamond, key;
-	std::string amountOfCoins = "", keyString = "";
+	std::string amountOfCoins = "", keyString = "", timeString = "";
 	sf::Text coinsText, keyText;
 	float currentFrame = 0, currentKey = 0;
+	sf::Sprite speedBoost, gravityBoost;
+	sf::Text timeLeft;
 
 	//Pause menu
 	sf::Sprite background, button;
@@ -47,6 +49,11 @@ public:
 		keyText.setOutlineColor(sf::Color::Black);
 		keyText.setOutlineThickness(2);
 		keyText.setPosition(sf::Vector2f(120, 290));
+		timeLeft.setFont(DATABASE.fonts.at(0));
+		timeLeft.setCharacterSize(40);
+		timeLeft.setFillColor(sf::Color::Yellow);
+		timeLeft.setOutlineColor(sf::Color::Black);
+		timeLeft.setOutlineThickness(2);
 		heartBorder.setTexture(DATABASE.textures.at(9));
 		heart.setTexture(DATABASE.textures.at(10));
 		diamond.setTexture(DATABASE.textures.at(12));
@@ -55,6 +62,13 @@ public:
 		heartBorder.setScale(sf::Vector2f(4, 4));
 		diamond.setScale(sf::Vector2f(6, 6));
 		key.setScale(sf::Vector2f(3, 3));
+		speedBoost.setTexture(DATABASE.textures.at(25));
+		speedBoost.setTextureRect(sf::IntRect(89, 64, 6, 8));
+		speedBoost.setScale(sf::Vector2f(sizeMultiplier * 3, sizeMultiplier * 3));
+		gravityBoost.setTexture(DATABASE.textures.at(25));
+		gravityBoost.setTextureRect(sf::IntRect(73, 64, 7, 8));
+		gravityBoost.setScale(sf::Vector2f(sizeMultiplier * 3, sizeMultiplier * 3));
+
 		scrW = sf::VideoMode::getDesktopMode().width;
 		scrH = sf::VideoMode::getDesktopMode().height;
 
@@ -145,6 +159,8 @@ public:
 		winButton.setTextureRect(sf::IntRect(0, 0, 200, 60));
 		winButton.setScale(1.5, 1.5);
 
+
+
 	}
 	void UpdateVolume() {
 		clickSound.setVolume(Volume);
@@ -179,6 +195,22 @@ public:
 			currentKey = 0;
 		key.setTextureRect(sf::IntRect(10 + (int)currentKey * 32, 0, 12, 32));
 		key.setPosition(50, 270);
+		if (player.speedBoostTime > 0) {
+			speedBoost.setPosition(50, 380);
+			timeString = std::to_string(player.speedBoostTime).substr(0, 3);
+			timeLeft.setString(timeString);
+			timeLeft.setPosition(sf::Vector2f(120, 390));
+			window.Renderer.draw(speedBoost);
+			window.Renderer.draw(timeLeft);
+		}
+		if (player.gravityBoostTime > 0) {
+			gravityBoost.setPosition(50, 490);
+			timeString = std::to_string(player.gravityBoostTime).substr(0, 3);
+			timeLeft.setString(timeString);
+			timeLeft.setPosition(sf::Vector2f(120, 500));
+			window.Renderer.draw(gravityBoost);
+			window.Renderer.draw(timeLeft);
+		}
 		window.Renderer.draw(key);
 		window.Renderer.draw(coinsText);
 		window.Renderer.draw(keyText);
