@@ -16,10 +16,10 @@ public:
     }
     void SetFullscreenWindow() {
         Renderer.clear();
-      // Renderer.create(sf::VideoMode(width, height), "New Title", sf::Style::Fullscreen);
-        width = 1600;
-       height = 1000;
-      Renderer.create(sf::VideoMode(1600, 1000), "New Title");
+      Renderer.create(sf::VideoMode(width, height), "New Title", sf::Style::Fullscreen);
+     //   width = 900;
+     //  height = 600;
+     // Renderer.create(sf::VideoMode(900, 600), "New Title");
     }
 };
 

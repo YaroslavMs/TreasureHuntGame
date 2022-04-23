@@ -100,8 +100,8 @@ public:
 		if (!player.lost && !levelCompleted) {
 			window.Renderer.draw(background);
 
-			offsetX = player.rect.left - sf::VideoMode().getDesktopMode().width / 2;
-			offsetY = player.rect.top - sf::VideoMode().getDesktopMode().height / 2 - 150;
+			offsetX = player.rect.left - window.width / 2;
+			offsetY = player.rect.top - window.height / 2 - window.height / 7.2;
 
 			time = time / 400;
 

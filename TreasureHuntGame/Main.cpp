@@ -84,7 +84,7 @@ int main()
 						}
 					}
 					else if (levels[currentLevel].Lost()) {
-						if (levels[currentLevel].ui.RespawnButton(mouse.getPosition())) {
+						if (levels[currentLevel].ui.RespawnButton(mouse.getPosition(window.Renderer))) {
 							levels[currentLevel].Respawn();
 							if (levels[currentLevel].isOver())
 								levels[currentLevel].Restart();
