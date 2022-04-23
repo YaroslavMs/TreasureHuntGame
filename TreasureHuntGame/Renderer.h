@@ -8,7 +8,7 @@ class Window
 
 public:
     sf::RenderWindow Renderer;
-    int width, height;
+    float width, height;
     Window() {
         width = sf::VideoMode::getDesktopMode().width;
         height = sf::VideoMode::getDesktopMode().height;
@@ -16,7 +16,10 @@ public:
     }
     void SetFullscreenWindow() {
         Renderer.clear();
-        Renderer.create(sf::VideoMode(width, height), "New Title", sf::Style::Fullscreen);
+      // Renderer.create(sf::VideoMode(width, height), "New Title", sf::Style::Fullscreen);
+        width = 1600;
+       height = 1000;
+      Renderer.create(sf::VideoMode(1600, 1000), "New Title");
     }
 };
 

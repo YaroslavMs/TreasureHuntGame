@@ -43,7 +43,9 @@ int main()
 			}
 			if (event.type == sf::Event::KeyPressed && mainMenu.currentMenu == ActiveMenu::OptionsMenu) {
 				changeKey = event.key.code;
-				mainMenu.ChangeButton(changeKey);
+				std::cout << changeKey;
+				if (changeKey != -1)
+					mainMenu.ChangeButton(changeKey);
 			}
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
 				if (mainMenu.currentMenu == ActiveMenu::OptionsMenu && !gameStarted) {
@@ -121,11 +123,11 @@ int main()
 
 void SaveVolume() {
 
-		std::ofstream saveFile("Saves/Volume.dat", std::ios::out | std::ios::binary);
-		if (saveFile) {
-			saveFile.write((char*)&Volume, sizeof(Volume));
-			saveFile.close();
-		}
+	std::ofstream saveFile("Saves/Volume.dat", std::ios::out | std::ios::binary);
+	if (saveFile) {
+		saveFile.write((char*)&Volume, sizeof(Volume));
+		saveFile.close();
+	}
 }
 void LoadVolume() {
 	std::ifstream loadFile("Saves/Volume.dat", std::ios::out | std::ios::binary);

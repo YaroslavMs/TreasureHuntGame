@@ -50,87 +50,86 @@ public:
 		//Main menu
 		background.setTexture(DATABASE.textures.at(0));
 		background.setTextureRect(sf::IntRect(1160, 81, 1294 - 1160, 190 - 81));
-		background.setScale(sf::Vector2f(sf::VideoMode::getDesktopMode().width / background.getGlobalBounds().width, sf::VideoMode::getDesktopMode().height / background.getGlobalBounds().height));
+		background.setScale(sf::Vector2f(window.width / background.getGlobalBounds().width, window.height / background.getGlobalBounds().height));
 		button.setTexture(DATABASE.textures.at(2));
 		button.setTextureRect(sf::IntRect(0, 0, 200, 60));
-		button.setScale(2, 1.5);
+		button.setScale(window.width / 960, window.height / 720);
 		text[0].setString("Play");
 		text[1].setString("Options");
 		text[2].setString("Quit");
 		for (int i = 0; i < 3; i++) {
 			text[i].setFont(DATABASE.fonts.at(0));
 			text[i].setFillColor(sf::Color::Red);
-			text[i].setCharacterSize(80);
+			text[i].setCharacterSize(window.height / 13.5);
 			text[i].setOutlineColor(sf::Color::White);
-			text[i].setOutlineThickness(2);
+			text[i].setOutlineThickness(window.height / 13.5 / 40);
 			text[i].setOrigin(text[i].getGlobalBounds().width / 2, text[i].getGlobalBounds().height / 2);
 		}
 		name.setString("Treasure  Hunt");
 		name.setFillColor(sf::Color::Red);
 		name.setOutlineColor(sf::Color::White);
-		name.setOutlineThickness(5);
-		name.setCharacterSize(200);
+		name.setOutlineThickness(window.height / 5.4 / 40);
+		name.setCharacterSize(window.height / 5.4);
 		name.setFont(DATABASE.fonts.at(0));
 		name.setOrigin(name.getGlobalBounds().width / 2, name.getGlobalBounds().height / 2);
-		name.setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2, 200));
+		name.setPosition(sf::Vector2f(window.width / 2, window.height / 5.4));
 		for (int i = 1; i <= 3; i++)
-			text[i - 1].setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2, 275 + 180 * i));
+			text[i - 1].setPosition(window.width / 2, window.height / 3.93 + window.height / 6 * i);
 
 		//Option menu
 		Opt.setString("Options");
 		Opt.setFillColor(sf::Color::Red);
 		Opt.setOutlineColor(sf::Color::White);
 		Opt.setOutlineThickness(5);
-		Opt.setCharacterSize(120);
+		Opt.setCharacterSize(window.height / 9);
 		Opt.setFont(DATABASE.fonts.at(0));
 		Opt.setOrigin(Opt.getGlobalBounds().width / 2, Opt.getGlobalBounds().height);
-		Opt.setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2, 120));
+		Opt.setPosition(sf::Vector2f(window.width / 2, window.height / 9));
 
 		volumeText.setString("Volume: ");
 		volumeText.setFont(DATABASE.fonts.at(0));
 		volumeText.setFillColor(sf::Color::Red);
-		volumeText.setCharacterSize(60);
+	    volumeText.setCharacterSize(window.height/ 18);
 		volumeText.setOutlineColor(sf::Color::White);
-		volumeText.setOutlineThickness(2);
+		volumeText.setOutlineThickness(window.height / 540);
 		volumeText.setOrigin(0, volumeText.getGlobalBounds().height);
-		volumeText.setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2 - Opt.getGlobalBounds().width, 100 + 180));
-
-		volumeRect.setSize(sf::Vector2f(100 * 4, 3 * 4));
+		volumeText.setPosition(sf::Vector2f(window.width / 2 - volumeText.getGlobalBounds().width * 2, window.height / 3.857));
+		volumeRect.setSize(sf::Vector2f(100 * window.width / 480, window.height / 90));
 		volumeRect.setFillColor(sf::Color::Black);
 		volumeRect.setOrigin(sf::Vector2f(0, volumeRect.getSize().y / 2));
-		volumeRect.setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2 - Opt.getGlobalBounds().width + 200, 280));
-		changeVolumeCol.left = sf::VideoMode::getDesktopMode().width / 2 - Opt.getGlobalBounds().width + 200;
-		changeVolumeCol.top = 280 - volumeRect.getSize().y * 2;
+		volumeRect.setPosition(sf::Vector2f(window.width / 2 - Opt.getGlobalBounds().width + window.width / 9.6, window.height / 3.857));
+		changeVolumeCol.left = window.width / 2 - Opt.getGlobalBounds().width + window.width / 9.6;
+		changeVolumeCol.top = window.height / 3.857 - volumeRect.getSize().y * 2;
 		changeVolumeCol.width = volumeRect.getSize().x;
 		changeVolumeCol.height = volumeRect.getSize().y * 4;
 
-		volumeAmount.setSize(sf::Vector2f(Volume * 4, 3 * 4));
+		volumeAmount.setSize(sf::Vector2f(Volume * window.width / 480, window.height / 90));
 		volumeAmount.setFillColor(sf::Color::Red);
 		volumeAmount.setOrigin(sf::Vector2f(0, volumeRect.getSize().y / 2));
-		volumeAmount.setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2 - Opt.getGlobalBounds().width + 200, 280));
+		volumeAmount.setPosition(sf::Vector2f(window.width / 2 - Opt.getGlobalBounds().width + window.width / 9.6, window.height / 3.857));
 
-		volumeCircle.setRadius(10);
-		volumeCircle.setOrigin(sf::Vector2f(10, 10));
+		volumeCircle.setRadius(window.height / 108);
+		volumeCircle.setOrigin(sf::Vector2f(window.height / 108, window.height / 108));
 		volumeCircle.setFillColor(sf::Color::White);
-		volumeCircle.setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2 - Opt.getGlobalBounds().width + 200 + Volume * 4, 280));
+		volumeCircle.setPosition(sf::Vector2f(window.width / 2 - Opt.getGlobalBounds().width + window.width / 9.6 + Volume * window.width / 480, window.height / 3.857));
 
 		LeaveOptMenu.setString("Main menu");
 		LeaveOptMenu.setFont(DATABASE.fonts.at(0));
 		LeaveOptMenu.setFillColor(sf::Color::Red);
-		LeaveOptMenu.setCharacterSize(80);
+		LeaveOptMenu.setCharacterSize(window.height / 13.5);
 		LeaveOptMenu.setOutlineColor(sf::Color::White);
-		LeaveOptMenu.setOutlineThickness(2);
+		LeaveOptMenu.setOutlineThickness(window.height / 13.5 / 40);
 		LeaveOptMenu.setOrigin(LeaveOptMenu.getGlobalBounds().width / 2, LeaveOptMenu.getGlobalBounds().height / 2);
-		LeaveOptMenu.setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2, sf::VideoMode::getDesktopMode().height - 100));
+		LeaveOptMenu.setPosition(sf::Vector2f(window.width / 2, window.height - window.height / 10.8));
 
 		resetSet.setString("Reset Settings");
 		resetSet.setFont(DATABASE.fonts.at(0));
 		resetSet.setFillColor(sf::Color::Red);
-		resetSet.setCharacterSize(80);
+		resetSet.setCharacterSize(window.height / 16.5);
 		resetSet.setOutlineColor(sf::Color::White);
-		resetSet.setOutlineThickness(2);
-		resetSet.setOrigin(resetSet.getGlobalBounds().width / 2, resetSet.getGlobalBounds().height / 2);
-		resetSet.setPosition(sf::Vector2f(300, sf::VideoMode::getDesktopMode().height - 100));
+		resetSet.setOutlineThickness(window.height / 16.5 / 40);
+		resetSet.setOrigin(resetSet.getGlobalBounds().width / 2, LeaveOptMenu.getGlobalBounds().height / 2);
+		resetSet.setPosition(sf::Vector2f(window.width / 34.133 + window.width / 9.6, window.height - window.height / 10.8));
 
 		ButtonsText[0][0].setString("Action");
 		ButtonsText[1][0].setString("Primary");
@@ -144,20 +143,20 @@ public:
 
 				ButtonsText[i][j].setFillColor(sf::Color::Red);
 				ButtonsText[i][j].setOutlineColor(sf::Color::White);
-				ButtonsText[i][j].setOutlineThickness(3);
-				ButtonsText[i][j].setCharacterSize(60);
+				ButtonsText[i][j].setOutlineThickness(window.height / 18 / 20);
+				ButtonsText[i][j].setCharacterSize(window.height / 18);
 				ButtonsText[i][j].setFont(DATABASE.fonts.at(0));
-				ButtonsText[i][j].setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2 - ButtonsText[1][0].getGlobalBounds().width / 2 - 500 + i * 500, 380 + 100 * j));
+				ButtonsText[i][j].setPosition(sf::Vector2f(window.width / 2 - ButtonsText[1][0].getGlobalBounds().width / 2 - window.width / 3.84 + i * window.width / 3.84, window.height / 2.842 + window.height / 10.8 * j));
 			}
 		}
 		for (int i = 0; i < 2; i++) {
 			for (int j = 0; j < 4; j++) {
-				Fields[i][j].setSize(sf::Vector2f(260, 60));
+				Fields[i][j].setSize(sf::Vector2f(window.width / 7.384, window.height / 18));
 				Fields[i][j].setFillColor(sf::Color(192, 192, 192));
 				Fields[i][j].setOutlineColor(sf::Color::White);
-				Fields[i][j].setOutlineThickness(3);
+				Fields[i][j].setOutlineThickness(window.height / 18 / 20);
 				Fields[i][j].setOutlineColor(sf::Color::Red);
-				Fields[i][j].setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2 - ButtonsText[1][0].getGlobalBounds().width / 2 + i * 500 - 30, 480 + 100 * j + 10));
+				Fields[i][j].setPosition(sf::Vector2f(window.width / 2 - ButtonsText[1][0].getGlobalBounds().width / 2 + i * window.width / 3.84 - window.width / 64, window.height / 2.25 + window.height / 10.8 * j + window.height / 108));
 
 			}
 		}
@@ -166,35 +165,35 @@ public:
 		LevelsT.setString("Levels");
 		LevelsT.setFillColor(sf::Color::Red);
 		LevelsT.setOutlineColor(sf::Color::White);
-		LevelsT.setOutlineThickness(5);
-		LevelsT.setCharacterSize(200);
+		LevelsT.setOutlineThickness(window.height / 5.4 / 40);
+		LevelsT.setCharacterSize(window.height / 5.4);
 		LevelsT.setFont(DATABASE.fonts.at(0));
 		LevelsT.setOrigin(LevelsT.getGlobalBounds().width / 2, LevelsT.getGlobalBounds().height / 2);
-		LevelsT.setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2, 70));
+		LevelsT.setPosition(sf::Vector2f(window.width / 2, window.height / 15.4286));
 
 		levelButton.setTexture(DATABASE.textures.at(23));
 		levelButton.setTextureRect(sf::IntRect(4, 4, 59, 59));
 		levelButton.setOrigin(sf::Vector2f(27.5, 27.5));
-		levelButton.setScale(4, 4);
-		levelButton.setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2, sf::VideoMode::getDesktopMode().height / 2));
+		levelButton.setScale(window.width / 480, window.width / 480);
+		levelButton.setPosition(sf::Vector2f(window.width / 2, window.height / 2));
 		levelButton.setColor(sf::Color(70, 0, 0, 255));
 
 		Lock.setTexture(DATABASE.textures.at(24));
 		Lock.setOrigin(sf::Vector2f(7.5, 7.5));
-		Lock.setScale(11, 11);
-		Lock.setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2, sf::VideoMode::getDesktopMode().height / 2));
+		Lock.setScale(window.width / 174.5454, window.width / 174.5454);
+		Lock.setPosition(sf::Vector2f(window.width / 2, window.height / 2));
 
 		levelNumb.setString("1");
 		levelNumb.setStyle(sf::Text::Bold);
 		levelNumb.setFont(DATABASE.fonts.at(0));
 		levelNumb.setFillColor(sf::Color::Red);
-		levelNumb.setCharacterSize(140);
+		levelNumb.setCharacterSize(window.width / 13.714);
 		levelNumb.setOrigin(levelNumb.getGlobalBounds().width / 2, levelNumb.getGlobalBounds().height);
 
 		Star.setTexture(DATABASE.textures.at(21));
 		Star.setTextureRect(sf::IntRect(6, 6, 20, 22));
-		Star.setOrigin(Star.getGlobalBounds().width / 2, Star.getGlobalBounds().height / 2);
-		Star.setScale(sf::Vector2f(2, 2));
+		Star.setOrigin(Star.getLocalBounds().width / 2, Star.getLocalBounds().height / 2);
+		Star.setScale(sf::Vector2f(window.width / 960, window.width / 960));
 	}
 	int UpdateMenu(Level levels[]) {
 
@@ -217,7 +216,7 @@ public:
 		sf::Vector2i mousePos = mouse.getPosition(window.Renderer);
 		for (int i = 1; i <= 3; i++) {
 
-			button.setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2 - 100 * 2, 250 + 180 * i));
+			button.setPosition(sf::Vector2f(window.width / 2 - window.width / 9.6, window.height / 4.32 + window.height / 6 * i));
 			if (CheckCollision(button.getGlobalBounds(), mousePos)) {
 				button.setColor(sf::Color(100, 0, 0, 255));
 			}
@@ -237,13 +236,13 @@ public:
 		window.Renderer.draw(volumeAmount);
 		window.Renderer.draw(volumeCircle);
 
-		button.setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2 - 200, sf::VideoMode::getDesktopMode().height - 120));
+		button.setPosition(sf::Vector2f(window.width / 2 - window.width / 9.6, window.height - window.height / 9));
 		if (CheckCollision(button.getGlobalBounds(), mousePos)) {
 			button.setColor(sf::Color(100, 0, 0, 255));
 		}
 		else button.setColor(sf::Color::White);
 		window.Renderer.draw(button);
-		button.setPosition(sf::Vector2f(100, sf::VideoMode::getDesktopMode().height - 120));
+		button.setPosition(sf::Vector2f(window.width / 34.133, window.height - window.height / 9));
 		if (CheckCollision(button.getGlobalBounds(), mousePos)) {
 			button.setColor(sf::Color(100, 0, 0, 255));
 		}
@@ -304,9 +303,9 @@ public:
 		sf::Mouse mouse;
 		sf::Vector2i mousePos = mouse.getPosition(window.Renderer);
 		if (CheckCollision(changeVolumeCol, mousePos)) {
-			volumeCircle.setPosition(sf::Vector2f(mousePos.x, 280));
-			Volume = (mousePos.x - ((sf::VideoMode::getDesktopMode().width / 2 - Opt.getGlobalBounds().width) + 200)) / 4;
-			volumeAmount.setSize(sf::Vector2f(Volume * 4, 3 * 4));
+			volumeCircle.setPosition(sf::Vector2f(mousePos.x, window.height / 3.857));
+			Volume = (mousePos.x - (window.width / 2 - Opt.getGlobalBounds().width + window.width / 9.6)) / (window.width / 480);
+			volumeAmount.setSize(sf::Vector2f(Volume * window.width / 480, window.height / 90));
 
 		}
 	}
@@ -326,7 +325,7 @@ public:
 	int MouseClicked(sf::Mouse mouse, Level levels[]) {
 		if (currentMenu == ActiveMenu::MainMenu) {
 			for (int i = 1; i <= 3; i++) {
-				button.setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2 - 100 * 2, 250 + 180 * i));
+				button.setPosition(sf::Vector2f(window.width / 2 - window.width / 9.6, window.height / 4.32 + window.height / 6 * i));
 				if ((CheckCollision(button.getGlobalBounds(), mouse.getPosition(window.Renderer)))) {
 					clickSound.play();
 					music.pause();
@@ -339,13 +338,13 @@ public:
 			}
 		}
 		else {
-			button.setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2 - 200, sf::VideoMode::getDesktopMode().height - 120));
+			button.setPosition(sf::Vector2f(window.width / 2 - window.width / 9.6, window.height - window.height / 9));
 			if ((CheckCollision(button.getGlobalBounds(), mouse.getPosition(window.Renderer)))) {
 				clickSound.play();
 				currentMenu = ActiveMenu::MainMenu;
 			}
 			else if (currentMenu == ActiveMenu::OptionsMenu) {
-				button.setPosition(sf::Vector2f(100, sf::VideoMode::getDesktopMode().height - 120));
+				button.setPosition(sf::Vector2f(window.width / 34.133, window.height - window.height / 9));
 				if ((CheckCollision(button.getGlobalBounds(), mouse.getPosition(window.Renderer)))) {
 					clickSound.play();
 					ResetSettings();
@@ -354,7 +353,7 @@ public:
 			}
 			else if (currentMenu == ActiveMenu::LevelsMenu) {
 				for (int i = 0; i < amountOfLevels; i++) {
-					levelButton.setPosition(sf::Vector2f(200 + 300 * i, sf::VideoMode::getDesktopMode().height / 2));
+					levelButton.setPosition(sf::Vector2f(window.width / 9.6 + window.width / 6.4 * i, window.height / 2));
 					if (i == 0 || levels[i - 1].bestScore > 0) {
 						if (CheckCollision(levelButton.getGlobalBounds(), mouse.getPosition(window.Renderer))) {
 							clickSound.play();
@@ -379,11 +378,11 @@ public:
 		sf::Vector2i mousePos = mouse.getPosition(window.Renderer);
 		window.Renderer.draw(LevelsT);
 		for (int i = 0; i < amountOfLevels; i++) {
-			levelNumb.setPosition(sf::Vector2f(200 + 300 * i, sf::VideoMode::getDesktopMode().height / 2));
+			levelNumb.setPosition(sf::Vector2f(window.width / 9.6 + window.width / 6.4 * i, window.height / 2));
 			levelNumb.setString(std::to_string(i + 1));
 			levelNumb.setOrigin(levelNumb.getGlobalBounds().width / 2, levelNumb.getGlobalBounds().height);
-			levelButton.setPosition(sf::Vector2f(200 + 300 * i, sf::VideoMode::getDesktopMode().height / 2));
-			Lock.setPosition(sf::Vector2f(200 + 300 * i, sf::VideoMode::getDesktopMode().height / 2));
+			levelButton.setPosition(sf::Vector2f(window.width / 9.6 + window.width / 6.4 * i, window.height / 2));
+			Lock.setPosition(sf::Vector2f(window.width / 9.6 + window.width / 6.4 * i, window.height / 2));
 			levelButton.setColor(sf::Color(70, 0, 0, 255));
 			if (i == 0 || levels[i - 1].bestScore > 0) {
 
@@ -398,14 +397,14 @@ public:
 				window.Renderer.draw(Lock);
 			if (i == 0 || levels[i - 1].bestScore > 0)
 				for (int j = 0; j < 3; j++) {
-					Star.setPosition(sf::Vector2f(200 + 300 * i - levelButton.getLocalBounds().width + levelButton.getLocalBounds().width * j, sf::VideoMode::getDesktopMode().height / 2 + levelButton.getLocalBounds().height * 1.3));
+					Star.setPosition(sf::Vector2f(window.width / 9.6 + window.width / 6.4 * i - levelButton.getLocalBounds().width / 5 * (window.width / 480) + levelButton.getLocalBounds().width * j / 5 * (window.width / 480), window.height / 2 + levelButton.getLocalBounds().height / 3 * (window.width / 480)));
 					if (j >= levels[i].bestScore)
 						Star.setColor(sf::Color(0, 0, 0, 70));
 					else Star.setColor(sf::Color::White);
 					window.Renderer.draw(Star);
 				}
 		}
-		button.setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2 - 200, sf::VideoMode::getDesktopMode().height - 120));
+		button.setPosition(sf::Vector2f(window.width / 2 - window.width / 9.6, window.height - window.height / 9));
 		if (CheckCollision(button.getGlobalBounds(), mousePos)) {
 			button.setColor(sf::Color(100, 0, 0, 255));
 		}
@@ -417,7 +416,7 @@ public:
 	void ResetSettings() {
 		Controls = KeyButtons();
 		Volume = 10;
-		volumeCircle.setPosition(sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2 - Opt.getGlobalBounds().width + 200 + Volume * 4, 280));
-		volumeAmount.setSize(sf::Vector2f(Volume * 4, 3 * 4));
+		volumeCircle.setPosition(sf::Vector2f(window.width / 2 - Opt.getGlobalBounds().width + window.width / 9.6 + Volume * window.width / 480, window.height / 3.857));
+		volumeAmount.setSize(sf::Vector2f(Volume * window.width / 480, window.height / 90));
 	}
 };
