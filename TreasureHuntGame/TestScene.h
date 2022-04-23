@@ -106,9 +106,9 @@ public:
 			time = time / 400;
 
 			if (!ui.gamePaused) {
-				if (sf::Keyboard::isKeyPressed(Controls.keys[1][0]) || sf::Keyboard::isKeyPressed(Controls.keys[1][1]))    player.dx = -0.1;
+				if (sf::Keyboard::isKeyPressed(Controls.keys[1][0]) || sf::Keyboard::isKeyPressed(Controls.keys[1][1]))    player.dx -= 0.1;
 
-				if (sf::Keyboard::isKeyPressed(Controls.keys[2][0]) || sf::Keyboard::isKeyPressed(Controls.keys[2][1]))    player.dx = 0.1;
+				if (sf::Keyboard::isKeyPressed(Controls.keys[2][0]) || sf::Keyboard::isKeyPressed(Controls.keys[2][1]))    player.dx += 0.1;
 
 				if (sf::Keyboard::isKeyPressed(Controls.keys[0][0]) || sf::Keyboard::isKeyPressed(Controls.keys[0][1]))
 					if (player.CanJump()) {
@@ -380,5 +380,8 @@ public:
 		player.UpdateVolume();
 		ui.UpdateVolume();
 		backgroundMus.setVolume(Volume);
+	}
+	void StopMusic() {
+		backgroundMus.stop();
 	}
 };

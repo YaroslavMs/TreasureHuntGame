@@ -49,7 +49,9 @@ int main()
 				if (mainMenu.currentMenu == ActiveMenu::OptionsMenu && !gameStarted) {
 					mainMenu.CheckField();
 					mainMenu.ChangeVolume();
-					levels[currentLevel].UpdateVolume();
+					for (int i = 0; i < 5; i++) {
+						levels[i].UpdateVolume();
+					}
 					mainMenu.UpdateVolume();
 				}
 			}
@@ -75,6 +77,7 @@ int main()
 						else if (number == 4) {
 							levels[currentLevel].ui.gamePaused = false;
 							mainMenu.currentMenu = ActiveMenu::MainMenu;
+							levels[currentLevel].StopMusic();
 							gameStarted = false;
 						}
 					}
@@ -91,6 +94,7 @@ int main()
 						if (number == 0) {
 							levels[currentLevel].levelCompleted = false;
 							levels[currentLevel].Restart();
+							levels[currentLevel].StopMusic();
 							gameStarted = false;
 						}
 						else if (number == 1) {

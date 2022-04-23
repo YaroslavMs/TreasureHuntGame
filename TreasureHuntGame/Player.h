@@ -145,12 +145,12 @@ public:
 		crouch.setPosition(rect.left - scene->offsetX, rect.top - scene->offsetY);
 		crouchWalk.setPosition(rect.left - scene->offsetX, rect.top - scene->offsetY);
 
-		if (dx > 0) facingRight = 1;
-		if (dx < 0) facingRight = 0;
+		if (dx > 0.0001) facingRight = 1;
+		if (dx < -0.0001) facingRight = 0;
 
 		if (crouching) {
 
-			if (dx == 0) {
+			if (dx > -0.0001 && dx < 0.0001 /*dx == 0*/) {
 				if (facingRight)crouch.setTextureRect(sf::IntRect(42, 52, 30, 30));
 				else crouch.setTextureRect(sf::IntRect(42 + 30, 52, -30, 30));
 				window.Renderer.draw(crouch);
@@ -191,7 +191,7 @@ public:
 				window.Renderer.draw(fall);
 			}
 			//Idle animation
-			else if (dx == 0) {
+			else if (dx > -0.0001 && dx < 0.0001) { //dx == 0
 
 				if (currentFrame >= 10) currentFrame = 0;
 				if (facingRight) idle.setTextureRect(sf::IntRect(41 + 120 * int(currentFrame), 40, 30, 41));
