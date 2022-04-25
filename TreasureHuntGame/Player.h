@@ -7,9 +7,9 @@ class Player {
 
 	bool facingRight = true;
 	float soundTimer = 0;
-	sf::Sound footstep, coinSound, keySound, healSound, finishSound;
+	sf::Sound footstep, coinSound, keySound, healSound, finishSound, boostColSound;
 public:
-	sf::Sound hitSound;
+	sf::Sound hitSound, shieldSound;
 	Scene* scene;
 	bool lost = false;
 	int keysFound = 0;
@@ -18,8 +18,14 @@ public:
 	sf::FloatRect rect;
 	sf::FloatRect spawnPoint;
 	bool onGround = false, jumping = false, jumped = false, crouching = false;
-	sf::Sprite idle, run, jump, fall, crouch, crouchWalk;
+	sf::Sprite idle, run, jump, fall, crouch, crouchWalk, shield;
 	float currentFrame;
+
+
+	//boost
+	float speedBoostTime, speedBoostPower = 1.3;
+	float gravityBoostTime, gravityBoostPower = 0.8;
+	float shieldTime;
 
 	Player(Scene* scene)
 	{
@@ -30,12 +36,15 @@ public:
 		fall.setTexture(DATABASE.textures.at(6));
 		crouch.setTexture(DATABASE.textures.at(7));
 		crouchWalk.setTexture(DATABASE.textures.at(8));
+		shield.setTexture(DATABASE.textures.at(26));
 		idle.setScale(1.2 * sizeMultiplier, 1.2 * sizeMultiplier);
 		run.setScale(1.2 * sizeMultiplier, 1.2 * sizeMultiplier);
 		jump.setScale(1.2 * sizeMultiplier, 1.2 * sizeMultiplier);
 		fall.setScale(1.2 * sizeMultiplier, 1.2 * sizeMultiplier);
 		crouch.setScale(1.1 * sizeMultiplier, 1.1 * sizeMultiplier);
 		crouchWalk.setScale(1.1 * sizeMultiplier, 1.1 * sizeMultiplier);
+		shield.setOrigin(sf::Vector2f(shield.getLocalBounds().width / 2 - 140, shield.getLocalBounds().height / 2 - 180));
+		shield.setScale(0.35, 0.35);
 		rect = scene->spawnPoint;
 		spawnPoint = scene->spawnPoint;
 		dx = dy = 0.1;
@@ -52,6 +61,12 @@ public:
 		healSound.setVolume(Volume);
 		finishSound.setBuffer(DATABASE.soundBuffers.at(5));
 		finishSound.setVolume(Volume);
+		boostColSound.setBuffer(DATABASE.soundBuffers.at(9));
+		boostColSound.setVolume(Volume);
+		shieldSound.setBuffer(DATABASE.soundBuffers.at(10));
+		shieldSound.setVolume(Volume);
+
+
 	}
 	~Player() {
 		//	delete scene;
@@ -61,13 +76,20 @@ public:
 		dx = 0.1;
 		dy = 0.1;
 		currentFrame = 0;
+		speedBoostTime = 0;
+		gravityBoostTime = 0;
+		shieldTime = 0;
 		lives--;
 		rect = spawnPoint;
 	}
 	void Restart() {
+		shieldSound.stop();
 		spawnPoint = scene->spawnPoint;
 		coinsCollected = 0;
 		keysFound = 0;
+		speedBoostTime = 0;
+		gravityBoostTime = 0;
+		shieldTime = 0;
 		dx = 0.1;
 		dy = 0.1;
 		currentFrame = 0;
@@ -78,14 +100,29 @@ public:
 
 	void update(float time)
 	{
+		if (shieldSound.getStatus() == sf::Music::Paused) {
+			shieldSound.play();
+		}
 		soundTimer += time * 0.05;
-		if (crouching)
-			rect.left += dx * time * 0.6f * sizeMultiplier;
-		else rect.left += dx * time * sizeMultiplier;
+		if (speedBoostTime > 0) {
+			if (crouching)
+				rect.left += dx * time * 0.6f * sizeMultiplier * speedBoostPower;
+			else rect.left += dx * time * sizeMultiplier * speedBoostPower;
+			speedBoostTime -= (time * 400 / 1000000.0f);
+		}
+		else {
+			if (crouching)
+				rect.left += dx * time * 0.6f * sizeMultiplier;
+			else rect.left += dx * time * sizeMultiplier;
+		}
 		Collision(0);
-
-
-		if (!onGround) dy = dy + 0.0005 * time;
+		if (gravityBoostTime > 0)
+			gravityBoostTime -= (time * 400 / 1000000.0f);
+		if (!onGround) {
+			if (gravityBoostTime > 0)
+				dy = dy + 0.0005 * time * gravityBoostPower;
+			else dy = dy + 0.0005 * time;
+		}
 		rect.top += dy * time * 2;
 		onGround = false;
 		Collision(1);
@@ -108,12 +145,12 @@ public:
 		crouch.setPosition(rect.left - scene->offsetX, rect.top - scene->offsetY);
 		crouchWalk.setPosition(rect.left - scene->offsetX, rect.top - scene->offsetY);
 
-		if (dx > 0) facingRight = 1;
-		if (dx < 0) facingRight = 0;
+		if (dx > 0.0001) facingRight = 1;
+		if (dx < -0.0001) facingRight = 0;
 
 		if (crouching) {
 
-			if (dx == 0) {
+			if (dx > -0.0001 && dx < 0.0001 /*dx == 0*/) {
 				if (facingRight)crouch.setTextureRect(sf::IntRect(42, 52, 30, 30));
 				else crouch.setTextureRect(sf::IntRect(42 + 30, 52, -30, 30));
 				window.Renderer.draw(crouch);
@@ -154,7 +191,7 @@ public:
 				window.Renderer.draw(fall);
 			}
 			//Idle animation
-			else if (dx == 0) {
+			else if (dx > -0.0001 && dx < 0.0001) { //dx == 0
 
 				if (currentFrame >= 10) currentFrame = 0;
 				if (facingRight) idle.setTextureRect(sf::IntRect(41 + 120 * int(currentFrame), 40, 30, 41));
@@ -177,10 +214,13 @@ public:
 				window.Renderer.draw(run);
 			}
 		}
-		//	if (lost) {
-		//		lost = false;
-		//		LoseLife();
-		//	}
+		if (shieldTime > 0) {
+			shieldTime -= (time * 400 / 1000000.0f);
+			shield.setPosition(rect.left - scene->offsetX, rect.top - scene->offsetY);
+			window.Renderer.draw(shield);
+		}
+		else shieldSound.stop();
+
 		dx = 0;
 	}
 
@@ -232,13 +272,29 @@ public:
 							lives++;
 
 						}
-						else if (scene->mainTilemap[i][j] == '2' && ((int)scene->currentFireTrap >= 4 && (int)scene->currentFireTrap <= 5)) {
+						else if (scene->mainTilemap[i][j] == '2' && ((int)scene->currentFireTrap >= 4 && (int)scene->currentFireTrap <= 5) && shieldTime <= 0) {
 							hitSound.play();
 							lost = true;
 						}
-						else if (scene->mainTilemap[i][j] == 110 || scene->mainTilemap[i][j] == 't' || scene->mainTilemap[i][j] == '0' || scene->mainTilemap[i][j] == '3') {
+						else if ((scene->mainTilemap[i][j] == 110 || scene->mainTilemap[i][j] == 't' || scene->mainTilemap[i][j] == '0' || scene->mainTilemap[i][j] == '3') && shieldTime <= 0) {
 							hitSound.play();
 							lost = true;
+						}
+						else if (scene->mainTilemap[i][j] == '7') {
+							boostColSound.play();
+							shieldSound.play();
+							shieldTime = 3;
+							scene->mainTilemap[i][j] = ' ';
+						}
+						else if (scene->mainTilemap[i][j] == '8') {
+							boostColSound.play();
+							speedBoostTime = 10;
+							scene->mainTilemap[i][j] = ' ';
+						}
+						else if (scene->mainTilemap[i][j] == '9') {
+							boostColSound.play();
+							gravityBoostTime = 10;
+							scene->mainTilemap[i][j] = ' ';
 						}
 						else if (scene->mainTilemap[i][j] >= 97 && scene->mainTilemap[i][j] <= 109)
 						{
@@ -310,5 +366,7 @@ public:
 		hitSound.setVolume(Volume);
 		healSound.setVolume(Volume);
 		finishSound.setVolume(Volume);
+		boostColSound.setVolume(Volume);
+		shieldSound.setVolume(Volume);
 	}
 };

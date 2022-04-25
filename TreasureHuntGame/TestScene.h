@@ -40,6 +40,18 @@ public:
 		fireTrap.setTexture(DATABASE.textures.at(18));
 		lightningTrap.setTexture(DATABASE.textures.at(19));
 		ceilingTrap.setTexture(DATABASE.textures.at(20));
+
+
+		speedBoost.setTexture(DATABASE.textures.at(25));
+		speedBoost.setTextureRect(sf::IntRect(89, 64, 6, 8));
+		speedBoost.setScale(sf::Vector2f(sizeMultiplier * 2, sizeMultiplier * 2));
+		gravityBoost.setTexture(DATABASE.textures.at(25));
+		gravityBoost.setTextureRect(sf::IntRect(73, 64, 7, 8));
+		gravityBoost.setScale(sf::Vector2f(sizeMultiplier * 2, sizeMultiplier * 2));
+		shieldBoost.setTexture(DATABASE.textures.at(27));
+		shieldBoost.setScale(sf::Vector2f(sizeMultiplier, sizeMultiplier));
+
+
 		coin.setScale(sf::Vector2f(2 * sizeMultiplier, 2 * sizeMultiplier));
 		tileset.setScale(sf::Vector2f(sizeMultiplier, sizeMultiplier));
 		healPotion.setScale(sf::Vector2f(sizeMultiplier, sizeMultiplier));
@@ -62,12 +74,7 @@ public:
 
 		obelisk.setScale(sf::Vector2f(0.7, 0.7));
 		LoadScore();
-		//height = 142;
-	//	width = 300;
 
-	}
-	~Level() {
-		//	delete enemy;
 	}
 	bool isOver() {
 		if (player.lives <= 0) {
@@ -93,15 +100,15 @@ public:
 		if (!player.lost && !levelCompleted) {
 			window.Renderer.draw(background);
 
-			offsetX = player.rect.left - sf::VideoMode().getDesktopMode().width / 2;
-			offsetY = player.rect.top - sf::VideoMode().getDesktopMode().height / 2 - 150;
+			offsetX = player.rect.left - window.width / 2;
+			offsetY = player.rect.top - window.height / 2 - window.height / 7.2;
 
 			time = time / 400;
 
 			if (!ui.gamePaused) {
-				if (sf::Keyboard::isKeyPressed(Controls.keys[1][0]) || sf::Keyboard::isKeyPressed(Controls.keys[1][1]))    player.dx = -0.1;
+				if (sf::Keyboard::isKeyPressed(Controls.keys[1][0]) || sf::Keyboard::isKeyPressed(Controls.keys[1][1]))    player.dx -= 0.1;
 
-				if (sf::Keyboard::isKeyPressed(Controls.keys[2][0]) || sf::Keyboard::isKeyPressed(Controls.keys[2][1]))    player.dx = 0.1;
+				if (sf::Keyboard::isKeyPressed(Controls.keys[2][0]) || sf::Keyboard::isKeyPressed(Controls.keys[2][1]))    player.dx += 0.1;
 
 				if (sf::Keyboard::isKeyPressed(Controls.keys[0][0]) || sf::Keyboard::isKeyPressed(Controls.keys[0][1]))
 					if (player.CanJump()) {
@@ -123,8 +130,6 @@ public:
 					player.crouching = false;
 				}
 
-				//enemy->
-				//
 				currentDiamond += time * 0.003;
 				currentObelisk += time * 0.003;
 				currentKey += time * 0.005;
@@ -137,12 +142,16 @@ public:
 				for (int i = 0; i < enemies.size(); i++)
 				{
 					enemies[i].Update(time);
-					if (player.rect.intersects(enemies[i].rect)) {
-						player.hitSound.play();
-						player.lost = true;
+					if (player.shieldTime <= 0) {
+						if (player.rect.intersects(enemies[i].rect)) {
+							player.hitSound.play();
+							player.lost = true;
+						}
 					}
 				}
 			}
+			else if (ui.gamePaused)
+				player.shieldSound.pause();
 			ui.Update(time);
 			ui.Draw(player);
 
@@ -171,6 +180,7 @@ public:
 				else if (mainTilemap[i][j] == '0') continue; //trap colliders
 				else if (mainTilemap[i][j] == '4' || mainTilemap[i][j] == '5' || mainTilemap[i][j] == 'o') continue;
 				else if (mainTilemap[i][j] == '3' || mainTilemap[i][j] == 't' || mainTilemap[i][j] == 'o') continue;
+				else if (mainTilemap[i][j] == '8' || mainTilemap[i][j] == '9' || mainTilemap[i][j] == '7') continue;
 				else if (mainTilemap[i][j] == 'a')  tileset.setTextureRect(sf::IntRect(240, 720, 16, 16));// низ
 				else if (mainTilemap[i][j] == 'c')  tileset.setTextureRect(sf::IntRect(176, 672, 16 * 2, 16 * 2));//ліва стіна
 				else if (mainTilemap[i][j] == 'd')  tileset.setTextureRect(sf::IntRect(512, 672, 16, 16));//права стіна
@@ -265,7 +275,6 @@ public:
 
 					std::string str = std::to_string(player.keysFound) + " / " + std::to_string(allKeys) + " keys found.";
 					doorText.setString(str);
-					//door.setTextureRect(sf::IntRect(0, 0, 25, 22));//door
 					door.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY - 80);
 					doorText.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY - 100);
 					window.Renderer.draw(door);
@@ -293,6 +302,7 @@ public:
 				tileset.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
 				window.Renderer.draw(tileset);
 			}
+		//second layer
 		for (int i = 0; i < H; i++)
 			for (int j = 0; j <= W; j++)
 			{
@@ -302,7 +312,7 @@ public:
 					i * 16 * sizeMultiplier - offsetY > window.height + 600) {
 					continue;
 				}
-				if (mainTilemap[i][j] != '3' && mainTilemap[i][j] != 't' && mainTilemap[i][j] != 'o') {
+				if (mainTilemap[i][j] != '3' && mainTilemap[i][j] != 't' && mainTilemap[i][j] != 'o' && mainTilemap[i][j] != '8' && mainTilemap[i][j] != '9' && mainTilemap[i][j] != '7') {
 					continue;
 				}
 				else if (mainTilemap[i][j] == 'o') {
@@ -349,17 +359,29 @@ public:
 					window.Renderer.draw(saw);
 					continue;
 				}
+				else if (mainTilemap[i][j] == '7') {
+					shieldBoost.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
+					window.Renderer.draw(shieldBoost);
+					continue;
+				}
+				else if (mainTilemap[i][j] == '8') {
+					speedBoost.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
+					window.Renderer.draw(speedBoost);
+					continue;
+				}
+				else if (mainTilemap[i][j] == '9') {
+					gravityBoost.setPosition(j * 16 * sizeMultiplier - offsetX, i * 16 * sizeMultiplier - offsetY);
+					window.Renderer.draw(gravityBoost);
+					continue;
+				}
 			}
-
-
-		//	window.Renderer.draw(player.idle);
-
-
-
 	}
 	void UpdateVolume() {
 		player.UpdateVolume();
 		ui.UpdateVolume();
 		backgroundMus.setVolume(Volume);
+	}
+	void StopMusic() {
+		backgroundMus.stop();
 	}
 };

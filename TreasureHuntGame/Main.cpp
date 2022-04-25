@@ -19,7 +19,11 @@ int main()
 	LoadControls();
 	sf::Keyboard::Key changeKey;
 	MainMenu mainMenu;
+
 	Level* levels = new Level[]{ Level(FirstMap, sf::Vector2f(100, 180), 0), Level(SecondMap, sf::Vector2f(100, 1100), 1), Level(TreeMap, sf::Vector2f(100, 2200), 2) };
+
+	//Level* levels = new Level[]{ Level(TreeMap, sf::Vector2f(100, 2200), 0), Level(SecondMap, sf::Vector2f(100, 180), 1), Level(FirstMap, sf::Vector2f(100, 1100), 2), Level(TreeMap, sf::Vector2f(100, 2200), 2), Level(TreeMap, sf::Vector2f(100, 2200), 2) };
+
 	sf::Clock clock;
 	int currentLevel = 0;
 	while (window.Renderer.isOpen()) {
@@ -43,13 +47,17 @@ int main()
 			}
 			if (event.type == sf::Event::KeyPressed && mainMenu.currentMenu == ActiveMenu::OptionsMenu) {
 				changeKey = event.key.code;
-				mainMenu.ChangeButton(changeKey);
+				std::cout << changeKey;
+				if (changeKey != -1)
+					mainMenu.ChangeButton(changeKey);
 			}
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
 				if (mainMenu.currentMenu == ActiveMenu::OptionsMenu && !gameStarted) {
 					mainMenu.CheckField();
 					mainMenu.ChangeVolume();
-					levels[currentLevel].UpdateVolume();
+					for (int i = 0; i < 5; i++) {
+						levels[i].UpdateVolume();
+					}
 					mainMenu.UpdateVolume();
 				}
 			}
@@ -75,11 +83,12 @@ int main()
 						else if (number == 4) {
 							levels[currentLevel].ui.gamePaused = false;
 							mainMenu.currentMenu = ActiveMenu::MainMenu;
+							levels[currentLevel].StopMusic();
 							gameStarted = false;
 						}
 					}
 					else if (levels[currentLevel].Lost()) {
-						if (levels[currentLevel].ui.RespawnButton(mouse.getPosition())) {
+						if (levels[currentLevel].ui.RespawnButton(mouse.getPosition(window.Renderer))) {
 							levels[currentLevel].Respawn();
 							if (levels[currentLevel].isOver())
 								levels[currentLevel].Restart();
@@ -91,6 +100,7 @@ int main()
 						if (number == 0) {
 							levels[currentLevel].levelCompleted = false;
 							levels[currentLevel].Restart();
+							levels[currentLevel].StopMusic();
 							gameStarted = false;
 						}
 						else if (number == 1) {
@@ -117,11 +127,11 @@ int main()
 
 void SaveVolume() {
 
-		std::ofstream saveFile("Saves/Volume.dat", std::ios::out | std::ios::binary);
-		if (saveFile) {
-			saveFile.write((char*)&Volume, sizeof(Volume));
-			saveFile.close();
-		}
+	std::ofstream saveFile("Saves/Volume.dat", std::ios::out | std::ios::binary);
+	if (saveFile) {
+		saveFile.write((char*)&Volume, sizeof(Volume));
+		saveFile.close();
+	}
 }
 void LoadVolume() {
 	std::ifstream loadFile("Saves/Volume.dat", std::ios::out | std::ios::binary);
