@@ -19,7 +19,7 @@ public:
 		scene = _scene;
 		sprite.setTexture(DATABASE.textures.at(22));
 		sprite.setScale(2, 2);
-		rect = sf::FloatRect(4848, 5568, 32 * 2, 32 * 2);
+		rect = sf::FloatRect(j * 16 * sizeMultiplier, i * 16 * sizeMultiplier, 64, 64);//4848, 5568, 32 * 2, 32 * 2));
 		this->i = i;
 		this->j = j;
 		dx = 0.05;
@@ -51,7 +51,7 @@ public:
 						dx *= -1;
 					}
 					else if (dx < 0)
-						dx *= -1;
+						dx *= -1; 
 
 				}
 	}

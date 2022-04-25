@@ -37,7 +37,7 @@ class MainMenu {
 	sf::Text LevelsT;
 	sf::Sprite levelButton, Lock, Star;
 	sf::Text levelNumb;
-	const int amountOfLevels = 5;
+	const int amountOfLevels = 3;
 
 public:
 	ActiveMenu currentMenu = ActiveMenu::MainMenu;
@@ -304,7 +304,7 @@ public:
 		sf::Vector2i mousePos = mouse.getPosition(window.Renderer);
 		if (CheckCollision(changeVolumeCol, mousePos)) {
 			volumeCircle.setPosition(sf::Vector2f(mousePos.x, window.height / 3.857));
-			Volume = (mousePos.x - (window.width / 2 - Opt.getGlobalBounds().width + window.width / 9.6)) / (window.width / 480);
+			Volume = (mousePos.x - (window.width / 2 -(float)Opt.getGlobalBounds().width + window.width / 9.6) ) / (window.width / 480);
 			volumeAmount.setSize(sf::Vector2f(Volume * window.width / 480, window.height / 90));
 
 		}

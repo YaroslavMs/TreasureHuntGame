@@ -20,7 +20,7 @@ int main()
 	sf::Keyboard::Key changeKey;
 	MainMenu mainMenu;
 
-	Level* levels = new Level[]{ Level(FirstMap, sf::Vector2f(100, 180), 0), Level(SecondMap, sf::Vector2f(100, 1100), 1), Level(TreeMap, sf::Vector2f(100, 2200), 2) };
+	Level* levels = new Level[]{ Level(FirstMap, sf::Vector2f(100, 2200), 0), Level(SecondMap, sf::Vector2f(100, 1100), 1), Level(ThirdMap, sf::Vector2f(100, 180), 2) };
 
 	//Level* levels = new Level[]{ Level(TreeMap, sf::Vector2f(100, 2200), 0), Level(SecondMap, sf::Vector2f(100, 180), 1), Level(FirstMap, sf::Vector2f(100, 1100), 2), Level(TreeMap, sf::Vector2f(100, 2200), 2), Level(TreeMap, sf::Vector2f(100, 2200), 2) };
 
@@ -55,7 +55,7 @@ int main()
 				if (mainMenu.currentMenu == ActiveMenu::OptionsMenu && !gameStarted) {
 					mainMenu.CheckField();
 					mainMenu.ChangeVolume();
-					for (int i = 0; i < 5; i++) {
+					for (int i = 0; i < 3; i++) {
 						levels[i].UpdateVolume();
 					}
 					mainMenu.UpdateVolume();

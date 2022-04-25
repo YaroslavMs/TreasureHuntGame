@@ -235,8 +235,8 @@ public:
 		for (int i = (int)top / 16 / sizeMultiplier; i < (top + height) / 16 / sizeMultiplier; i++)
 			for (int j = (int)left / 16 / sizeMultiplier; j < (left + width) / 16 / sizeMultiplier; j++)
 			{
-				if (i < scene->mainTilemap.size()) {
-					if (j < scene->mainTilemap[i].length()) {
+				if (i < scene->H) {
+					if (j <= scene->W) {
 						if (scene->mainTilemap[i][j] == ' ')
 							continue;
 						if (scene->mainTilemap[i][j] == '+') {
@@ -256,7 +256,7 @@ public:
 							}
 						}
 						else if (scene->mainTilemap[i][j] == 's') {
-							spawnPoint.left = j * 16 * sizeMultiplier - 10;
+							spawnPoint.left = j * 16 * sizeMultiplier;
 							spawnPoint.top = i * 16 * sizeMultiplier - 30;
 
 						}
@@ -332,13 +332,10 @@ public:
 		auto width = rect.width;
 		for (int i = (top + height - height1) / 16 / sizeMultiplier; i < (top + height) / 16 / sizeMultiplier; i++)
 			for (int j = left / 16 / sizeMultiplier; j < (left + width1) / 16 / sizeMultiplier; j++)
-			{
-				if (scene->mainTilemap[i][j] >= 97 && scene->mainTilemap[i][j] <= 109)
-				{
-					return false;
-				}
-			}
-
+				if (i < scene->H)
+					if (j <= scene->W)
+						if (scene->mainTilemap[i][j] >= 97 && scene->mainTilemap[i][j] <= 109)
+							return false;
 		return true;
 	}
 	bool CanJump() {
@@ -350,10 +347,10 @@ public:
 		int i = int(top) / 16 / sizeMultiplier - 1;
 		for (int j = (int)left / 16 / sizeMultiplier; j < (left + width) / 16 / sizeMultiplier; j++)
 		{
-			if (scene->mainTilemap[i][j] >= 97 && scene->mainTilemap[i][j] <= 109)
-			{
-				return false;
-			}
+			if (i < scene->H)
+				if (j <= scene->W)
+					if (scene->mainTilemap[i][j] >= 97 && scene->mainTilemap[i][j] <= 109)
+						return false;
 		}
 		return true;
 
