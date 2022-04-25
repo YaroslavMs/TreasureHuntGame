@@ -74,7 +74,6 @@ public:
 
 		obelisk.setScale(sf::Vector2f(0.7, 0.7));
 		LoadScore();
-
 	}
 	bool isOver() {
 		if (player.lives <= 0) {

@@ -25,7 +25,7 @@ public:
 	//boost
 	float speedBoostTime, speedBoostPower = 1.3;
 	float gravityBoostTime, gravityBoostPower = 0.8;
-	float shieldTime;
+	float shieldTime = 0;
 
 	Player(Scene* scene)
 	{

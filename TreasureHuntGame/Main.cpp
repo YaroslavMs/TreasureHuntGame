@@ -108,8 +108,18 @@ int main()
 							levels[currentLevel].Restart();
 						}
 						else if (number == 2) {
-							if (currentLevel < 1)
+							if (currentLevel < 2) {
+								levels[currentLevel].levelCompleted = false;
+								levels[currentLevel].Restart();
+								levels[currentLevel].StopMusic();
 								currentLevel++;
+							}
+							else {
+								levels[currentLevel].levelCompleted = false;
+								levels[currentLevel].Restart();
+								levels[currentLevel].StopMusic();
+								gameStarted = false;
+							}
 						}
 
 					}
