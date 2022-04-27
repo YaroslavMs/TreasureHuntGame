@@ -104,6 +104,8 @@ public:
 		soundBuffers.push_back(loadSound);
 		loadSound.loadFromFile("Assets/sfx/ShieldElectric.wav");      //10
 		soundBuffers.push_back(loadSound);
+		loadSound.loadFromFile("Assets/sfx/keyPress.wav");            //11
+		soundBuffers.push_back(loadSound);
 
 	}
 	void AddTextureToDatabase(sf::Texture texture) {

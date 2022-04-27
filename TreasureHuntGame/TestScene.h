@@ -104,7 +104,7 @@ public:
 
 			time = time / 400;
 
-			if (!ui.gamePaused) {
+			if (!ui.gamePaused && ui.storyFinished) {
 				if (sf::Keyboard::isKeyPressed(Controls.keys[1][0]) || sf::Keyboard::isKeyPressed(Controls.keys[1][1]))    player.dx -= 0.1;
 
 				if (sf::Keyboard::isKeyPressed(Controls.keys[2][0]) || sf::Keyboard::isKeyPressed(Controls.keys[2][1]))    player.dx += 0.1;

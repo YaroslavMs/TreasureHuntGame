@@ -30,11 +30,23 @@ class UI {
 	sf::Sprite winPanel, Star, winPanelButton, winButton;
 
 	sf::Sound clickSound;
+
+	//Pre-start history
+	sf::Text stories[3];
+	std::string storiesStrings[3], currentStory = "";
+	float StoryTime = 100;
+	float storySymbolFloat = 0;
+	int storySymbol = 0;
+	sf::Sound typeSound;
+
 public:
+	bool storyFinished = false;
 	bool gamePaused = false;
 	UI() {
 		clickSound.setBuffer(DATABASE.soundBuffers.at(6));
 		clickSound.setVolume(Volume);
+		typeSound.setBuffer(DATABASE.soundBuffers.at(11));
+		typeSound.setVolume(Volume);
 
 		coinsText.setFont(DATABASE.fonts.at(0));
 		coinsText.setCharacterSize(window.height / 27);
@@ -156,15 +168,39 @@ public:
 		winButton.setScale(window.width / 1280, window.width / 1280);
 
 
+		storiesStrings[0] = "You entered ruins of an old castle,\nseeking for treasures,\nwanting to uncover mysteries of this castle.\nBut will you survive?";
+		storiesStrings[1] = "Castle appeared to be much more\ndangerous than you expected.\nBut you decided not to give up\nand continue your journey";
+		storiesStrings[2] = "Slowly you are getting used\nto this castle,\nBut nevertheless,\nbe careful as even\nsmall mistake\ncan lead to your death...";
+		stories[0].setString(storiesStrings[0]);
+		stories[1].setString(storiesStrings[1]);
+		stories[2].setString(storiesStrings[2]);
+		for (int i = 0; i < 3; i++) {
+
+			stories[i].setFillColor(sf::Color::Red);
+			stories[i].setOutlineColor(sf::Color::White);
+			stories[i].setOutlineThickness(window.height / 10 / 40);
+			stories[i].setCharacterSize(window.height / 10);
+			stories[i].setFont(DATABASE.fonts.at(0));
+			stories[i].setOrigin(stories[i].getGlobalBounds().width / 2, stories[i].getGlobalBounds().height / 2);
+			stories[i].setPosition(sf::Vector2f(window.width / 2, window.height / 2));
+		}
+		stories[0].setString("");
+		stories[1].setString("");
+		stories[2].setString("");
 
 	}
 	void UpdateVolume() {
 		clickSound.setVolume(Volume);
+		typeSound.setVolume(Volume);
 	}
 
 	void Update(float time) {
 		currentFrame += time * 0.003;
 		currentKey += time * 0.003;
+		if (StoryTime >= 0) {
+			StoryTime -= (time * 400 / 1000000.0f);
+			storySymbolFloat += time * 0.01;
+		}
 	}
 	void Draw(Player player) {
 		//WinMenu(3);
@@ -190,7 +226,7 @@ public:
 		if (currentKey >= 12)
 			currentKey = 0;
 		key.setTextureRect(sf::IntRect(10 + (int)currentKey * 32, 0, 12, 32));
-		key.setPosition(window.width / 38.4, window.height / 21.6 +  2 * window.height / 9.8181);
+		key.setPosition(window.width / 38.4, window.height / 21.6 + 2 * window.height / 9.8181);
 		if (player.speedBoostTime > 0) {
 			speedBoost.setPosition(window.width / 38.4, window.height / 21.6 + 3 * window.height / 9.8181);
 			timeString = std::to_string(player.speedBoostTime).substr(0, 3);
@@ -222,6 +258,9 @@ public:
 		if (gamePaused) {
 			PauseMenu();
 		}
+		if (StoryTime > 0)
+			StoryMenu(player);
+		else storyFinished = true;
 	}
 
 	void PauseMenu() {
@@ -331,6 +370,25 @@ public:
 		}
 	}
 
+	void StoryMenu(Player player) {
+
+
+		window.Renderer.draw(background);
+		sf::Mouse mouse;
+		sf::Vector2i mousePos = mouse.getPosition(window.Renderer);
+		if (storySymbol < storiesStrings[player.scene->levelNumber].length() && storySymbolFloat > storySymbol) {
+			currentStory += storiesStrings[player.scene->levelNumber][storySymbol];
+			storySymbol++;
+			if (typeSound.getStatus() == sf::Music::Stopped)
+				typeSound.play();
+			if (storySymbol == storiesStrings[player.scene->levelNumber].length())
+				StoryTime = 2;
+		}
+
+		stories[player.scene->levelNumber].setString(currentStory);
+		window.Renderer.draw(stories[player.scene->levelNumber]);
+
+	}
 
 
 };
